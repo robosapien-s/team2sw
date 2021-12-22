@@ -87,3 +87,5 @@ lint/tmp/
 # lint/reports/
 TeamCode/src/main/java/org/firstinspires/ftc/.DS_Store
 java_pid23804.hprof
+*.hprof
+.DS_Store
