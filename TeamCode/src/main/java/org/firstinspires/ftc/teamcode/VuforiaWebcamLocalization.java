@@ -277,9 +277,7 @@ public class VuforiaWebcamLocalization extends LinearOpMode {
 
 
 
-    public OpenGLMatrix getLastLocation() {
-        return lastLocation;
-    }
+
 
     public OpenGLMatrix createMatrix(float x, float y, float z, float u, float v,float w){
         return  OpenGLMatrix.translation(x,y,z).multiplied(Orientation.getRotationMatrix(EXTRINSIC, XYZ, DEGREES, u, v, w));
