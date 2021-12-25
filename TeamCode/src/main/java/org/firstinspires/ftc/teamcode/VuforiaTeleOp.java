@@ -28,10 +28,12 @@ public class VuforiaTeleOp extends OpMode {
         vuforiaWrapper = new VuforiaLocalizerWrapper();
         vuforiaWrapper.init(hardwareMap, telemetry);
 
-    }
+     }
 
     @Override
     public void loop() {
+        OpenGLMatrix vuforiaWrapper.
+        if()
         telemetry.addData("Location",vuforiaWrapper.getLocation().toString());
         telemetry.update();
     }
