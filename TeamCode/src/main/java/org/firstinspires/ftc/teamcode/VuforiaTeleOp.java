@@ -32,9 +32,10 @@ public class VuforiaTeleOp extends OpMode {
 
     @Override
     public void loop() {
-        OpenGLMatrix vuforiaWrapper.
-        if()
-        telemetry.addData("Location",vuforiaWrapper.getLocation().toString());
+        OpenGLMatrix matrix = vuforiaWrapper.getLocation();
+        if(matrix!=null){
+            telemetry.addData("Location",vuforiaWrapper.getLocation().toString());
+        }
         telemetry.update();
     }
 }
