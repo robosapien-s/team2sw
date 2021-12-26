@@ -33,15 +33,20 @@ public class RRTest extends LinearOpMode {
 
     public static double DISTANCE = 20;
 
+    boolean usingLocalizer;
+
     @Override
     public void runOpMode() throws InterruptedException {
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
 
-        VuforiaLocalizerWrapper localizer = new VuforiaLocalizerWrapper();
+        if (usingLocalizer){
+            VuforiaLocalizerWrapper localizer = new VuforiaLocalizerWrapper();
 
-        localizer.init(hardwareMap, telemetry);
+            localizer.init(hardwareMap, telemetry);
 
-        drive.setLocalizer(localizer);
+            drive.setLocalizer(localizer);
+        }
+
 
 
         Trajectory trajectoryForward = drive.trajectoryBuilder(new Pose2d())
