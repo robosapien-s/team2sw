@@ -5,9 +5,15 @@ import static org.firstinspires.ftc.robotcore.external.navigation.AxesOrder.XYZ;
 import static org.firstinspires.ftc.robotcore.external.navigation.AxesOrder.XZY;
 import static org.firstinspires.ftc.robotcore.external.navigation.AxesReference.EXTRINSIC;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
+import com.acmerobotics.roadrunner.geometry.Pose2d;
+import com.acmerobotics.roadrunner.localization.Localizer;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.vuforia.Vuforia;
 
+import org.checkerframework.checker.i18n.qual.LocalizableKey;
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
@@ -23,7 +29,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class VuforiaLocalizerWrapper {
+public class VuforiaLocalizerWrapper implements Localizer {
 
     private static final VuforiaLocalizer.CameraDirection CAMERA_CHOICE = VuforiaLocalizer.CameraDirection.BACK;
     Telemetry telemetry;
@@ -52,6 +58,8 @@ public class VuforiaLocalizerWrapper {
     boolean isWebcam = false;
 
     OpenGLMatrix locationInches;
+
+    Pose2d roadRunnerLocation;
 
     public void init(HardwareMap inHardwareMap, Telemetry inTelemetry){
 
@@ -136,8 +144,68 @@ public class VuforiaLocalizerWrapper {
         }
         return locationInches;
     }
+    public OpenGLMatrix getLocationRaw(){
+        targetVisible = false;
+        if(allTrackables !=null ) {
+            for (VuforiaTrackable trackable : allTrackables) {
+                if (((VuforiaTrackableDefaultListener) trackable.getListener()).isVisible()) {
+                    telemetry.addData("Visible Target", trackable.getName());
+                    targetVisible = true;
+
+                    // getUpdatedRobotLocation() will return null if no new information is available since
+                    // the last time that call was made, or if the trackable is not currently visible.
+                    OpenGLMatrix robotLocationTransform = ((VuforiaTrackableDefaultListener) trackable.getListener()).getUpdatedRobotLocation();
+                    if (robotLocationTransform != null) {
+                        lastLocation = robotLocationTransform;
+                    }
+                    break;
+                }
+            }
+            if (targetVisible) {
+                // express position (translation) of robot in inches.
+                VectorF translation = lastLocation.getTranslation();
+                telemetry.addData("Pos (inches)", "{X, Y, Z} = %.1f, %.1f, %.1f",
+                        translation.get(0) / mmPerInch, translation.get(1) / mmPerInch, translation.get(2) / mmPerInch);
+
+                // express the rotation of the robot in degrees.
+                Orientation rotation = Orientation.getOrientation(lastLocation, EXTRINSIC, XYZ, DEGREES);
+                telemetry.addData("Rot (deg)", "{Roll, Pitch, Heading} = %.0f, %.0f, %.0f", rotation.firstAngle, rotation.secondAngle, rotation.thirdAngle);
+                locationInches = createMatrix(translation.get(0), translation.get(1), translation.get(2), rotation.firstAngle, rotation.secondAngle, rotation.thirdAngle);
+            } else {
+                telemetry.addData("Visible Target", "none");
+            }
+            telemetry.update();
+
+        }
+        return lastLocation;
+    }
 
     public OpenGLMatrix createMatrix(float x, float y, float z, float u, float v,float w){
         return  OpenGLMatrix.translation(x,y,z).multiplied(Orientation.getRotationMatrix(EXTRINSIC, XYZ, DEGREES, u, v, w));
+    }
+
+    @NonNull
+    @Override
+    public Pose2d getPoseEstimate() {
+        return roadRunnerLocation;
+    }
+
+    @Override
+    public void setPoseEstimate(@NonNull Pose2d pose2d) {
+
+    }
+
+
+    @Override
+    public void update() {
+        OpenGLMatrix location = getLocationRaw();
+        VectorF translation = location.getTranslation();
+        roadRunnerLocation = new Pose2d(translation.get(0),translation.get(1),location.getRow(1).get(3));
+    }
+
+    @Nullable
+    @Override
+    public Pose2d getPoseVelocity() {
+        return null;
     }
 }
