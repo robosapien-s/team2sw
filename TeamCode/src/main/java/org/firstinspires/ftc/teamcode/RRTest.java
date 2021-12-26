@@ -41,6 +41,8 @@ public class RRTest extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         SampleMecanumDrive roadRunner = new SampleMecanumDrive(hardwareMap);
 
+        usingLocalizer = true;
+
         if (usingLocalizer){
             localizer = new VuforiaLocalizerWrapper();
 
