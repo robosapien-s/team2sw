@@ -39,39 +39,39 @@ public class RRTest extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
-        SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
+        SampleMecanumDrive roadRunner = new SampleMecanumDrive(hardwareMap);
 
         if (usingLocalizer){
             localizer = new VuforiaLocalizerWrapper();
 
             localizer.init(hardwareMap, telemetry);
 
-            drive.setLocalizer(localizer);
+            roadRunner.setLocalizer(localizer);
         }
 
 
-        Trajectory trajectoryForward = drive.trajectoryBuilder(new Pose2d())
+        Trajectory trajectoryForward = roadRunner.trajectoryBuilder(new Pose2d())
                 .forward(DISTANCE)
                 .build();
 
-        Trajectory trajectoryRight = drive.trajectoryBuilder(trajectoryForward.end())
+        Trajectory trajectoryRight = roadRunner.trajectoryBuilder(trajectoryForward.end())
                 .strafeRight(DISTANCE*2)
                 .build();
-        Trajectory trajectoryBackward = drive.trajectoryBuilder(trajectoryRight.end())
+        Trajectory trajectoryBackward = roadRunner.trajectoryBuilder(trajectoryRight.end())
                 .back(DISTANCE)
                 .build();
 
-        Trajectory trajectoryLeft = drive.trajectoryBuilder(trajectoryBackward.end())
+        Trajectory trajectoryLeft = roadRunner.trajectoryBuilder(trajectoryBackward.end())
                 .strafeLeft(DISTANCE*2)
                 .build();
         waitForStart();
 
         while (opModeIsActive() && !isStopRequested()) {
             telemetry.addData("location", localizer.getLocation());
-            drive.followTrajectory(trajectoryForward);
-            drive.followTrajectory(trajectoryRight);
-            drive.followTrajectory(trajectoryBackward);
-            drive.followTrajectory(trajectoryLeft);
+            roadRunner.followTrajectory(trajectoryForward);
+            roadRunner.followTrajectory(trajectoryRight);
+            roadRunner.followTrajectory(trajectoryBackward);
+            roadRunner.followTrajectory(trajectoryLeft);
             telemetry.update();
         }
     }
