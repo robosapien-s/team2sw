@@ -43,7 +43,6 @@ public class RRTest extends LinearOpMode {
 
         drive.setLocalizer(localizer);
 
-
         Trajectory trajectoryForward = drive.trajectoryBuilder(new Pose2d())
                 .forward(DISTANCE)
                 .build();
