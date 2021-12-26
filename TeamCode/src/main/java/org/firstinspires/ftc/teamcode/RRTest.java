@@ -35,6 +35,8 @@ public class RRTest extends LinearOpMode {
 
     boolean usingLocalizer;
 
+    VuforiaLocalizerWrapper localizer;
+
     @Override
     public void runOpMode() throws InterruptedException {
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
@@ -42,7 +44,7 @@ public class RRTest extends LinearOpMode {
         usingLocalizer = true;
 
         if (usingLocalizer){
-            VuforiaLocalizerWrapper localizer = new VuforiaLocalizerWrapper();
+            localizer = new VuforiaLocalizerWrapper();
 
             localizer.init(hardwareMap, telemetry);
 
@@ -67,10 +69,12 @@ public class RRTest extends LinearOpMode {
         waitForStart();
 
         while (opModeIsActive() && !isStopRequested()) {
+            telemetry.addData("location", localizer.getLocation());
             drive.followTrajectory(trajectoryForward);
             drive.followTrajectory(trajectoryRight);
             drive.followTrajectory(trajectoryBackward);
             drive.followTrajectory(trajectoryLeft);
+            telemetry.update();
         }
     }
 }
