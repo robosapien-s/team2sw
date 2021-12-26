@@ -55,7 +55,7 @@ public class VuforiaLocalizerWrapper implements Localizer {
 
     public boolean targetVisible;
 
-    boolean isWebcam = false;
+    boolean isWebcam = true;
 
     OpenGLMatrix locationInches;
 
