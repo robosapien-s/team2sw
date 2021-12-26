@@ -42,6 +42,7 @@ public class VuforiaWrapper {
 
     HardwareMap hardwareMap;
 
+
     private static final String VUFORIA_KEY = "AUMliK3/////AAABmagADgA89U2Xsq+lLQdjtTZBktfma3T+X+DW3XLkPLxA8jT0n/1w4SzLeSi9k1B+He06svc/yzd6LkUPG7r1EJTRzjI9EsR7Xke6VDo+zDlBZc7ZFPoKs7Gr2t0kZxVa9m2oYy0LavCObTihphRpCmnTsKqmlW78PGVv3YNWznbpX2Q9ociNgqXuidC3pSuCRXoffEgI7m7B5WaWJNpAFFWovr1hEPEophwiQnup4xmWm76MvDO93PTaHaztapNZen7qoyj9l1SLvyYUXDFTDm5l3C2mrjzKsbrEfIEIT/RW7frXZwKjCKrM2QXUecvOrPgLIPLYaYa7fLcv0oOXMMC6yzE80Hgja2RW1NaGTDjv";
 
 
@@ -152,4 +153,24 @@ public class VuforiaWrapper {
 
         return lastKnownLocations;
     }
+
+
+//    public OpenGLMatrix getPlayerLocation(OpenGLMatrix cameraLocation, OpenGLMatrix targetLocation, VuforiaTrackable target){
+//
+//    }
+
+    public OpenGLMatrix getBlueStorage(){
+        return OpenGLMatrix.translation(-1828.8f, 914.4f, 152.4f).multiplied(Orientation.getRotationMatrix(EXTRINSIC, XYZ, DEGREES, 90, 0, 90));
+    }
+    public OpenGLMatrix getBlueAllianceWall(){
+        return OpenGLMatrix.translation(304.8f, 1828.8f, 152.4f).multiplied(Orientation.getRotationMatrix(EXTRINSIC, XYZ, DEGREES, 90, 0, 0));
+    }
+    public OpenGLMatrix getRedStorage(){
+        return OpenGLMatrix.translation(-1828.8f, -914.4f, 152.4f).multiplied(Orientation.getRotationMatrix(EXTRINSIC, XYZ, DEGREES, 90, 0, 90));
+    }
+    public OpenGLMatrix getRedAllianceWall(){
+        return OpenGLMatrix.translation(304.8f, -1828.8f, 152.4f).multiplied(Orientation.getRotationMatrix(EXTRINSIC, XYZ, DEGREES, 90, 0, 0));
+    }
+
+
 }

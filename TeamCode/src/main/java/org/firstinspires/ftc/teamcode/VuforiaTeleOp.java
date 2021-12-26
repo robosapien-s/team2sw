@@ -22,19 +22,19 @@ public class VuforiaTeleOp extends OpMode {
 
     ColorSensor color;
 
-    VuforiaWrapper vuforiaWrapper;
+    VuforiaLocalizerWrapper vuforiaWrapper;
     @Override
     public void init() {
-        vuforiaWrapper = new VuforiaWrapper();
+        vuforiaWrapper = new VuforiaLocalizerWrapper();
         vuforiaWrapper.init(hardwareMap, telemetry);
 
-    }
+     }
 
     @Override
     public void loop() {
-        ArrayList<OpenGLMatrix> matrices = vuforiaWrapper.getMetrics();
-        for (OpenGLMatrix matrix: matrices){
-            telemetry.addData("value", vuforiaWrapper.formatMatrix(matrix));
+        OpenGLMatrix matrix = vuforiaWrapper.getLocation();
+        if(matrix!=null){
+            telemetry.addData("Location",vuforiaWrapper.getLocation().toString());
         }
         telemetry.update();
     }
