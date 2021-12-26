@@ -6,7 +6,9 @@ import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.SampleMecanumDrive;
 
 /*
@@ -37,7 +39,10 @@ public class RRTest extends LinearOpMode {
 
         VuforiaLocalizerWrapper localizer = new VuforiaLocalizerWrapper();
 
+        localizer.init(hardwareMap, telemetry);
+
         drive.setLocalizer(localizer);
+
 
         Trajectory trajectoryForward = drive.trajectoryBuilder(new Pose2d())
                 .forward(DISTANCE)
