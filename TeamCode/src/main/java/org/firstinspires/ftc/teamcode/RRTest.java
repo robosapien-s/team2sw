@@ -73,6 +73,7 @@ public class RRTest extends LinearOpMode {
             drive.followTrajectory(trajectoryRight);
             drive.followTrajectory(trajectoryBackward);
             drive.followTrajectory(trajectoryLeft);
+            telemetry.update();
         }
     }
 }
