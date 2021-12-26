@@ -20,6 +20,7 @@ public class VuforiaTeleOp extends OpMode {
 
     DcMotorEx armMotor;
 
+    // what is the Color sensor for?
     ColorSensor color;
 
     VuforiaLocalizerWrapper vuforiaWrapper;
