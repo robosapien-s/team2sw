@@ -15,7 +15,7 @@ import org.firstinspires.ftc.teamcode.SampleMecanumDrive;
  * dashboard is recommended for this tuning routine. To access the dashboard, connect your computer
  * to the RC's WiFi network. In your browser, navigate to https://192.168.49.1:8080/dash if you're
  * using the RC phone or https://192.168.43.1:8080/dash if you are using the Control Hub. Once
- * you've successfully connected, start the program, and your robot will begin moving forward and
+ * you've successfully connected, start the program, and your robot will begin moving back() and
  * backward. You should observe the target position (green) and your pose estimate (blue) and adjust
  * your follower PID coefficients such that you follow the target position as accurately as possible.
  * If you are using SampleMecanumDrive, you should be tuning TRANSLATIONAL_PID and HEADING_PID.
@@ -26,28 +26,49 @@ import org.firstinspires.ftc.teamcode.SampleMecanumDrive;
  * is recommended that you use the FollowerPIDTuner opmode for further fine tuning.
  */
 @Config
-@Autonomous(group = "drive")
-public class BackAndForth extends LinearOpMode {
+@Autonomous(group = "drive", name = "circle")
+public class RRTestV2 extends LinearOpMode {
 
-    public static double DISTANCE = 20;
+    public static double DISTANCE = 5;
 
     @Override
     public void runOpMode() throws InterruptedException {
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
 
-        Trajectory trajectoryForward = drive.trajectoryBuilder(new Pose2d())
+        Trajectory trajectoryCircle = drive.trajectoryBuilder(new Pose2d())
                 .forward(DISTANCE)
-                .build();
-
-        Trajectory trajectoryBackward = drive.trajectoryBuilder(trajectoryForward.end())
+                .strafeLeft(DISTANCE*2)
+                .forward(DISTANCE)
+                .strafeLeft(DISTANCE*2)
+                .forward(DISTANCE)
+                .strafeLeft(DISTANCE*2)
+                .forward(DISTANCE*2)
+                .strafeRight(DISTANCE*2)
+                .forward(DISTANCE)
+                .strafeRight(DISTANCE*2)
+                .forward(DISTANCE)
+                .strafeRight(DISTANCE*2)
+                .forward(DISTANCE)
+                .strafeRight(DISTANCE*4)
                 .back(DISTANCE)
+                .strafeRight(DISTANCE*2)
+                .back(DISTANCE)
+                .strafeRight(DISTANCE*2)
+                .back(DISTANCE)
+                .strafeRight(DISTANCE*2)
+                .back(DISTANCE*2)
+                .strafeLeft(DISTANCE*2)
+                .back(DISTANCE)
+                .strafeLeft(DISTANCE*2)
+                .back(DISTANCE)
+                .strafeLeft(DISTANCE*2)
+                .back(DISTANCE)
+                .strafeLeft(DISTANCE*4)
                 .build();
 
-        waitForStart();
 
         while (opModeIsActive() && !isStopRequested()) {
-            drive.followTrajectory(trajectoryForward);
-            drive.followTrajectory(trajectoryBackward);
+            drive.followTrajectory(trajectoryCircle);
         }
     }
 }
