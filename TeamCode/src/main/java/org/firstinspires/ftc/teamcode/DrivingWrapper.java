@@ -10,6 +10,10 @@ public class DrivingWrapper {
         RIGHT,
         FORWARD,
         BACKWARD,
+        FORWARDRIGHT,
+        FORWARDLEFT,
+        BACKWARDLEFT,
+        BACKWARDRIGHT,
         SPINRIGHT,
         SPINLEFT
     }
@@ -58,6 +62,15 @@ public class DrivingWrapper {
         double x = -joystickWrapper.gamepad1GetLeftStickX() * 1.1; // Counteract imperfect strafing | Defining the x variable
         double rx = joystickWrapper.gamepad1GetRightStickX(); // Defining the rx (right x) variable
 
+        if (joystickWrapper.gamepad1GetRightBumper()){
+            y=-1;
+            x=1;
+        }
+        if (joystickWrapper.gamepad1GetLeftBumperRaw()){
+            y=-1;
+            x=-1;
+        }
+
         double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1); // Defining the denominator variable
 
         motorFrontLeft.setPower(FrontLeftPower(denominator, y, x, rx) * speed); //setting the power for the motors
@@ -104,17 +117,30 @@ public class DrivingWrapper {
             x = 0;
             y = 0;
             rx = -1;
-        }else {
-            x = 0;
-            y = 0;
+        }else if (direction == Direction.FORWARDRIGHT){
+            x = 1;
+            y = 1;
+            rx = 0;
+        }else if (direction == Direction.FORWARDLEFT){
+            x = 1;
+            y = -1;
+            rx = 0;
+        }else if (direction == Direction.BACKWARDLEFT){
+            x = -1;
+            y = -1;
+            rx = 0;
+        }else if (direction == Direction.BACKWARDRIGHT){
+            x = 1;
+            y = -1;
             rx = 0;
         }
+
         double denominator = calculateDenominator(x, y, rx);
         motorFrontLeft.setPower(FrontLeftPower(denominator, y, x, rx)*speed); //setting the power for the motors
         motorBackLeft.setPower(BackLeftPower(denominator, y, x, rx)*speed);
         motorFrontRight.setPower(FrontRightPower(denominator, y, x, rx)*speed);
         motorBackRight.setPower(BackRightPower(denominator, y, x, rx)*speed);
-//        try {
+//        try
 //            Thread.sleep((long) (1000*time));
 //        } catch (InterruptedException e) {
 //            e.printStackTrace();

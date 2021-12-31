@@ -52,6 +52,7 @@ public class RS_TeleOp extends OpMode {
         armWrapper.ArmMove(joystickWrapper);
         //Everything below is what happens when every key is pressed, besides the joysticks because they are used to drive (above).
 
+
         if (joystickWrapper.gamepad1GetA()){
             speed = .25;
         }
@@ -64,6 +65,7 @@ public class RS_TeleOp extends OpMode {
         if (joystickWrapper.gamepad1GetY()){
             speed = 1;
         }
+
         telemetry.addData("speed", speed);
 
         if (joystickWrapper.gamepad2GetDUp()) {
@@ -106,6 +108,7 @@ public class RS_TeleOp extends OpMode {
         }else {
             crMotor.setPower(0);
         }
+
         telemetry.update();
     }
 }
