@@ -62,7 +62,9 @@ public class ArmWrapper {
         if (!started) {
 
             armMotor.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+
             armMotor.setPower(.5);
+
             armMotor.setTargetPosition(-1000);
 
 
@@ -77,6 +79,7 @@ public class ArmWrapper {
             }
 
  */
+
             armServo.setPosition(servoPositions[0]);
 
             telemetry.addData("position:",armServo.getPosition());
@@ -84,6 +87,10 @@ public class ArmWrapper {
             started = true;
         }
         return started;
+    }
+
+    public void ResetArm(){
+
     }
 
     public void ArmMove(JoystickWrapper joystickWrapper) {
@@ -148,7 +155,7 @@ public class ArmWrapper {
             telemetry.update();
         }
     }
-    public void AutonomousArmMove(int lev) {
+    public void SetLevel(int lev) {
         started = init(started);
         double armPower = 1;
         Level previousLevel = level;

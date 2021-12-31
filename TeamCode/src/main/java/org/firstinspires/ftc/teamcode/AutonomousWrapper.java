@@ -33,7 +33,7 @@ public class AutonomousWrapper {
 
         arm.init(false);
         opMode.sleep(1000);
-        arm.AutonomousArmMove(2);
+        arm.SetLevel(2);
         opMode.sleep(1000);
         driver.AutonomousDrive(DrivingWrapper.Direction.FORWARD, .4, speed);
         opMode.sleep(1700);
@@ -88,6 +88,7 @@ public class AutonomousWrapper {
 //            driver.AutonomousDrive(DrivingWrapper.Direction.BACKWARD, 1,speed);
 //            driver.AutonomousDrive(DrivingWrapper.Direction.LEFT, 4,speed);
 //            arm.Carousel(10, -1);
+        arm.SetLevel(0);
 
     }
 //    public void RunCarousel(boolean isBlue){
