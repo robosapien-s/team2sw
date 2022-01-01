@@ -4,6 +4,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+
 public class DrivingWrapper {
     public enum Direction {
         LEFT,
@@ -18,6 +20,7 @@ public class DrivingWrapper {
         SPINLEFT
     }
     HardwareMap hardwareMap;// Making a variable hardwareMap of type HardwareMap
+    Telemetry telemetry;
 
     //Creating the four motors
     DcMotor motorFrontLeft;
@@ -25,8 +28,10 @@ public class DrivingWrapper {
     DcMotor motorFrontRight;
     DcMotor motorBackRight;
 
-    DrivingWrapper(HardwareMap inHardwareMap) {
+    DrivingWrapper(HardwareMap inHardwareMap, Telemetry inTelemetry) {
         hardwareMap = inHardwareMap;// making a reference to HardwareMap in opModes
+        telemetry = inTelemetry;// making a reference to Telemetry in opModes
+
         motorFrontLeft = hardwareMap.dcMotor.get("motorFrontLeft"); //setting up the motors with hardwaremaps
         motorBackLeft = hardwareMap.dcMotor.get("motorBackLeft");
         motorFrontRight = hardwareMap.dcMotor.get("motorFrontRight");
@@ -59,14 +64,16 @@ public class DrivingWrapper {
 
     public void Drive(JoystickWrapper joystickWrapper, double speed) {
         double y = -joystickWrapper.gamepad1GetLeftStickY(); // Remember, this is reversed! | Defining the y variable
-        double x = -joystickWrapper.gamepad1GetLeftStickX() * 1.1; // Counteract imperfect strafing | Defining the x variable
+        double x = joystickWrapper.gamepad1GetLeftStickX() * 1.1; // Counteract imperfect strafing | Defining the x variable
         double rx = joystickWrapper.gamepad1GetRightStickX(); // Defining the rx (right x) variable
 
-        if (joystickWrapper.gamepad1GetRightBumper()){
+        if (joystickWrapper.gamepad1GetRightBumperRaw()){
+            telemetry.addData("Move", "Right");
             y=-1;
             x=1;
         }
         if (joystickWrapper.gamepad1GetLeftBumperRaw()){
+            telemetry.addData("Move", "Left");
             y=-1;
             x=-1;
         }

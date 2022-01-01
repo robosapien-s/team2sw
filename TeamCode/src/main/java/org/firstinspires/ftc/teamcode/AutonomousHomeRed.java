@@ -9,7 +9,7 @@ public class AutonomousHomeRed extends LinearOpMode {
 
         waitForStart();
 
-        DrivingWrapper driver = new DrivingWrapper(hardwareMap);
+        DrivingWrapper driver = new DrivingWrapper(hardwareMap,telemetry);
         ArmWrapper arm = new ArmWrapper(hardwareMap, telemetry);
 
         AutonomousWrapper autonomousWrapper = new AutonomousWrapper(hardwareMap, telemetry);

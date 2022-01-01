@@ -22,7 +22,7 @@ public class AutonomousWrapper {
     }
 
     public void init(){
-        driver = new DrivingWrapper(hardwareMap);
+        driver = new DrivingWrapper(hardwareMap,telemetry);
         arm = new ArmWrapper(hardwareMap, telemetry);
     }
 

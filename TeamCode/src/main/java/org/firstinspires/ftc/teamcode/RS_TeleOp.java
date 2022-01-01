@@ -40,9 +40,11 @@ public class RS_TeleOp extends OpMode {
 
         stateTimer.reset(); //resets the timer everytime the code is initialized
         joystickWrapper = new JoystickWrapper(gamepad1, gamepad2);  //see JoystickWrapper
-        drivingWrapper = new DrivingWrapper(hardwareMap); //see DrivingWrapper
+        drivingWrapper = new DrivingWrapper(hardwareMap, telemetry); //see DrivingWrapper
         armWrapper = new ArmWrapper(hardwareMap, telemetry); //see ArmWrapper
         crMotor  = hardwareMap.get(DcMotor.class, "carouselMotor");
+//        armWrapper.started = armWrapper.init(armWrapper.started);
+
 
     }
     @Override
