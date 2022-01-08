@@ -31,11 +31,11 @@ import org.firstinspires.ftc.teamcode.SampleMecanumDrive;
 @Autonomous(group = "drive", name = "square")
 public class RRTest extends LinearOpMode {
 
-    public static double DISTANCE = 20;
+    public static double DISTANCE = 10;
 
     boolean usingLocalizer;
 
-    VuforiaLocalizerWrapper localizer;
+    VuforiaWebcamLocalizer localizer;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -44,11 +44,18 @@ public class RRTest extends LinearOpMode {
         usingLocalizer = true;
 
         if (usingLocalizer){
-            localizer = new VuforiaLocalizerWrapper();
+            localizer = new VuforiaWebcamLocalizer();
 
             localizer.init(hardwareMap, telemetry);
 
             roadRunner.setLocalizer(localizer);
+
+            while (localizer.getCurrentLocation()==null);
+            telemetry.addData("locationU",localizer.getCurrentLocation().toString());
+            telemetry.update();
+            sleep(1000);
+
+
         }
 
 
@@ -69,12 +76,22 @@ public class RRTest extends LinearOpMode {
         waitForStart();
 
         while (opModeIsActive() && !isStopRequested()) {
-            telemetry.addData("location", localizer.getLocation());
             roadRunner.followTrajectory(trajectoryForward);
-            roadRunner.followTrajectory(trajectoryRight);
-            roadRunner.followTrajectory(trajectoryBackward);
-            roadRunner.followTrajectory(trajectoryLeft);
+            telemetry.addData("location", localizer.getCurrentLocation());
             telemetry.update();
+            sleep(1000);
+            roadRunner.followTrajectory(trajectoryRight);
+            telemetry.addData("location", localizer.getCurrentLocation());
+            telemetry.update();
+            sleep(1000);
+            roadRunner.followTrajectory(trajectoryBackward);
+            telemetry.addData("location", localizer.getCurrentLocation());
+            telemetry.update();
+            sleep(1000);
+            roadRunner.followTrajectory(trajectoryLeft);
+            telemetry.addData("location", localizer.getCurrentLocation());
+            telemetry.update();
+            sleep(1000);
         }
     }
 }

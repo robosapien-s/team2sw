@@ -101,15 +101,15 @@ public class RS_TeleOp extends OpMode {
             armWrapper.Intake(joystickWrapper.gamepad2GetRightTrigger());
         }
         if (joystickWrapper.gamepad2GetRightBumperRaw()){
-            crMotor.setPower(1);
-        }else {
-            crMotor.setPower(0);
-        }
-        if (joystickWrapper.gamepad2GetLeftBumperRaw()){
             crMotor.setPower(-1);
         }else {
-            crMotor.setPower(0);
+            if (joystickWrapper.gamepad2GetLeftBumperRaw()){
+                crMotor.setPower(1);
+            }else {
+                crMotor.setPower(0);
+            }
         }
+
 
         telemetry.update();
     }

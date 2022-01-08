@@ -34,26 +34,24 @@ import static org.firstinspires.ftc.robotcore.external.navigation.AxesOrder.XYZ;
 import static org.firstinspires.ftc.robotcore.external.navigation.AxesOrder.XZY;
 import static org.firstinspires.ftc.robotcore.external.navigation.AxesReference.EXTRINSIC;
 
-import android.media.VolumeShaper;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.localization.Localizer;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+
+import com.acmerobotics.roadrunner.geometry.Pose2d;
+import com.acmerobotics.roadrunner.localization.Localizer;
+import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.vuforia.Vuforia;
 
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.matrices.OpenGLMatrix;
 import org.firstinspires.ftc.robotcore.external.matrices.VectorF;
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
-import org.firstinspires.ftc.robotcore.external.navigation.Quaternion;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackable;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackableDefaultListener;
@@ -86,8 +84,7 @@ import java.util.List;
  * is explained below.
  */
 
-@TeleOp(name="Vuforia Field Nav Webcam")
-public class VuforiaWebcamLocalization extends LinearOpMode implements Localizer {
+public class VuforiaWebcamLocalizer implements Localizer {
 
     /*
      * IMPORTANT: You need to obtain your own license key to use Vuforia. The string below with which
@@ -114,31 +111,25 @@ public class VuforiaWebcamLocalization extends LinearOpMode implements Localizer
 
     // Class Members
     private OpenGLMatrix lastLocation   = null;
-    private VectorF location;
-    private Orientation rotation;
     private VuforiaLocalizer vuforia    = null;
+    private VuforiaTrackables targets   = null ;
     private WebcamName webcamName       = null;
-    List<VuforiaTrackable> trackables;
 
     private boolean targetVisible       = false;
 
-    SampleMecanumDrive roadRunner;
+    List<VuforiaTrackable> allTrackables;
+
+    HardwareMap hardwareMap;
+    Telemetry telemetry;
 
 
+    OpenGLMatrix currentLocation;
 
-    public Pose2d pose2d;
-    public VuforiaTrackables targets   = null ;
-    public enum ELocation{
-        BLUECAROUSEL,
-        REDCAROUSEL,
-        BLUEHOME,
-        REDHOME
-    }
-    ELocation place;
-
-
-    public void initializeVuforia() {
+    public void init(HardwareMap inHardwareMap, Telemetry inTelemetry) {
         // Connect to the camera we are to use.  This name must match what is set up in Robot Configuration
+        hardwareMap = inHardwareMap;
+        telemetry = inTelemetry;
+
         webcamName = hardwareMap.get(WebcamName.class, "Webcam 1");
 
         /*
@@ -167,10 +158,9 @@ public class VuforiaWebcamLocalization extends LinearOpMode implements Localizer
         targets = this.vuforia.loadTrackablesFromAsset("FreightFrenzy");
 
         // For convenience, gather together all the trackable objects in one easily-iterable collection */
-        List<VuforiaTrackable> allTrackables = new ArrayList<VuforiaTrackable>();
+        allTrackables = new ArrayList<VuforiaTrackable>();
         allTrackables.addAll(targets);
 
-        trackables = allTrackables;
         /**
          * In order for localization to work, we need to tell the system where each target is on the field, and
          * where the phone resides on the robot.  These specifications are in the form of <em>transformation matrices.</em>
@@ -220,8 +210,8 @@ public class VuforiaWebcamLocalization extends LinearOpMode implements Localizer
         final float CAMERA_LEFT_DISPLACEMENT     = 0.0f * mmPerInch;   // eg: Enter the left distance from the center of the robot to the camera lens
 
         OpenGLMatrix cameraLocationOnRobot = OpenGLMatrix
-                .translation(CAMERA_FORWARD_DISPLACEMENT, CAMERA_LEFT_DISPLACEMENT, CAMERA_VERTICAL_DISPLACEMENT)
-                .multiplied(Orientation.getRotationMatrix(EXTRINSIC, XZY, DEGREES, 90, 90, 0));
+                    .translation(CAMERA_FORWARD_DISPLACEMENT, CAMERA_LEFT_DISPLACEMENT, CAMERA_VERTICAL_DISPLACEMENT)
+                    .multiplied(Orientation.getRotationMatrix(EXTRINSIC, XZY, DEGREES, 90, 90, 0));
 
         /**  Let all the trackable listeners know where the camera is.  */
         for (VuforiaTrackable trackable : allTrackables) {
@@ -247,65 +237,9 @@ public class VuforiaWebcamLocalization extends LinearOpMode implements Localizer
 
         targets.activate();
 
-        roadRunner = new SampleMecanumDrive(hardwareMap);
 
-        roadRunner.setLocalizer(this);
-    }
-
-    public void runVuforia(){
-        // check all the trackable targets to see which one (if any) is visible.
-        targetVisible = false;
-        for (VuforiaTrackable trackable : trackables) {
-            if (((VuforiaTrackableDefaultListener)trackable.getListener()).isVisible()) {
-//                telemetry.addData("Visible Target", trackable.getName());
-                targetVisible = true;
-
-                // getUpdatedRobotLocation() will return null if no new information is available since
-                // the last time that call was made, or if the trackable is not currently visible.
-                OpenGLMatrix robotLocationTransform = ((VuforiaTrackableDefaultListener)trackable.getListener()).getUpdatedRobotLocation();
-                if (robotLocationTransform != null) {
-                    lastLocation = robotLocationTransform;
-                }
-                break;
-            }
-        }
-
-        // Provide feedback as to where the robot is located (if we know).
-        if (targetVisible) {
-            // express position (translation) of robot in inches.
-            VectorF translation = lastLocation.getTranslation();
-
-
-            // express the rotation of the robot in degrees.
-            Orientation rotation = Orientation.getOrientation(lastLocation, EXTRINSIC, XYZ, DEGREES);
-            telemetry.addData("Rot (deg)", "{Roll, Pitch, Heading} = %.0f, %.0f, %.0f", rotation.firstAngle, rotation.secondAngle, rotation.thirdAngle);
-        }
-        else {
-            telemetry.addData("Visible Target", "none");
-        }
-        if (lastLocation.getTranslation().get(1) > 0){
-            if (lastLocation.getTranslation().get(0) > 0){
-                place = ELocation.BLUEHOME;
-            }else {
-                place = ELocation.BLUECAROUSEL;
-            }
-        }else {
-            if (lastLocation.getTranslation().get(0) > 0){
-                place = ELocation.REDHOME;
-            }else {
-                place = ELocation.REDCAROUSEL;
-            }
-        }
-        telemetry.addData("Place", place);
-        telemetry.update();
-    }
-
-    @Override
-    public void runOpMode() {
 
     }
-
-
 
     /***
      * Identify a target by naming it, and setting its position and orientation on the field
@@ -332,7 +266,7 @@ public class VuforiaWebcamLocalization extends LinearOpMode implements Localizer
     @NonNull
     @Override
     public Pose2d getPoseEstimate() {
-        return pose2d;
+        return matrixToPose(getCurrentLocation());
     }
 
     @Override
@@ -348,11 +282,50 @@ public class VuforiaWebcamLocalization extends LinearOpMode implements Localizer
 
     @Override
     public void update() {
-        rotation = Orientation.getOrientation(lastLocation, EXTRINSIC, XYZ, DEGREES);
-        location = lastLocation.getTranslation();
+        // check all the trackable targets to see which one (if any) is visible.
+        targetVisible = false;
+        for (VuforiaTrackable trackable : allTrackables) {
+            if (((VuforiaTrackableDefaultListener)trackable.getListener()).isVisible()) {
+                telemetry.addData("Visible Target", trackable.getName());
+                targetVisible = true;
 
-        pose2d = new Pose2d(location.get(0),location.get(1), rotation.thirdAngle);
-        telemetry.addData("updated location", pose2d);
+                // getUpdatedRobotLocation() will return null if no new information is available since
+                // the last time that call was made, or if the trackable is not currently visible.
+                OpenGLMatrix robotLocationTransform = ((VuforiaTrackableDefaultListener)trackable.getListener()).getUpdatedRobotLocation();
+                if (robotLocationTransform != null) {
+                    lastLocation = robotLocationTransform;
+                }
+                break;
+            }
+        }
+
+        // Provide feedback as to where the robot is located (if we know).
+        if (targetVisible) {
+            // express position (translation) of robot in inches.
+            VectorF translation = lastLocation.getTranslation();
+
+            // express the rotation of the robot in degrees.
+            Orientation rotation = Orientation.getOrientation(lastLocation, EXTRINSIC, XYZ, DEGREES);
+            createMatrix(translation.get(0) / mmPerInch, translation.get(1) / mmPerInch, translation.get(2) / mmPerInch,rotation.firstAngle, rotation.secondAngle, rotation.thirdAngle);
+        }
+        else {
+            telemetry.addData("Visible Target", "none");
+        }
         telemetry.update();
+
+    }
+
+    public OpenGLMatrix getCurrentLocation() {
+        return currentLocation;
+    }
+    public OpenGLMatrix getLastLocation(){
+        return lastLocation;
+    }
+
+    public Pose2d matrixToPose(OpenGLMatrix matrix){
+        OpenGLMatrix location = matrix;
+        VectorF translation = location.getTranslation();
+        Pose2d outputLocation = new Pose2d(translation.get(0),translation.get(1),location.getRow(1).get(3));
+        return outputLocation;
     }
 }

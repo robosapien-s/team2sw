@@ -221,19 +221,13 @@ public class ArmWrapper {
 
     }
 
-    public void Carousel(double time, double power, boolean wait) {
-
+    public void StartCarousel(double time, double power, boolean wait) {
         carouselServo.setPower(power);
-        if(wait){
-            try {
-                Thread.sleep((long) (1000*time));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            carouselServo.setPower(0);
-        }else {
-            //Wait in the background, hasnt been implemented yet.
-        }
-
+    }
+    public void StopCarousel(double time, double power, boolean wait) {
+        carouselServo.setPower(0);
+    }
+    public void Carousel(double time, double power, boolean wait) {
+        carouselServo.setPower(power);
     }
 }

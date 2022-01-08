@@ -42,7 +42,7 @@ public class VuforiaLocalizerWrapper implements Localizer {
 
     ArrayList<VuforiaTrackable> allTrackables;
 
-    public OpenGLMatrix lastLocation = OpenGLMatrix.identityMatrix();
+
 
     private static final float mmPerInch        = 25.4f;
     private static final float mmTargetHeight   = 6 * mmPerInch;          // the height of the center of the target image above the floor
@@ -57,9 +57,7 @@ public class VuforiaLocalizerWrapper implements Localizer {
 
     boolean isWebcam = true;
 
-    OpenGLMatrix locationInches;
-
-    Pose2d roadRunnerLocation;
+    Pose2d locationInches = null;
 
     public void init(HardwareMap inHardwareMap, Telemetry inTelemetry){
 
@@ -67,36 +65,48 @@ public class VuforiaLocalizerWrapper implements Localizer {
 
         telemetry = inTelemetry;
 
-        Vuforia.init();
+        //Vuforia.init();
 
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
-
         parameters =  new org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer.Parameters(cameraMonitorViewId);
         parameters.vuforiaLicenseKey = VUFORIA_KEY;
+        parameters.useExtendedTracking = false;
+
         if(isWebcam){
             parameters.cameraName = hardwareMap.get(WebcamName.class, "Webcam 1");
         }else {
             parameters.cameraDirection   = CAMERA_CHOICE;
         }
-        parameters.useExtendedTracking = true;
+
 
 
         vuforiaLocalizer = ClassFactory.getInstance().createVuforia(parameters);
-        if(Vuforia.isInitialized()) {
-            visionTargets = vuforiaLocalizer.loadTrackablesFromAsset("FreightFrenzy");
 
-            allTrackables = new ArrayList<VuforiaTrackable>();
-            allTrackables.addAll(visionTargets);
+        visionTargets = vuforiaLocalizer.loadTrackablesFromAsset("FreightFrenzy");
 
-            visionTargets.activate();
+        allTrackables = new ArrayList<VuforiaTrackable>();
+        allTrackables.addAll(visionTargets);
+
+        identifyTarget(0, "Blue Storage",       -halfField,  oneAndHalfTile, mmTargetHeight, 90, 0, 90);
+        identifyTarget(1, "Blue Alliance Wall",  halfTile,   halfField,      mmTargetHeight, 90, 0, 0);
+        identifyTarget(2, "Red Storage",        -halfField, -oneAndHalfTile, mmTargetHeight, 90, 0, 90);
+        identifyTarget(3, "Red Alliance Wall",   halfTile,  -halfField,      mmTargetHeight, 90, 0, 180);
 
 
+        final float CAMERA_FORWARD_DISPLACEMENT  = 0.0f * mmPerInch;   // eg: Enter the forward distance from the center of the robot to the camera lens
+        final float CAMERA_VERTICAL_DISPLACEMENT = 6.0f * mmPerInch;   // eg: Camera is 6 Inches above ground
+        final float CAMERA_LEFT_DISPLACEMENT     = 0.0f * mmPerInch;   // eg: Enter the left distance from the center of the robot to the camera lens
 
-            identifyTarget(0, "Blue Storage",       -halfField,  oneAndHalfTile, mmTargetHeight, 90, 0, 90);
-            identifyTarget(1, "Blue Alliance Wall",  halfTile,   halfField,      mmTargetHeight, 90, 0, 0);
-            identifyTarget(2, "Red Storage",        -halfField, -oneAndHalfTile, mmTargetHeight, 90, 0, 90);
-            identifyTarget(3, "Red Alliance Wall",   halfTile,  -halfField,      mmTargetHeight, 90, 0, 180);
+        OpenGLMatrix cameraLocationOnRobot = OpenGLMatrix
+                .translation(CAMERA_FORWARD_DISPLACEMENT, CAMERA_LEFT_DISPLACEMENT, CAMERA_VERTICAL_DISPLACEMENT)
+                .multiplied(Orientation.getRotationMatrix(EXTRINSIC, XZY, DEGREES, 90, 90, 0));
+
+        /**  Let all the trackable listeners know where the camera is.  */
+        for (VuforiaTrackable trackable : allTrackables) {
+            ((VuforiaTrackableDefaultListener) trackable.getListener()).setCameraLocationOnRobot(parameters.cameraName, cameraLocationOnRobot);
         }
+
+        visionTargets.activate();
 
     }
 
@@ -109,76 +119,42 @@ public class VuforiaLocalizerWrapper implements Localizer {
         aTarget.setLocation(OpenGLMatrix.translation(dx, dy, dz).multiplied(Orientation.getRotationMatrix(EXTRINSIC, XYZ, DEGREES, rx, ry, rz)));
     }
 
-    public OpenGLMatrix getLocation(){
+    public Pose2d getLocation(){
         targetVisible = false;
+        OpenGLMatrix robotLocationTransform = null;
         if(allTrackables !=null ) {
             for (VuforiaTrackable trackable : allTrackables) {
+                robotLocationTransform = ((VuforiaTrackableDefaultListener) trackable.getListener()).getUpdatedRobotLocation();
                 if (((VuforiaTrackableDefaultListener) trackable.getListener()).isVisible()) {
                     //telemetry.addData("Visible Target", trackable.getName());
-                    targetVisible = true;
 
                     // getUpdatedRobotLocation() will return null if no new information is available since
                     // the last time that call was made, or if the trackable is not currently visible.
-                    OpenGLMatrix robotLocationTransform = ((VuforiaTrackableDefaultListener) trackable.getListener()).getUpdatedRobotLocation();
-                    if (robotLocationTransform != null) {
-                        lastLocation = robotLocationTransform;
+                    robotLocationTransform = ((VuforiaTrackableDefaultListener) trackable.getListener()).getUpdatedRobotLocation();
+                    if (robotLocationTransform!=null){
+                        targetVisible = true;
+                        break;
+                    }else {
+                        targetVisible = false;
                     }
-                    break;
                 }
             }
-            if (targetVisible) {
+            if (targetVisible && robotLocationTransform != null) {
                 // express position (translation) of robot in inches.
-                VectorF translation = lastLocation.getTranslation();
+                VectorF translation = robotLocationTransform.getTranslation();
                 //telemetry.addData("Pos (inches)", "{X, Y, Z} = %.1f, %.1f, %.1f",
                 //        translation.get(0) / mmPerInch, translation.get(1) / mmPerInch, translation.get(2) / mmPerInch);
 
                 // express the rotation of the robot in degrees.
-                Orientation rotation = Orientation.getOrientation(lastLocation, EXTRINSIC, XYZ, DEGREES);
+                Orientation rotation = Orientation.getOrientation(robotLocationTransform, EXTRINSIC, XYZ, DEGREES);
                 //telemetry.addData("Rot (deg)", "{Roll, Pitch, Heading} = %.0f, %.0f, %.0f", rotation.firstAngle, rotation.secondAngle, rotation.thirdAngle);
-                locationInches = createMatrix(translation.get(0), translation.get(1), translation.get(2), rotation.firstAngle, rotation.secondAngle, rotation.thirdAngle);
-            } else {
-                //telemetry.addData("Visible Target", "none");
+                locationInches = new Pose2d(translation.get(0) / mmPerInch, translation.get(1) / mmPerInch, rotation.thirdAngle);
             }
-            telemetry.update();
 
         }
         return locationInches;
     }
-    public OpenGLMatrix getLocationRaw(){
-        targetVisible = false;
-        if(allTrackables !=null ) {
-            for (VuforiaTrackable trackable : allTrackables) {
-                if (((VuforiaTrackableDefaultListener) trackable.getListener()).isVisible()) {
-                    //telemetry.addData("Visible Target", trackable.getName());
-                    targetVisible = true;
 
-                    // getUpdatedRobotLocation() will return null if no new information is available since
-                    // the last time that call was made, or if the trackable is not currently visible.
-                    OpenGLMatrix robotLocationTransform = ((VuforiaTrackableDefaultListener) trackable.getListener()).getUpdatedRobotLocation();
-                    if (robotLocationTransform != null) {
-                        lastLocation = robotLocationTransform;
-                    }
-                    break;
-                }
-            }
-            if (targetVisible) {
-                // express position (translation) of robot in inches.
-                VectorF translation = lastLocation.getTranslation();
-                //telemetry.addData("Pos (inches)", "{X, Y, Z} = %.1f, %.1f, %.1f",
-                //        translation.get(0) / mmPerInch, translation.get(1) / mmPerInch, translation.get(2) / mmPerInch);
-
-                // express the rotation of the robot in degrees.
-                Orientation rotation = Orientation.getOrientation(lastLocation, EXTRINSIC, XYZ, DEGREES);
-                //telemetry.addData("Rot (deg)", "{Roll, Pitch, Heading} = %.0f, %.0f, %.0f", rotation.firstAngle, rotation.secondAngle, rotation.thirdAngle);
-                locationInches = createMatrix(translation.get(0), translation.get(1), translation.get(2), rotation.firstAngle, rotation.secondAngle, rotation.thirdAngle);
-            } else {
-                //telemetry.addData("Visible Target", "none");
-            }
-            telemetry.update();
-
-        }
-        return lastLocation;
-    }
 
     public OpenGLMatrix createMatrix(float x, float y, float z, float u, float v,float w){
         return  OpenGLMatrix.translation(x,y,z).multiplied(Orientation.getRotationMatrix(EXTRINSIC, XYZ, DEGREES, u, v, w));
@@ -187,7 +163,7 @@ public class VuforiaLocalizerWrapper implements Localizer {
     @NonNull
     @Override
     public Pose2d getPoseEstimate() {
-        return roadRunnerLocation;
+        return locationInches;
     }
 
     @Override
@@ -198,9 +174,8 @@ public class VuforiaLocalizerWrapper implements Localizer {
 
     @Override
     public void update() {
-        OpenGLMatrix location = getLocationRaw();
-        VectorF translation = location.getTranslation();
-        roadRunnerLocation = new Pose2d(translation.get(0),translation.get(1),location.getRow(1).get(3));
+        getLocation();
+
     }
 
     @Nullable

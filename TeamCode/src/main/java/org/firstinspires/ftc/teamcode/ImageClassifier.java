@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.robotcore.external.matrices.OpenGLMatrix;
 import org.opencv.core.Mat;
 import org.opencv.core.Point;
 import org.opencv.core.Scalar;
@@ -33,10 +34,11 @@ public class ImageClassifier {
     public ArrayList<String> SRecognitions = new ArrayList<String>();
 
 
-    public void Initialize(HardwareMap hardwareMap, Telemetry lTelemetry){
+
+    public void Initialize(HardwareMap hardwareMap, Telemetry inTelemetry){
 
         try {
-            telemetry = lTelemetry;
+            telemetry = inTelemetry;
             tfic = new TFICBuilder(hardwareMap, "BarcodeModelMeta.tflite", "1","2","3").setQuantized(true).build();
 
             int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
@@ -205,8 +207,9 @@ public class ImageClassifier {
         HashMap<String, Integer> map = new HashMap<String, Integer>();
         Integer currValue;
 
+        ArrayList<String> SRecs = (ArrayList<String>) SRecognitions.clone();
 
-        for(String rec : SRecognitions){
+        for(String rec : SRecs){
             if(map.containsKey(rec)) {
                 currValue = map.get(rec);
                 currValue++;
@@ -229,5 +232,16 @@ public class ImageClassifier {
             }
         }
         return recognition;
+    }
+
+    public void StopStreaming(){
+//        phoneCam.stopStreaming();
+        phoneCam.closeCameraDeviceAsync(new OpenCvCamera.AsyncCameraCloseListener() {
+            @Override
+            public void onClose() {
+
+            }
+        });
+
     }
 }

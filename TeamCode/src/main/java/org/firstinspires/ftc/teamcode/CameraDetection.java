@@ -41,70 +41,36 @@ and also this ¯\_(ツ)_/¯
  */
 
 @TeleOp
-public class CameraDetection extends OpMode{
+public class CameraDetection extends OpMode {
 
     ImageClassifier imageClassifier;
 
     ColorSensor color;
+
+    String sLevel = "";
+
     @Override
     public void init() {
 
-        telemetry.addData("Started","");
+        telemetry.addData("Started", "");
         imageClassifier = new ImageClassifier();
-        imageClassifier.Initialize(hardwareMap,telemetry);
+        imageClassifier.Initialize(hardwareMap, telemetry);
         telemetry.update();
     }
 
     @Override
+    public void init_loop() {
+        super.init_loop();
+        imageClassifier.StopStreaming();
+        sLevel = imageClassifier.GetCurrentRecognition();
+        telemetry.addData("Recognition", sLevel);
+        telemetry.update();
+
+    }
+
+    @Override
     public void loop() {
-        telemetry.addData("Recognition", imageClassifier.GetCurrentRecognition());
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        telemetry.addData("Recognition", sLevel);
         telemetry.update();
     }
 }
