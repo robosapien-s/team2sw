@@ -17,7 +17,7 @@ public class AutonomousCarouselBlue extends LinearOpMode {
         AutonomousWrapper autonomousWrapper = new AutonomousWrapper(hardwareMap, telemetry);
 
         if(opModeIsActive()) {
-            autonomousWrapper.RunAutonomous(true, true, this);
+            autonomousWrapper.RunAutonomous(VuforiaWebcamLocalization.ELocation.BLUECAROUSEL, this);
         }
 
 

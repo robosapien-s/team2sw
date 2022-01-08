@@ -14,6 +14,8 @@ public class AutonomousWrapper {
     HardwareMap hardwareMap;
     Telemetry telemetry;
 
+
+
     public AutonomousWrapper(HardwareMap map, Telemetry inTelemetry){
         hardwareMap = map;
         telemetry = inTelemetry;
@@ -26,10 +28,10 @@ public class AutonomousWrapper {
         arm = new ArmWrapper(hardwareMap, telemetry);
     }
 
-    public void RunAutonomous(boolean isBlue, boolean isCarousel, LinearOpMode opMode){
+    public void RunAutonomous(VuforiaWebcamLocalization.ELocation location, LinearOpMode opMode){
 
 
-        telemetry.addData(String.valueOf(isBlue) ,String.valueOf(isCarousel));
+        telemetry.addData("Location" ,location.toString());
 
         arm.init(false);
         opMode.sleep(1000);
@@ -40,15 +42,14 @@ public class AutonomousWrapper {
         driver.AutonomousDriveStop();
 
 
-
-        if(isBlue && isCarousel){
+        if(location == VuforiaWebcamLocalization.ELocation.BLUECAROUSEL){
             driver.AutonomousDrive(DrivingWrapper.Direction.SPINLEFT, 1, rotSpeed);
 
-        }else if(isBlue && !isCarousel) {
+        }else if(location == VuforiaWebcamLocalization.ELocation.BLUEHOME) {
             driver.AutonomousDrive(DrivingWrapper.Direction.SPINRIGHT, 1, rotSpeed);
-        }else if(!isBlue && isCarousel) {
+        }else if(location == VuforiaWebcamLocalization.ELocation.REDCAROUSEL) {
             driver.AutonomousDrive(DrivingWrapper.Direction.SPINRIGHT, 1, rotSpeed);
-        }else if(!isBlue && !isCarousel) {
+        }else if(location == VuforiaWebcamLocalization.ELocation.REDHOME) {
             driver.AutonomousDrive(DrivingWrapper.Direction.SPINLEFT, 1, rotSpeed);
         }
         opMode.sleep(600);
@@ -62,7 +63,7 @@ public class AutonomousWrapper {
         arm.AutonomousOutput(2);
 
         //Checks if is Carousel, because if we are not going to the carousel, we need to go over the barrier.
-        if(isCarousel) {
+        if(location == VuforiaWebcamLocalization.ELocation.BLUECAROUSEL || location == VuforiaWebcamLocalization.ELocation.REDCAROUSEL) {
             arm.Carousel(3, 1, false);
             driver.AutonomousDrive(DrivingWrapper.Direction.BACKWARD, 2.5, speed);
             opMode.sleep(4000);
