@@ -10,12 +10,14 @@ public class VuforiaRoadrunner extends VuforiaWebcamLocalization{
     public void runOpMode(){
         initializeVuforia();
         runVuforia();
-        AutonomousWrapper autonomousWrapper = new AutonomousWrapper(hardwareMap, telemetry);
 
+        SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
 
-        autonomousWrapper.RunAutonomous(place, this);
+        RoadRunnerWrapper wrapper = new RoadRunnerWrapper(drive, this);
 
+        while (!isStarted());
 
+        wrapper.init();
 
         while (!isStopRequested()){
             runVuforia();

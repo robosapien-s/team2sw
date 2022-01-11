@@ -12,7 +12,6 @@ public class ArmWrapper {
     Servo armServo;
     CRServo servo1;
     CRServo servo2;
-    CRServo carouselServo;
     Telemetry telemetry;
 
     public ArmWrapper(HardwareMap inHardwareMap, Telemetry inTelemetry) {
@@ -20,7 +19,6 @@ public class ArmWrapper {
         servo1 = hardwareMap.get(CRServo.class, "servo1");
         servo2 = hardwareMap.get(CRServo.class, "servo2");// defining the servos' hardware maps
 
-        carouselServo = hardwareMap.get(CRServo.class, "carouselServo");
 
         armMotor = hardwareMap.get(DcMotorEx.class, "armMotor");
         armServo = hardwareMap.get(Servo.class, "armServo");
@@ -131,6 +129,12 @@ public class ArmWrapper {
             armMotor.setTargetPosition(-50);
             armMotor.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
         }
+        if (joystickWrapper.gamepad2GetDRight()){
+            armServo.setPosition(armServo.getPosition()-.1);
+        }
+        if (joystickWrapper.gamepad2GetDLeft()){
+            armServo.setPosition(armServo.getPosition()+.1);
+        }
 
         if(previousLevel != level) {
             double newServoPosition = getIntakePosition(previousLevel, level);
@@ -221,13 +225,4 @@ public class ArmWrapper {
 
     }
 
-    public void StartCarousel(double time, double power, boolean wait) {
-        carouselServo.setPower(power);
-    }
-    public void StopCarousel(double time, double power, boolean wait) {
-        carouselServo.setPower(0);
-    }
-    public void Carousel(double time, double power, boolean wait) {
-        carouselServo.setPower(power);
-    }
 }

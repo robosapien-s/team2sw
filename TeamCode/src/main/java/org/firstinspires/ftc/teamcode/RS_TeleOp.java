@@ -93,12 +93,12 @@ public class RS_TeleOp extends OpMode {
         }
         if (joystickWrapper.gamepad2GetLeftTrigger() != .5) {
             telemetry.addData("KeyPressed:", "Left Trigger");
-            armWrapper.IntakeReverse(joystickWrapper.gamepad2GetLeftTrigger());
+            armWrapper.Intake(joystickWrapper.gamepad2GetLeftTrigger()*2);
 
         }
         if (joystickWrapper.gamepad2GetRightTrigger() != .5) {
             telemetry.addData("KeyPressed:", "Right Trigger");
-            armWrapper.Intake(joystickWrapper.gamepad2GetRightTrigger());
+            armWrapper.IntakeReverse(joystickWrapper.gamepad2GetRightTrigger());
         }
         if (joystickWrapper.gamepad2GetRightBumperRaw()){
             crMotor.setPower(-1);

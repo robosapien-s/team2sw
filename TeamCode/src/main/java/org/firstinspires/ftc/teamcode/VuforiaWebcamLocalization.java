@@ -44,6 +44,7 @@ import com.acmerobotics.roadrunner.localization.Localizer;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.vuforia.Vuforia;
 
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -138,6 +139,7 @@ public class VuforiaWebcamLocalization extends LinearOpMode implements Localizer
 
 
     public void initializeVuforia() {
+        Vuforia.init();
         // Connect to the camera we are to use.  This name must match what is set up in Robot Configuration
         webcamName = hardwareMap.get(WebcamName.class, "Webcam 1");
 
@@ -157,7 +159,7 @@ public class VuforiaWebcamLocalization extends LinearOpMode implements Localizer
         parameters.cameraName = webcamName;
 
         // Turn off Extended tracking.  Set this true if you want Vuforia to track beyond the target.
-        parameters.useExtendedTracking = false;
+        parameters.useExtendedTracking = true;
 
         //  Instantiate the Vuforia engine
         vuforia = ClassFactory.getInstance().createVuforia(parameters);
@@ -269,35 +271,38 @@ public class VuforiaWebcamLocalization extends LinearOpMode implements Localizer
                 break;
             }
         }
+        if (lastLocation!=null) {
+            // Provide feedback as to where the robot is located (if we know).
+            if (targetVisible) {
+                // express position (translation) of robot in inches.
+                VectorF translation = lastLocation.getTranslation();
+                telemetry.addData("Pos (inches)", "{X, Y, Z} = %.1f, %.1f, %.1f",
+                        translation.get(0) / mmPerInch, translation.get(1) / mmPerInch, translation.get(2) / mmPerInch);
 
-        // Provide feedback as to where the robot is located (if we know).
-        if (targetVisible) {
-            // express position (translation) of robot in inches.
-            VectorF translation = lastLocation.getTranslation();
 
 
-            // express the rotation of the robot in degrees.
-            Orientation rotation = Orientation.getOrientation(lastLocation, EXTRINSIC, XYZ, DEGREES);
-            telemetry.addData("Rot (deg)", "{Roll, Pitch, Heading} = %.0f, %.0f, %.0f", rotation.firstAngle, rotation.secondAngle, rotation.thirdAngle);
-        }
-        else {
-            telemetry.addData("Visible Target", "none");
-        }
-        if (lastLocation.getTranslation().get(1) > 0){
-            if (lastLocation.getTranslation().get(0) > 0){
-                place = ELocation.BLUEHOME;
-            }else {
-                place = ELocation.BLUECAROUSEL;
+                // express the rotation of the robot in degrees.
+                Orientation rotation = Orientation.getOrientation(lastLocation, EXTRINSIC, XYZ, DEGREES);
+                telemetry.addData("Rot (deg)", "{Roll, Pitch, Heading} = %.0f, %.0f, %.0f", rotation.firstAngle, rotation.secondAngle, rotation.thirdAngle);
+            } else {
+                telemetry.addData("Visible Target", "none");
             }
-        }else {
-            if (lastLocation.getTranslation().get(0) > 0){
-                place = ELocation.REDHOME;
-            }else {
-                place = ELocation.REDCAROUSEL;
+            if (lastLocation.getTranslation().get(1) > 0) {
+                if (lastLocation.getTranslation().get(0) > 0) {
+                    place = ELocation.BLUEHOME;
+                } else {
+                    place = ELocation.BLUECAROUSEL;
+                }
+            } else {
+                if (lastLocation.getTranslation().get(0) > 0) {
+                    place = ELocation.REDHOME;
+                } else {
+                    place = ELocation.REDCAROUSEL;
+                }
             }
+            telemetry.addData("Place", place);
+            telemetry.update();
         }
-        telemetry.addData("Place", place);
-        telemetry.update();
     }
 
     @Override
@@ -332,7 +337,11 @@ public class VuforiaWebcamLocalization extends LinearOpMode implements Localizer
     @NonNull
     @Override
     public Pose2d getPoseEstimate() {
-        return pose2d;
+        if (pose2d!=null) {
+            return pose2d;
+        }else {
+            return new Pose2d(0,0,0);
+        }
     }
 
     @Override
@@ -348,11 +357,13 @@ public class VuforiaWebcamLocalization extends LinearOpMode implements Localizer
 
     @Override
     public void update() {
-        rotation = Orientation.getOrientation(lastLocation, EXTRINSIC, XYZ, DEGREES);
-        location = lastLocation.getTranslation();
+        if (lastLocation!=null){
+            rotation = Orientation.getOrientation(lastLocation, EXTRINSIC, XYZ, DEGREES);
+            location = lastLocation.getTranslation();
 
-        pose2d = new Pose2d(location.get(0),location.get(1), rotation.thirdAngle);
-        telemetry.addData("updated location", pose2d);
-        telemetry.update();
+            pose2d = new Pose2d(location.get(0) / mmPerInch,location.get(1) / mmPerInch, rotation.thirdAngle);
+            telemetry.addData("updated location", pose2d);
+            telemetry.update();
+        }
     }
 }
