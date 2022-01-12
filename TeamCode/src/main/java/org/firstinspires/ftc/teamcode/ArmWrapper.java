@@ -30,7 +30,8 @@ public class ArmWrapper {
         START,
         ONE,
         TWO,
-        THREE
+        THREE,
+        BACK
     }
     Level level = Level.START;
     int level2int(Level inLevel) {
@@ -40,8 +41,10 @@ public class ArmWrapper {
             return 1;
         } else if (inLevel == Level.TWO) {
             return 2;
-        } else {
+        } else if(inLevel == Level.THREE){
             return 3;
+        }else {
+            return 4;
         }
     }
     int getNewPosition(Level previousLevel, Level newLevel) {
@@ -53,8 +56,8 @@ public class ArmWrapper {
         return servoPositions[level2int(newIntakeLevel)];
     }
     Double encoderTicks = 537.7;
-    int[] levelPositions = {1000, 1500, 2200, 3350};
-    double[] servoPositions = {.26, .26, .16, 0.05};
+    int[] levelPositions = {1000, 1500, 2200, 3350, 6000};
+    double[] servoPositions = {.26, .26, .16, 0.05, 0};
 
     public boolean init(boolean started) {
         if (!started) {
@@ -116,6 +119,11 @@ public class ArmWrapper {
             System.out.println("b");
             //telemetry.addData("KeyPressed","B");
         }
+        if (joystickWrapper.gamepad2GetRightStickDown()){
+            level = Level.BACK;
+            System.out.println("RD");
+            //telemetry.addData("KeyPressed","B");
+        }
         if (joystickWrapper.gamepad2GetDDown()) {
             armMotor.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
             armMotor.setPower(.25);
@@ -171,7 +179,9 @@ public class ArmWrapper {
             level = Level.TWO;
         }else if(lev == 3) {
             level = Level.THREE;
-        }else{}
+        }else if(lev == 4){
+            level = Level.BACK;
+        }
         if(previousLevel != level) {
             armMotor.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
             double newServoPosition = getIntakePosition(previousLevel, level);
