@@ -34,14 +34,25 @@ public class RRTestV2 extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
+        ArmWrapper armWrapper = new ArmWrapper(hardwareMap, telemetry);
 
-        Trajectory trajectoryCircle = drive.trajectoryBuilder(new Pose2d())
-                .forward(DISTANCE)
+        Trajectory trajectory1 = drive.trajectoryBuilder(new Pose2d())
+                .forward(24)
+                .build();
+        Trajectory trajectory2 = drive.trajectoryBuilder(trajectory1.end())
+                .strafeLeft(24)
+                .build();
+        Trajectory trajectory3 = drive.trajectoryBuilder(trajectory2.end())
+                .forward(5)
                 .build();
 
 
         while (opModeIsActive() && !isStopRequested()) {
-            drive.followTrajectory(trajectoryCircle);
+            armWrapper.SetLevel(3);
+            drive.followTrajectory(trajectory1);
+            drive.followTrajectory(trajectory2);
+            drive.followTrajectory(trajectory3);
+            armWrapper.IntakeReverse(1);
         }
     }
 }
