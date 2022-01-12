@@ -176,6 +176,12 @@ public class JoystickWrapper {
         return gamepad1.left_bumper;
     }
 
+    public boolean gamepad1GetRightStickDown() { return gamepad1.right_stick_button; }
+
+    public boolean gamepad1GetLeftStickDown() {
+        return gamepad1.left_stick_button;
+    }
+
     public double gamepad1GetRightTrigger() {
         return gamepad1.right_trigger;
     }
@@ -199,6 +205,7 @@ public class JoystickWrapper {
     public double gamepad1GetLeftStickY() {
         return gamepad1.left_stick_y;
     }
+
 
     public boolean gamepad2GetX() {
         if (!gamepad2xPressed && gamepad2.x) {
@@ -328,6 +335,12 @@ public class JoystickWrapper {
 
     public boolean gamepad2GetLeftBumperRaw() {
         return gamepad2.left_bumper;
+    }
+
+    public boolean gamepad2GetRightStickDown() { return gamepad2.right_stick_button; }
+
+    public boolean gamepad2GetLeftStickDown() {
+        return gamepad2.left_stick_button;
     }
 
     public double gamepad2GetRightTrigger() {
