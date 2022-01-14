@@ -58,18 +58,22 @@ public class CameraDetection extends OpMode {
         telemetry.update();
     }
 
+    /*
     @Override
     public void init_loop() {
         super.init_loop();
-        imageClassifier.StopStreaming();
+
         sLevel = imageClassifier.GetCurrentRecognition();
         telemetry.addData("Recognition", sLevel);
         telemetry.update();
 
     }
+     */
 
     @Override
     public void loop() {
+        imageClassifier.StopStreaming();
+
         telemetry.addData("Recognition", sLevel);
         telemetry.update();
     }

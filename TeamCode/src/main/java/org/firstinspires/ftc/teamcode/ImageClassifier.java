@@ -85,6 +85,7 @@ public class ImageClassifier {
                 @Override
                 public void onError(int errorCode)
                 {
+                    telemetry.addData("Error", "openCameraDeviceAsync");
                     /*
                      * This will be called if the camera could not be opened
                      */

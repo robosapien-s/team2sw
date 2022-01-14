@@ -56,8 +56,8 @@ public class ArmWrapper {
         return servoPositions[level2int(newIntakeLevel)];
     }
     Double encoderTicks = 537.7;
-    int[] levelPositions = {1000, 1500, 2200, 3350, 6000};
-    double[] servoPositions = {.26, .26, .16, 0.05, 0};
+    int[] levelPositions = {1000, 1500, 2500, 3350, 7500};
+    double[] servoPositions = {.35, .35, .28, 0.22, .38};
 
     public boolean init(boolean started) {
         if (!started) {
@@ -66,7 +66,7 @@ public class ArmWrapper {
 
             armMotor.setPower(.5);
 
-            armMotor.setTargetPosition(-1000);
+            armMotor.setTargetPosition(-650);
 
 
             armMotor.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
@@ -100,30 +100,31 @@ public class ArmWrapper {
         double armPower = 1;
         Level previousLevel = level;
         if (joystickWrapper.gamepad2GetX()) {
-            System.out.println("x");
+            telemetry.addData("input","x");
             level = Level.START;
             //telemetry.addData("KeyPressed","X");
         }
         if (joystickWrapper.gamepad2GetY()) {
             level = Level.ONE;
-            System.out.println("y");
+            telemetry.addData("input","y");
             //telemetry.addData("KeyPressed","Y");
         }
         if (joystickWrapper.gamepad2GetA()) {
             level = Level.TWO;
-            System.out.println("a");
+            telemetry.addData("input","a");
             //telemetry.addData("KeyPressed","A");
         }
         if (joystickWrapper.gamepad2GetB()) {
             level = Level.THREE;
-            System.out.println("b");
+            telemetry.addData("input","b");
             //telemetry.addData("KeyPressed","B");
         }
         if (joystickWrapper.gamepad2GetRightStickDown()){
             level = Level.BACK;
-            System.out.println("RD");
+            telemetry.addData("input","RD");
             //telemetry.addData("KeyPressed","B");
         }
+        telemetry.update();
         if (joystickWrapper.gamepad2GetDDown()) {
             armMotor.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
             armMotor.setPower(.25);
@@ -138,10 +139,10 @@ public class ArmWrapper {
             armMotor.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
         }
         if (joystickWrapper.gamepad2GetDRight()){
-            armServo.setPosition(armServo.getPosition()-.1);
+            armServo.setPosition(armServo.getPosition()-.05);
         }
         if (joystickWrapper.gamepad2GetDLeft()){
-            armServo.setPosition(armServo.getPosition()+.1);
+            armServo.setPosition(armServo.getPosition()+.05);
         }
 
         if(previousLevel != level) {
@@ -201,38 +202,26 @@ public class ArmWrapper {
             telemetry.update();
         }
     }
-    public void AutonomousIntake(double time) {
-        servo1.setPower(-1);
-        servo2.setPower(1);
-        try {
-            Thread.sleep((long) (1000*time));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        servo1.setPower(0);
-        servo2.setPower(0);
-    }
-    public void AutonomousOutput(double time) {
-        servo1.setPower(1);
-        servo2.setPower(-1);
-        try {
-            Thread.sleep((long) (1000*time));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        servo1.setPower(0);
-        servo2.setPower(0);
-    }
     public void Intake(double inputSpeed) {
-        servo1.setPower(inputSpeed);
-        servo2.setPower(-inputSpeed);
-
+        if (servo1.getPower()!=inputSpeed){
+            telemetry.addData("IntakeReverse",inputSpeed);
+            servo1.setPower(inputSpeed);
+            servo2.setPower(-inputSpeed);
+        }
+        telemetry.update();
     }
     public void IntakeReverse(double inputSpeed) {
-
-        servo1.setPower(-inputSpeed);
-        servo2.setPower(inputSpeed);
-
+        if (servo2.getPower()!=inputSpeed){
+            telemetry.addData("IntakeReverse",inputSpeed);
+            servo1.setPower(-inputSpeed);
+            servo2.setPower(inputSpeed);
+        }
+        telemetry.update();
+    }
+    public void StopIntake(){
+        servo1.setPower(0);
+        servo2.setPower(0);
+        telemetry.addData("Intake","Stop");
     }
 
 }

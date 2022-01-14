@@ -37,7 +37,6 @@ public class RS_TeleOp extends OpMode {
     @Override
     public void init() {
 
-
         stateTimer.reset(); //resets the timer everytime the code is initialized
         joystickWrapper = new JoystickWrapper(gamepad1, gamepad2);  //see JoystickWrapper
         drivingWrapper = new DrivingWrapper(hardwareMap, telemetry); //see DrivingWrapper
@@ -91,15 +90,15 @@ public class RS_TeleOp extends OpMode {
         if (joystickWrapper.gamepad2GetRightBumper()) {
             telemetry.addData("KeyPressed:", "Right Bumper");
         }
-        if (joystickWrapper.gamepad2GetLeftTrigger() != .5) {
-            telemetry.addData("KeyPressed:", "Left Trigger");
-            armWrapper.Intake(joystickWrapper.gamepad2GetLeftTrigger()*2);
+        if (joystickWrapper.gamepad2GetLeftTrigger() >= .5) {
+            armWrapper.Intake(.75);
 
+        }else if (joystickWrapper.gamepad2GetRightTrigger() >= .5) {
+            armWrapper.IntakeReverse(1);
+        }else{
+            armWrapper.StopIntake();
         }
-        if (joystickWrapper.gamepad2GetRightTrigger() != .5) {
-            telemetry.addData("KeyPressed:", "Right Trigger");
-            armWrapper.IntakeReverse(joystickWrapper.gamepad2GetRightTrigger());
-        }
+
         if (joystickWrapper.gamepad2GetRightBumperRaw()){
             crMotor.setPower(-1);
         }else {

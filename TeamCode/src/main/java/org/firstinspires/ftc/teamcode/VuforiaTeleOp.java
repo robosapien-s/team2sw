@@ -12,7 +12,7 @@ import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 
-import org.apache.commons.math3.geometry.euclidean.twod.Line;
+//import org.apache.commons.math3.geometry.euclidean.twod.Line;
 import org.firstinspires.ftc.robotcore.external.matrices.OpenGLMatrix;
 
 import java.util.ArrayList;
