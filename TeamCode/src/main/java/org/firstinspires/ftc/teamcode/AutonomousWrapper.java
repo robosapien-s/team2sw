@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.acmerobotics.roadrunner.control.PIDCoefficients;
 import com.acmerobotics.roadrunner.control.PIDFController;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
+import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.acmerobotics.roadrunner.profile.MotionProfile;
 import com.acmerobotics.roadrunner.profile.MotionProfileGenerator;
 import com.acmerobotics.roadrunner.profile.MotionState;
@@ -43,7 +44,6 @@ public class AutonomousWrapper {
 
 
     }
-
     public void RunAutonomous(VuforiaWebcamLocalization.ELocation location, LinearOpMode opMode){
 
 
@@ -51,7 +51,7 @@ public class AutonomousWrapper {
 
         arm.init(false);
         opMode.sleep(1000);
-        arm.SetLevel(2);
+        arm.SetLevel(3);
         opMode.sleep(1000);
         driver.AutonomousDrive(DrivingWrapper.Direction.FORWARD, .4, speed);
         opMode.sleep(1700);
@@ -59,16 +59,16 @@ public class AutonomousWrapper {
 
 
         if(location == VuforiaWebcamLocalization.ELocation.BLUECAROUSEL){
-            driver.AutonomousDrive(DrivingWrapper.Direction.SPINLEFT, 1, rotSpeed);
+            driver.AutonomousDrive(DrivingWrapper.Direction.SPINLEFT, .9, rotSpeed);
 
         }else if(location == VuforiaWebcamLocalization.ELocation.BLUEHOME) {
-            driver.AutonomousDrive(DrivingWrapper.Direction.SPINRIGHT, 1, rotSpeed);
+            driver.AutonomousDrive(DrivingWrapper.Direction.SPINRIGHT, .8, rotSpeed);
         }else if(location == VuforiaWebcamLocalization.ELocation.REDCAROUSEL) {
-            driver.AutonomousDrive(DrivingWrapper.Direction.SPINRIGHT, 1, rotSpeed);
+            driver.AutonomousDrive(DrivingWrapper.Direction.SPINRIGHT, .8, rotSpeed);
         }else if(location == VuforiaWebcamLocalization.ELocation.REDHOME) {
-            driver.AutonomousDrive(DrivingWrapper.Direction.SPINLEFT, 1, rotSpeed);
+            driver.AutonomousDrive(DrivingWrapper.Direction.SPINLEFT, .9, rotSpeed);
         }
-        opMode.sleep(600);
+        opMode.sleep(900);
         driver.AutonomousDriveStop();
 
         driver.AutonomousDrive(DrivingWrapper.Direction.FORWARD, 1, speed);
@@ -76,22 +76,109 @@ public class AutonomousWrapper {
         opMode.sleep(1000);
         driver.AutonomousDriveStop();
 
+        arm.Intake(1);
+        opMode.sleep(1000);
+        arm.StopIntake();
+
+        arm.ResetArm();
 
         //Checks if is Carousel, because if we are not going to the carousel, we need to go over the barrier.
-        if(location == VuforiaWebcamLocalization.ELocation.BLUECAROUSEL || location == VuforiaWebcamLocalization.ELocation.REDCAROUSEL) {
+        if(location == VuforiaWebcamLocalization.ELocation.BLUECAROUSEL) {
 //            arm.Carousel(3, 1, false);
-            driver.AutonomousDrive(DrivingWrapper.Direction.BACKWARD, 2.5, speed);
-            opMode.sleep(4000);
+            driver.AutonomousDrive(DrivingWrapper.Direction.BACKWARD, 1.5, speed);
+            opMode.sleep(1500);
             driver.AutonomousDriveStop();
 
 
-
+            driver.AutonomousDrive(DrivingWrapper.Direction.SPINLEFT, .6, rotSpeed);
 //            arm.Carousel(3, 1, false);
-            opMode.sleep(6000);
+            opMode.sleep(600);
+            driver.AutonomousDriveStop();
+
+            driver.AutonomousDrive(DrivingWrapper.Direction.BACKWARD, 2, speed);
+            opMode.sleep(2000);
+            driver.AutonomousDriveStop();
+
+            driver.AutonomousDrive(DrivingWrapper.Direction.RIGHT, 2.4, speed);
+            opMode.sleep(2400);
+            driver.AutonomousDriveStop();
+
+            crMotor.setPower(1);
+            opMode.sleep(4000);
+            driver.AutonomousDriveStop();
+
+            driver.AutonomousDrive(DrivingWrapper.Direction.LEFT, 3, speed);
+            opMode.sleep(3000);
+            driver.AutonomousDriveStop();
+
+
+        }else if(location == VuforiaWebcamLocalization.ELocation.REDCAROUSEL) {
+            driver.AutonomousDrive(DrivingWrapper.Direction.BACKWARD, 1.5, speed);
+            opMode.sleep(1500);
+            driver.AutonomousDriveStop();
+
+
+            driver.AutonomousDrive(DrivingWrapper.Direction.SPINLEFT, .6, rotSpeed);
+//            arm.Carousel(3, 1, false);
+            opMode.sleep(600);
+            driver.AutonomousDriveStop();
+
+            driver.AutonomousDrive(DrivingWrapper.Direction.BACKWARD, 2, speed);
+            opMode.sleep(2000);
+            driver.AutonomousDriveStop();
+
+            driver.AutonomousDrive(DrivingWrapper.Direction.RIGHT, 3, speed);
+            opMode.sleep(2400);
+            driver.AutonomousDriveStop();
+
+            crMotor.setPower(-1);
+            opMode.sleep(4000);
+            driver.AutonomousDriveStop();
+
+            driver.AutonomousDrive(DrivingWrapper.Direction.LEFT, 4, speed);
+            opMode.sleep(3000);
+            driver.AutonomousDriveStop();
+        }else if(location == VuforiaWebcamLocalization.ELocation.BLUEHOME) {
+            driver.AutonomousDrive(DrivingWrapper.Direction.BACKWARD, 1.5, speed);
+            opMode.sleep(1500);
+            driver.AutonomousDriveStop();
+
+
+            driver.AutonomousDrive(DrivingWrapper.Direction.SPINLEFT, .6, rotSpeed);
+//            arm.Carousel(3, 1, false);
+            opMode.sleep(600);
+            driver.AutonomousDriveStop();
+
+            driver.AutonomousDrive(DrivingWrapper.Direction.BACKWARD, 2, speed);
+            opMode.sleep(2000);
+            driver.AutonomousDriveStop();
+
+            driver.AutonomousDrive(DrivingWrapper.Direction.RIGHT, 5, speed);
+            opMode.sleep(5000);
+            driver.AutonomousDriveStop();
+
+        }else if(location == VuforiaWebcamLocalization.ELocation.REDHOME) {
+            driver.AutonomousDrive(DrivingWrapper.Direction.BACKWARD, 1.5, speed);
+            opMode.sleep(1500);
+            driver.AutonomousDriveStop();
+
+
+            driver.AutonomousDrive(DrivingWrapper.Direction.SPINRIGHT, .6, rotSpeed);
+//            arm.Carousel(3, 1, false);
+            opMode.sleep(600);
+            driver.AutonomousDriveStop();
+
+            driver.AutonomousDrive(DrivingWrapper.Direction.BACKWARD, 2, speed);
+            opMode.sleep(2000);
+            driver.AutonomousDriveStop();
+
+            driver.AutonomousDrive(DrivingWrapper.Direction.LEFT, 5, speed);
+            opMode.sleep(5000);
+            driver.AutonomousDriveStop();
 
         }else {
             driver.AutonomousDrive(DrivingWrapper.Direction.BACKWARD, 1.5, speed*2);
-            opMode.sleep(3500);
+            opMode.sleep(1500);
             driver.AutonomousDriveStop();
         }
 
@@ -118,32 +205,79 @@ public class AutonomousWrapper {
 //
 //    }
     public void RunAutonomousV2(VuforiaWebcamLocalization.ELocation location, LinearOpMode opMode){
-        Pose2d start = new Pose2d(0,0);
-        Trajectory tr1;
-        Trajectory tr2;
-        Trajectory tr3;
-        if(location == VuforiaWebcamLocalization.ELocation.BLUECAROUSEL){
-            tr1 = roadRunner.trajectoryBuilder(start).forward(14).build();
-            tr2 = roadRunner.trajectoryBuilder(start).forward(17).build();
-            tr3 = roadRunner.trajectoryBuilder(start).back(34).build();
-
-        }else if(location == VuforiaWebcamLocalization.ELocation.REDCAROUSEL) {
-            tr1 = roadRunner.trajectoryBuilder(start).forward(14).build();
-            tr2 = roadRunner.trajectoryBuilder(start).forward(17).build();
-            tr3 = roadRunner.trajectoryBuilder(start).back(34).build();
-        }else {
-            telemetry.addData("Bad","bad");
-            return;
-        }
-        roadRunner.followTrajectory(tr1);
-        roadRunner.turn(45);
-        roadRunner.followTrajectory(tr2);
-        arm.IntakeReverse(1);
-        opMode.sleep(1000);
-        arm.StopIntake();
-        roadRunner.followTrajectory(tr3);
-        crMotor.setPower(1);
-        opMode.sleep(1000);
-        crMotor.setPower(0);
+//        arm.init(false);
+//        opMode.sleep(1000);
+//        arm.SetLevel(2);
+//        Pose2d start = new Pose2d(0,0);
+//        Trajectory tr1;
+//        Trajectory tr2;
+//        Trajectory tr3;
+//        double rot;
+//        DrivingWrapper.Direction rotDir;
+//        if(location == VuforiaWebcamLocalization.ELocation.BLUECAROUSEL){
+//            tr1 = roadRunner.trajectoryBuilder(start).forward(14*2).build();
+//            tr2 = roadRunner.trajectoryBuilder(start).forward(17*2).build();
+//            tr3 = roadRunner.trajectoryBuilder(start).back(34*2).build();
+//            rot = -45;
+//            rotDir = DrivingWrapper.Direction.SPINLEFT;
+//
+//        }else if(location == VuforiaWebcamLocalization.ELocation.REDCAROUSEL) {
+//            tr1 = roadRunner.trajectoryBuilder(start).forward(14*2).build();
+//            tr2 = roadRunner.trajectoryBuilder(start).forward(17*2).build();
+//            tr3 = roadRunner.trajectoryBuilder(start).back(34*2).build();
+//            rot = 45;
+//            rotDir = DrivingWrapper.Direction.SPINRIGHT;
+//        }else {
+//            telemetry.addData("Bad","bad");
+//            return;
+//        }
+//        roadRunner.followTrajectory(tr1);
+//        driver.AutonomousDrive(rotDir, 1, rotSpeed);
+//        roadRunner.followTrajectory(tr2);
+//        arm.IntakeReverse(1);
+//        opMode.sleep(1000);
+//        arm.StopIntake();
+//        roadRunner.followTrajectory(tr3);
+//        crMotor.setPower(1);
+//        opMode.sleep(1000);
+//        crMotor.setPower(0);
+    }
+    public void RunAutonomousV3(VuforiaWebcamLocalization.ELocation location, LinearOpMode opMode){
+//        arm.init(false);
+//        opMode.sleep(1000);
+//        arm.SetLevel(2);
+//        Pose2d start = new Pose2d(0,0);
+//        Trajectory tr1;
+//        Trajectory tr2;
+//        Trajectory tr3;
+//        double rot;
+//        DrivingWrapper.Direction rotDir;
+//        if(location == VuforiaWebcamLocalization.ELocation.BLUECAROUSEL){
+//            tr1 = roadRunner.trajectoryBuilder(start).splineTo(new Vector2d(-24,34), roadRunner).build();
+//            tr2 = roadRunner.trajectoryBuilder(start).forward(17*2).build();
+//            tr3 = roadRunner.trajectoryBuilder(start).back(34*2).build();
+//            rot = -45;
+//            rotDir = DrivingWrapper.Direction.SPINLEFT;
+//
+//        }else if(location == VuforiaWebcamLocalization.ELocation.REDCAROUSEL) {
+//            tr1 = roadRunner.trajectoryBuilder(start).forward(14*2).build();
+//            tr2 = roadRunner.trajectoryBuilder(start).forward(17*2).build();
+//            tr3 = roadRunner.trajectoryBuilder(start).back(34*2).build();
+//            rot = 45;
+//            rotDir = DrivingWrapper.Direction.SPINRIGHT;
+//        }else {
+//            telemetry.addData("Bad","bad");
+//            return;
+//        }
+//        roadRunner.followTrajectory(tr1);
+//        driver.AutonomousDrive(rotDir, 1, rotSpeed);
+//        roadRunner.followTrajectory(tr2);
+//        arm.IntakeReverse(1);
+//        opMode.sleep(1000);
+//        arm.StopIntake();
+//        roadRunner.followTrajectory(tr3);
+//        crMotor.setPower(1);
+//        opMode.sleep(1000);
+//        crMotor.setPower(0);
     }
 }

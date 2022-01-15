@@ -32,10 +32,15 @@ public class DrivingWrapper {
         hardwareMap = inHardwareMap;// making a reference to HardwareMap in opModes
         telemetry = inTelemetry;// making a reference to Telemetry in opModes
 
+        //Motor 0
         motorFrontLeft = hardwareMap.dcMotor.get("motorFrontLeft"); //setting up the motors with hardwaremaps
+        //Motor 2
         motorBackLeft = hardwareMap.dcMotor.get("motorBackLeft");
+        //Motor 1
         motorFrontRight = hardwareMap.dcMotor.get("motorFrontRight");
+        //Motor 3
         motorBackRight = hardwareMap.dcMotor.get("motorBackRight");
+
 
         motorFrontRight.setDirection(DcMotorSimple.Direction.REVERSE); //setting the right side motors to reverse so they go the right directiond
         motorBackRight.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -101,11 +106,11 @@ public class DrivingWrapper {
         double rx = 0;
 
         if(direction == Direction.RIGHT) { //x [-1, 0), y=0
-            x = -1;
+            x = -1 * 1.1;
             y = 0;
             rx = 0;
         }else if(direction == Direction.LEFT) { // x (0, 1], y=0
-            x = 1;
+            x = 1 * 1.1;
             y = 0;
             rx = 0;
         }else if(direction == Direction.FORWARD) { // x=0, y (0, 1]
@@ -134,11 +139,11 @@ public class DrivingWrapper {
             rx = 0;
         }else if (direction == Direction.BACKWARDLEFT){
             x = -1;
-            y = -1;
+            y = -.1;
             rx = 0;
         }else if (direction == Direction.BACKWARDRIGHT){
             x = 1;
-            y = -1;
+            y = -.1;
             rx = 0;
         }
 

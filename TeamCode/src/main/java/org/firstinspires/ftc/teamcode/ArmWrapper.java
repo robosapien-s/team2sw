@@ -16,11 +16,14 @@ public class ArmWrapper {
 
     public ArmWrapper(HardwareMap inHardwareMap, Telemetry inTelemetry) {
         hardwareMap = inHardwareMap;
+        //Servo 0
         servo1 = hardwareMap.get(CRServo.class, "servo1");
+        //Servo 1
         servo2 = hardwareMap.get(CRServo.class, "servo2");// defining the servos' hardware maps
 
 
         armMotor = hardwareMap.get(DcMotorEx.class, "armMotor");
+        //Servo 2
         armServo = hardwareMap.get(Servo.class, "armServo");
 
         telemetry = inTelemetry;
@@ -91,11 +94,14 @@ public class ArmWrapper {
     }
 
     public void ResetArm(){
+        armServo.setPosition(servoPositions[0]);
+
+        SetLevel(0);
 
     }
 
     public void ArmMove(JoystickWrapper joystickWrapper) {
-        started = init(started);
+//        started = init(started);
         armServo.setDirection(Servo.Direction.REVERSE);
         double armPower = 1;
         Level previousLevel = level;

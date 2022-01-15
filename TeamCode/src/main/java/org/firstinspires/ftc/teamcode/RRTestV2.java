@@ -40,7 +40,7 @@ public class RRTestV2 extends LinearOpMode {
                 .forward(24)
                 .build();
         Trajectory trajectory2 = drive.trajectoryBuilder(trajectory1.end())
-                .strafeLeft(24)
+                .strafeLeft(48)
                 .build();
         Trajectory trajectory3 = drive.trajectoryBuilder(trajectory2.end())
                 .forward(5)
