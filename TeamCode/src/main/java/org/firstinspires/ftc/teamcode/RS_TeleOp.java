@@ -91,10 +91,10 @@ public class RS_TeleOp extends OpMode {
             telemetry.addData("KeyPressed:", "Right Bumper");
         }
         if (joystickWrapper.gamepad2GetLeftTrigger() >= .5) {
-            armWrapper.Intake(.75);
+            armWrapper.IntakeReverse(1);
 
         }else if (joystickWrapper.gamepad2GetRightTrigger() >= .5) {
-            armWrapper.IntakeReverse(1);
+            armWrapper.Intake(.75);
         }else{
             armWrapper.StopIntake();
         }

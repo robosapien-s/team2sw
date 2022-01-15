@@ -56,8 +56,8 @@ public class ArmWrapper {
         return servoPositions[level2int(newIntakeLevel)];
     }
     Double encoderTicks = 537.7;
-    int[] levelPositions = {1000, 1500, 2500, 3350, 7500};
-    double[] servoPositions = {.35, .35, .28, 0.22, .38};
+    int[] levelPositions = {1000, 1500, 2500, 3500, 7500};
+    double[] servoPositions = {.38, .38, .31, 0.23, .41};
 
     public boolean init(boolean started) {
         if (!started) {
@@ -66,7 +66,7 @@ public class ArmWrapper {
 
             armMotor.setPower(.5);
 
-            armMotor.setTargetPosition(-650);
+            armMotor.setTargetPosition(-620);
 
 
             armMotor.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
