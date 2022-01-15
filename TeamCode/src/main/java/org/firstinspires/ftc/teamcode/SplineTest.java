@@ -14,24 +14,19 @@ public class SplineTest extends LinearOpMode {
     public void runOpMode() {
         SampleMecanumDrive roadRunner = new SampleMecanumDrive(hardwareMap);
 
-        Pose2d startPose = new Pose2d(24,-48, Math.toRadians(90));
+        Pose2d startPose = new Pose2d(-36,-72, Math.toRadians(-90));
 
         roadRunner.setPoseEstimate(startPose);
 
-        Trajectory strafeLeft = roadRunner.trajectoryBuilder(startPose)
-                .strafeLeft(24)
+        Trajectory splineTest = roadRunner.trajectoryBuilder(startPose)
                 .build();
 
-        Trajectory lineTo = roadRunner.trajectoryBuilder(strafeLeft.end())
-                .lineTo(new Vector2d(0,0))
-                .build();
 
 
         waitForStart();
 
         while (opModeIsActive() && !isStopRequested()) {
-            roadRunner.followTrajectory(strafeLeft);
-            roadRunner.followTrajectory(lineTo);
+            roadRunner.followTrajectory(splineTest);
         }
     }
 }

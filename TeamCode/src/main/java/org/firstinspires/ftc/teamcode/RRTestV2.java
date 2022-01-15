@@ -45,7 +45,7 @@ public class RRTestV2 extends LinearOpMode {
         Trajectory trajectory3 = drive.trajectoryBuilder(trajectory2.end())
                 .forward(5)
                 .build();
-
+        waitForStart();
 
         while (opModeIsActive() && !isStopRequested()) {
             armWrapper.SetLevel(3);
