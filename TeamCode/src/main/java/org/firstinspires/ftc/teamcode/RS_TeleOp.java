@@ -100,10 +100,10 @@ public class RS_TeleOp extends OpMode {
         }
 
         if (joystickWrapper.gamepad2GetRightBumperRaw()){
-            crMotor.setPower(-1);
+            crMotor.setPower(-.5);
         }else {
             if (joystickWrapper.gamepad2GetLeftBumperRaw()){
-                crMotor.setPower(1);
+                crMotor.setPower(.5);
             }else {
                 crMotor.setPower(0);
             }

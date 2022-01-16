@@ -80,7 +80,6 @@ public class AutonomousWrapper {
         opMode.sleep(1000);
         arm.StopIntake();
 
-        arm.ResetArm();
 
         //Checks if is Carousel, because if we are not going to the carousel, we need to go over the barrier.
         if(location == VuforiaWebcamLocalization.ELocation.BLUECAROUSEL) {
@@ -89,6 +88,7 @@ public class AutonomousWrapper {
             opMode.sleep(1500);
             driver.AutonomousDriveStop();
 
+            arm.ResetArm();
 
             driver.AutonomousDrive(DrivingWrapper.Direction.SPINLEFT, .6, rotSpeed);
 //            arm.Carousel(3, 1, false);
@@ -103,12 +103,12 @@ public class AutonomousWrapper {
             opMode.sleep(2400);
             driver.AutonomousDriveStop();
 
-            crMotor.setPower(1);
+            crMotor.setPower(.5);
             opMode.sleep(4000);
             driver.AutonomousDriveStop();
 
-            driver.AutonomousDrive(DrivingWrapper.Direction.LEFT, 3, speed);
-            opMode.sleep(3000);
+            driver.AutonomousDrive(DrivingWrapper.Direction.LEFT, 2.2, speed);
+            opMode.sleep(2200);
             driver.AutonomousDriveStop();
 
 
@@ -117,6 +117,7 @@ public class AutonomousWrapper {
             opMode.sleep(1500);
             driver.AutonomousDriveStop();
 
+            arm.ResetArm();
 
             driver.AutonomousDrive(DrivingWrapper.Direction.SPINLEFT, .6, rotSpeed);
 //            arm.Carousel(3, 1, false);
@@ -131,22 +132,22 @@ public class AutonomousWrapper {
             opMode.sleep(2400);
             driver.AutonomousDriveStop();
 
-            crMotor.setPower(-1);
+            crMotor.setPower(-.5);
             opMode.sleep(4000);
             driver.AutonomousDriveStop();
 
-            driver.AutonomousDrive(DrivingWrapper.Direction.LEFT, 4, speed);
-            opMode.sleep(3000);
+            driver.AutonomousDrive(DrivingWrapper.Direction.LEFT, 2.2, speed);
+            opMode.sleep(2200);
             driver.AutonomousDriveStop();
         }else if(location == VuforiaWebcamLocalization.ELocation.BLUEHOME) {
-            driver.AutonomousDrive(DrivingWrapper.Direction.BACKWARD, 1.5, speed);
-            opMode.sleep(1500);
+            driver.AutonomousDrive(DrivingWrapper.Direction.BACKWARD, 1, speed);
+            opMode.sleep(1000);
             driver.AutonomousDriveStop();
 
 
-            driver.AutonomousDrive(DrivingWrapper.Direction.SPINLEFT, .6, rotSpeed);
+            driver.AutonomousDrive(DrivingWrapper.Direction.SPINLEFT, .7, rotSpeed);
 //            arm.Carousel(3, 1, false);
-            opMode.sleep(600);
+            opMode.sleep(700);
             driver.AutonomousDriveStop();
 
             driver.AutonomousDrive(DrivingWrapper.Direction.BACKWARD, 2, speed);
@@ -157,15 +158,18 @@ public class AutonomousWrapper {
             opMode.sleep(5000);
             driver.AutonomousDriveStop();
 
+            arm.ResetArm();
+            opMode.sleep(5000);
+
         }else if(location == VuforiaWebcamLocalization.ELocation.REDHOME) {
-            driver.AutonomousDrive(DrivingWrapper.Direction.BACKWARD, 1.5, speed);
-            opMode.sleep(1500);
+            driver.AutonomousDrive(DrivingWrapper.Direction.BACKWARD, 1, speed);
+            opMode.sleep(1000);
             driver.AutonomousDriveStop();
 
 
-            driver.AutonomousDrive(DrivingWrapper.Direction.SPINRIGHT, .6, rotSpeed);
+            driver.AutonomousDrive(DrivingWrapper.Direction.SPINRIGHT, .7, rotSpeed);
 //            arm.Carousel(3, 1, false);
-            opMode.sleep(600);
+            opMode.sleep(700);
             driver.AutonomousDriveStop();
 
             driver.AutonomousDrive(DrivingWrapper.Direction.BACKWARD, 2, speed);
@@ -175,6 +179,9 @@ public class AutonomousWrapper {
             driver.AutonomousDrive(DrivingWrapper.Direction.LEFT, 5, speed);
             opMode.sleep(5000);
             driver.AutonomousDriveStop();
+
+            arm.ResetArm();
+            opMode.sleep(5000);
 
         }else {
             driver.AutonomousDrive(DrivingWrapper.Direction.BACKWARD, 1.5, speed*2);
