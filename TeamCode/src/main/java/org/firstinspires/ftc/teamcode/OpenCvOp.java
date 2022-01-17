@@ -3,7 +3,10 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.ColorSensor;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfPoint;
@@ -31,19 +34,25 @@ import java.util.List;
 
 and also this ¯\_(ツ)_/¯
  */
+public class OpenCvOp {
 
-@TeleOp
-public class OpenCvOp extends OpMode {
-
-    OpenCvCamera phoneCam;
+    OpenCvCamera webcam;
     Point loc;
 
-    @Override
-    public void init() {
+    HardwareMap hardwareMap;
+    Telemetry telemetry;
 
+    int barcodeInt;
+
+    public OpenCvOp(Telemetry inTelemtry, HardwareMap inHardwareMap){
+        telemetry = inTelemtry;
+        hardwareMap = inHardwareMap;
+    }
+
+    public void init() {
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
-        OpenCvCameraFactory openCvCameraFactory = OpenCvCameraFactory.getInstance();
-        phoneCam = openCvCameraFactory.createInternalCamera(OpenCvInternalCamera.CameraDirection.BACK, cameraMonitorViewId);
+        webcam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
+
         // OR...  Do Not Activate the Camera Monitor View
         //phoneCam = OpenCvCameraFactory.getInstance().createInternalCamera(OpenCvInternalCamera.CameraDirection.BACK);
 
@@ -52,7 +61,7 @@ public class OpenCvOp extends OpMode {
          * of a frame from the camera. Note that switching pipelines on-the-fly
          * (while a streaming session is in flight) *IS* supported.
          */
-        phoneCam.setPipeline(new OpenCvPl());
+        webcam.setPipeline(new OpenCvPl());
 
         /*
          * Open the connection to the camera device. New in v1.4.0 is the ability
@@ -63,7 +72,8 @@ public class OpenCvOp extends OpMode {
          *
          * If you really want to open synchronously, the old method is still available.
          */
-        phoneCam.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener()
+
+        webcam.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener()
         {
             @Override
             public void onOpened()
@@ -79,7 +89,7 @@ public class OpenCvOp extends OpMode {
                  * For a rear facing camera or a webcam, rotation is defined assuming the camera is facing
                  * away from the user.
                  */
-                phoneCam.startStreaming(1920, 1080, OpenCvCameraRotation.SIDEWAYS_LEFT);
+                webcam.startStreaming(1920, 1080, OpenCvCameraRotation.SIDEWAYS_LEFT);
             }
 
             @Override
@@ -92,14 +102,6 @@ public class OpenCvOp extends OpMode {
             }
         });
     }
-
-
-    @Override
-    public void loop() {
-
-    }
-
-
 
     class OpenCvPl extends OpenCvPipeline
     {
@@ -167,11 +169,11 @@ public class OpenCvOp extends OpMode {
                 if(boundRect.size().width>100.0){
                     loc = center;
                     if (loc.x<650){
-                        telemetry.addData("Barcode","1");
+                        barcodeInt = 1;
                     }else if (loc.x<1250){
-                        telemetry.addData("Barcode","2");
+                        barcodeInt = 2;
                     }else {
-                        telemetry.addData("Barcode","3");
+                        barcodeInt = 3;
                     }
                     telemetry.addData("Location", loc);
                     telemetry.addData("Size",boundRect.size());
@@ -191,7 +193,9 @@ public class OpenCvOp extends OpMode {
             //return input;
         }
 
-
+        public int GetBarcodeInt(){
+            return barcodeInt;
+        }
 
 
         @Override
@@ -213,11 +217,11 @@ public class OpenCvOp extends OpMode {
 
             if(viewportPaused)
             {
-                phoneCam.pauseViewport();
+                webcam.pauseViewport();
             }
             else
             {
-                phoneCam.resumeViewport();
+                webcam.resumeViewport();
             }
         }
     }

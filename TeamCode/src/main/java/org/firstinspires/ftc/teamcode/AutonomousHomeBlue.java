@@ -8,12 +8,13 @@ public class AutonomousHomeBlue extends LinearOpMode {
     @Override
     public void runOpMode() {
 
-        waitForStart();
-
         DrivingWrapper driver = new DrivingWrapper(hardwareMap,telemetry);
         ArmWrapper arm = new ArmWrapper(hardwareMap, telemetry);
 
         AutonomousWrapper autonomousWrapper = new AutonomousWrapper(hardwareMap, telemetry);
+
+        waitForStart();
+
 
 
         if(opModeIsActive()) {

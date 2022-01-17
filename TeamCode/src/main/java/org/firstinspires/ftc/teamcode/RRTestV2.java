@@ -5,9 +5,8 @@ import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
 
-import org.firstinspires.ftc.teamcode.SampleMecanumDrive;
+import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 
 /*
  * Op mode for preliminary tuning of the follower PID coefficients (located in the drive base

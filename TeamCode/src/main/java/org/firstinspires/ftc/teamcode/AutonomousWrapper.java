@@ -14,6 +14,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.sun.tools.javac.tree.DCTree;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 
 public class AutonomousWrapper {
 
@@ -26,6 +27,7 @@ public class AutonomousWrapper {
     Telemetry telemetry;
     DcMotor crMotor;
 
+    OpenCvOp OpenCVWrapper;
 
 
 
@@ -41,17 +43,27 @@ public class AutonomousWrapper {
         driver = new DrivingWrapper(hardwareMap,telemetry);
         arm = new ArmWrapper(hardwareMap, telemetry);
 
+        OpenCVWrapper = new OpenCvOp(telemetry, hardwareMap);
 
+        OpenCVWrapper.init();
 
+        telemetry.addData("barcode", OpenCVWrapper.barcodeInt);
     }
     public void RunAutonomous(VuforiaWebcamLocalization.ELocation location, LinearOpMode opMode){
 
+        while (OpenCVWrapper.barcodeInt!=0);
 
         telemetry.addData("Location" ,location.toString());
+        telemetry.addData("Barcode", OpenCVWrapper.barcodeInt);
+
+
+        telemetry.update();
+
+
 
         arm.init(false);
         opMode.sleep(1000);
-        arm.SetLevel(3);
+        arm.SetLevel(OpenCVWrapper.barcodeInt);
         opMode.sleep(1000);
         driver.AutonomousDrive(DrivingWrapper.Direction.FORWARD, .4, speed);
         opMode.sleep(1700);
