@@ -38,18 +38,51 @@ public class AutonomousWrapper {
         driver = new DrivingWrapper(hardwareMap,telemetry);
         arm = new ArmWrapper(hardwareMap, telemetry);
 
-        OpenCVWrapper = new OpenCvDetection(telemetry, hardwareMap);
+//        OpenCVWrapper = new OpenCvDetection(telemetry, hardwareMap);
+//
+//        OpenCVWrapper.init();
 
-        OpenCVWrapper.init();
+//
 
-        telemetry.addData("barcode", OpenCVWrapper.barcodeInt);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
     public void RunAutonomous(VuforiaWebcamLocalization.ELocation location, LinearOpMode opMode){
+//        telemetry.addData("Barcode", OpenCVWrapper.barcodeInt);
+        telemetry.update();
 
-        while (OpenCVWrapper.barcodeInt!=0);
+//        while (OpenCVWrapper.barcodeInt!=0);
 
         telemetry.addData("Location" ,location.toString());
-        telemetry.addData("Barcode", OpenCVWrapper.barcodeInt);
+//        telemetry.addData("Barcode", OpenCVWrapper.barcodeInt);
 
 
         telemetry.update();
@@ -58,7 +91,8 @@ public class AutonomousWrapper {
 
         arm.init(false);
         opMode.sleep(1000);
-        arm.SetLevel(OpenCVWrapper.barcodeInt);
+//        arm.SetLevel(OpenCVWrapper.barcodeInt);
+        arm.SetLevel(3);
         opMode.sleep(1000);
         driver.AutonomousDrive(DrivingWrapper.Direction.FORWARD, .4, speed);
         opMode.sleep(1700);

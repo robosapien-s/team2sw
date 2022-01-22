@@ -177,7 +177,6 @@ public class OpenCvDetection {
                     }
                     telemetry.addData("Location", loc);
                     telemetry.addData("Size",boundRect.size());
-                    telemetry.update();
 
                     break;
                 }
