@@ -1,7 +1,19 @@
 package org.firstinspires.ftc.teamcode.testopmodes;
 
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.HardwareMap;
+
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.wrappers.ArmWrapper;
+import org.firstinspires.ftc.teamcode.wrappers.DrivingWrapper;
+import org.firstinspires.ftc.teamcode.wrappers.OpenCvDetection;
+import org.firstinspires.ftc.teamcode.wrappers.OpenCvDetection.*;
+import org.firstinspires.ftc.teamcode.testopmodes.VuforiaWebcamLocalization;
+import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
+
 
 // This is a comment LOL ¯\_(ツ)_/¯
 
@@ -13,31 +25,24 @@ and also this ¯\_(ツ)_/¯
 
 @TeleOp
 public class Kabir_Practice extends OpMode{
-    /**
-     * This is called when the driver presses INIT
-     */
+
+    OpenCvDetection OpenCVWrapper;
+
+
+
     @Override
-    public void init() {
-        // This sends to the driver station
-        int teamNumber;
-        double motorSpeed;
-        boolean touchSensorPressed;
+    public void init(){
 
-        teamNumber = 16072;
-        motorSpeed = 0.5;
-        touchSensorPressed = true;
+        OpenCVWrapper = new OpenCvDetection(telemetry, hardwareMap);
 
-        telemetry.addData("Team Number", teamNumber);
-        telemetry.addData("Motor Speed", motorSpeed);
-        telemetry.addData("Touch Sensor", touchSensorPressed);
+        OpenCVWrapper.init(false);
+
+        telemetry.addData("barcode", OpenCVWrapper.barcodeInt);
     }
-
-    /**
-     * This is called repeatedly while OpMode is playing
-     */
 
     @Override
     public void loop() {
-        // intentionally left blank
+        telemetry.addData("Running: ", OpenCVWrapper.barcodeInt);
+        telemetry.update();
     }
 }
