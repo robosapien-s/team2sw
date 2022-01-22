@@ -49,10 +49,13 @@ public class OpenCvDetection {
         hardwareMap = inHardwareMap;
     }
 
-    public void init() {
+    public void init(boolean webcamBool) {
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
-        webcam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
-
+        if(webcamBool) {
+            webcam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
+        } else {
+            webcam = OpenCvCameraFactory.getInstance().createInternalCamera(OpenCvInternalCamera.CameraDirection.BACK, cameraMonitorViewId);
+        }
         // OR...  Do Not Activate the Camera Monitor View
         //phoneCam = OpenCvCameraFactory.getInstance().createInternalCamera(OpenCvInternalCamera.CameraDirection.BACK);
 
@@ -103,7 +106,7 @@ public class OpenCvDetection {
         });
     }
 
-    class OpenCvPl extends OpenCvPipeline
+    public class OpenCvPl extends OpenCvPipeline
     {
         boolean viewportPaused = false;
 
@@ -175,8 +178,11 @@ public class OpenCvDetection {
                     }else {
                         barcodeInt = 3;
                     }
-                    telemetry.addData("Location", loc);
+                    /*telemetry.addData("Test Barcode:", barcodeInt);
+                    telemetry.update();*/
+                    /*telemetry.addData("Location", loc);
                     telemetry.addData("Size",boundRect.size());
+                    telemetry.update();*/
 
                     break;
                 }
@@ -191,6 +197,7 @@ public class OpenCvDetection {
 
             //return input;
         }
+
 
         public int GetBarcodeInt(){
             return barcodeInt;
