@@ -178,11 +178,10 @@ public class OpenCvDetection {
                     }else {
                         barcodeInt = 3;
                     }
-                    /*telemetry.addData("Test Barcode:", barcodeInt);
-                    telemetry.update();*/
-                    /*telemetry.addData("Location", loc);
+                    telemetry.addData("Test Barcode:", barcodeInt);
+                    telemetry.addData("Location", loc);
                     telemetry.addData("Size",boundRect.size());
-                    telemetry.update();*/
+                    telemetry.update();
 
                     break;
                 }

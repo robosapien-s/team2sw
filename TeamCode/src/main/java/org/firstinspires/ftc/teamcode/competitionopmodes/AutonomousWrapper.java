@@ -49,7 +49,7 @@ public class AutonomousWrapper {
         while (OpenCVWrapper.barcodeInt!=0);
 
         telemetry.addData("Location" ,location.toString());
-        telemetry.addData("Barcode", OpenCVWrapper.GetBarcodeInt());
+        telemetry.addData("Barcode", OpenCVWrapper.barcodeInt);
 
 
         telemetry.update();
