@@ -49,6 +49,10 @@ public class OpenCvDetection {
         hardwareMap = inHardwareMap;
     }
 
+    Mat cvtMat = new Mat();
+    Mat mask = new Mat();
+    Mat hierarchy = new Mat();
+
     public void init(boolean webcamBool) {
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         if(webcamBool) {
@@ -140,7 +144,6 @@ public class OpenCvDetection {
 
             //Scalar minValues = new Scalar(0,0,0);
             //Scalar maxValues = new Scalar(255,255,164);
-            Mat cvtMat = new Mat();
             Imgproc.cvtColor(input, cvtMat, Imgproc.COLOR_RGB2HSV);
             Imgproc.GaussianBlur(cvtMat,cvtMat,new Size(3,3),0);
 
@@ -149,12 +152,11 @@ public class OpenCvDetection {
             Scalar maxValues = new Scalar(32, 255, 255);
 
 
-            Mat mask = new Mat();
+
             Core.inRange(cvtMat, minValues, maxValues, mask);
 
 
             List<MatOfPoint> contours = new ArrayList<>();
-            Mat hierarchy = new Mat();
             Imgproc.findContours(mask, contours, hierarchy, Imgproc.RETR_CCOMP, Imgproc.CHAIN_APPROX_SIMPLE);
 
 
@@ -182,6 +184,9 @@ public class OpenCvDetection {
                     telemetry.addData("Location", loc);
                     telemetry.addData("Size",boundRect.size());
                     telemetry.update();
+
+                    contoursPoly.release();
+
 
                     break;
                 }
