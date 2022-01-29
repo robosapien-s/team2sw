@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.testopmodes;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
+import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -41,55 +42,16 @@ public class RRTest extends LinearOpMode {
 
         usingLocalizer = true;
 
-        if (usingLocalizer){
-            localizer = new VuforiaWebcamLocalizer();
 
-            localizer.init(hardwareMap, telemetry);
-
-            roadRunner.setLocalizer(localizer);
-
-            while (localizer.getCurrentLocation()==null);
-            telemetry.addData("locationU",localizer.getCurrentLocation().toString());
-            telemetry.update();
-            sleep(1000);
-
-
-        }
 
 
         Trajectory trajectoryForward = roadRunner.trajectoryBuilder(new Pose2d())
-                .forward(DISTANCE)
+                .lineTo(new Vector2d(24,0))
                 .build();
 
-        Trajectory trajectoryRight = roadRunner.trajectoryBuilder(trajectoryForward.end())
-                .strafeRight(DISTANCE*2)
-                .build();
-        Trajectory trajectoryBackward = roadRunner.trajectoryBuilder(trajectoryRight.end())
-                .back(DISTANCE)
-                .build();
-
-        Trajectory trajectoryLeft = roadRunner.trajectoryBuilder(trajectoryBackward.end())
-                .strafeLeft(DISTANCE*2)
-                .build();
         waitForStart();
 
-        while (opModeIsActive() && !isStopRequested()) {
-            roadRunner.followTrajectory(trajectoryForward);
-            telemetry.addData("location", localizer.getCurrentLocation());
-            telemetry.update();
-            sleep(1000);
-            roadRunner.followTrajectory(trajectoryRight);
-            telemetry.addData("location", localizer.getCurrentLocation());
-            telemetry.update();
-            sleep(1000);
-            roadRunner.followTrajectory(trajectoryBackward);
-            telemetry.addData("location", localizer.getCurrentLocation());
-            telemetry.update();
-            sleep(1000);
-            roadRunner.followTrajectory(trajectoryLeft);
-            telemetry.addData("location", localizer.getCurrentLocation());
-            telemetry.update();
-            sleep(1000);
-        }
+        roadRunner.followTrajectory(trajectoryForward);
+        sleep(1000);
     }
 }

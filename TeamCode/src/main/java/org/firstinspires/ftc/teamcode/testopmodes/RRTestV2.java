@@ -48,9 +48,9 @@ public class RRTestV2 extends LinearOpMode {
                 .splineTo(new Vector2d(0,40),Math.toRadians(-135))
                 .build();
         Trajectory trajectory2 = drive.trajectoryBuilder(
-                trajectory1.end()).splineTo(new Vector2d(20,64),0).splineTo(new Vector2d(60,60),0).build();
+                trajectory1.end()).splineTo(new Vector2d(10,64),0).splineTo(new Vector2d(60,60),0).build();
 
-        Trajectory trajectory3 = drive.trajectoryBuilder(trajectory2.end()).splineTo(new Vector2d(20,64),0).splineTo(new Vector2d(0,40),0).build();
+        Trajectory trajectory3 = drive.trajectoryBuilder(trajectory2.end()).splineTo(new Vector2d(10,64),0).splineTo(new Vector2d(0,40),0).build();
 
 
         armWrapper.SetLevel(3);
