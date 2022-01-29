@@ -39,6 +39,10 @@ public class RRTestV2 extends LinearOpMode {
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
         ArmWrapper armWrapper = new ArmWrapper(hardwareMap, telemetry);
 
+        Pose2d startPose = new Pose2d(10, 60, Math.toRadians(-90));
+
+        drive.setPoseEstimate(startPose);
+
         armWrapper.init(true);
         Trajectory trajectory1 = drive.trajectoryBuilder(new Pose2d(10,60, Math.toRadians(-90)))
                 .splineTo(new Vector2d(0,40),Math.toRadians(-135))
