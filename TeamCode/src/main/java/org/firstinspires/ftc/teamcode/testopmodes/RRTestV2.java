@@ -2,12 +2,14 @@ package org.firstinspires.ftc.teamcode.testopmodes;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
+import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.wrappers.ArmWrapper;
+import org.opencv.core.Mat;
 
 /*
  * Op mode for preliminary tuning of the follower PID coefficients (located in the drive base
@@ -33,26 +35,30 @@ public class RRTestV2 extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
+
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
         ArmWrapper armWrapper = new ArmWrapper(hardwareMap, telemetry);
 
-        Trajectory trajectory1 = drive.trajectoryBuilder(new Pose2d())
-                .forward(24)
+        armWrapper.init(true);
+        Trajectory trajectory1 = drive.trajectoryBuilder(new Pose2d(10,60, Math.toRadians(-90)))
+                .splineTo(new Vector2d(0,40),Math.toRadians(-135))
                 .build();
-        Trajectory trajectory2 = drive.trajectoryBuilder(trajectory1.end())
-                .strafeLeft(48)
-                .build();
-        Trajectory trajectory3 = drive.trajectoryBuilder(trajectory2.end())
-                .forward(5)
-                .build();
-        waitForStart();
+        Trajectory trajectory2 = drive.trajectoryBuilder(new
+                Pose2d(0,40)).splineTo(new Vector2d(20,64),0).splineTo(new Vector2d(60,60),0).build();
 
-        while (opModeIsActive() && !isStopRequested()) {
-            armWrapper.SetLevel(3);
-            drive.followTrajectory(trajectory1);
-            drive.followTrajectory(trajectory2);
-            drive.followTrajectory(trajectory3);
-            armWrapper.IntakeReverse(1);
-        }
+        Trajectory trajectory3 = drive.trajectoryBuilder(new Pose2d(60,60)).splineTo(new Vector2d(20,64),0).splineTo(new Vector2d(0,40),-135).build();
+
+
+        armWrapper.SetLevel(3);
+        drive.followTrajectory(trajectory1);
+        armWrapper.IntakeReverse(1);
+        armWrapper.SetLevel(0);
+        drive.followTrajectory(trajectory2);
+        armWrapper.Intake(1);
+        drive.followTrajectory(trajectory3);
+        armWrapper.SetLevel(3);
+        armWrapper.IntakeReverse(1);
+
+
     }
 }
