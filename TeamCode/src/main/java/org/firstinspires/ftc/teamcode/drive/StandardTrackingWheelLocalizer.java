@@ -27,7 +27,7 @@ import java.util.List;
  */
 @Config
 public class StandardTrackingWheelLocalizer extends ThreeTrackingWheelLocalizer {
-    private static final double X_MULTIPLIER = 2;
+    private static final double X_MULTIPLIER = 1.02529926;
     private static final double Y_MULTIPLIER = 1.04083393442623;
 
     public static double TICKS_PER_REV = 8192;

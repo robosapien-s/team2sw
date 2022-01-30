@@ -46,12 +46,12 @@ public class RRTest extends LinearOpMode {
 
 
         Trajectory trajectoryForward = roadRunner.trajectoryBuilder(new Pose2d())
-                .lineTo(new Vector2d(24,0))
+                .forward(40)
                 .build();
 
         waitForStart();
 
         roadRunner.followTrajectory(trajectoryForward);
-        sleep(1000);
+        //sleep(1000);
     }
 }
