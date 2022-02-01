@@ -33,35 +33,70 @@ public class RRTestV2 extends LinearOpMode {
 
     public static double DISTANCE = 5;
 
+    Trajectory trajectory1;
+    Trajectory trajectory2;
+    Trajectory trajectory3;
+    Trajectory trajectory4;
+    Trajectory trajectory5;
+    SampleMecanumDrive drive;
+    ArmWrapper armWrapper;
+    int levelInt = 3;
+
+
     @Override
     public void runOpMode() throws InterruptedException {
 
-        SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
-        ArmWrapper armWrapper = new ArmWrapper(hardwareMap, telemetry);
+        drive = new SampleMecanumDrive(hardwareMap);
+        armWrapper = new ArmWrapper(hardwareMap, telemetry);
 
         Pose2d startPose = new Pose2d(10, 60, Math.toRadians(-90));
 
         drive.setPoseEstimate(startPose);
 
         armWrapper.init(true);
-        Trajectory trajectory1 = drive.trajectoryBuilder(new Pose2d(10,60, Math.toRadians(-90)))
+        trajectory1 = drive.trajectoryBuilder(new Pose2d(10,60, Math.toRadians(-90)))
                 .splineTo(new Vector2d(0,40),Math.toRadians(-135))
                 .build();
-        Trajectory trajectory2 = drive.trajectoryBuilder(
-                trajectory1.end()).splineTo(new Vector2d(10,64),0).splineTo(new Vector2d(60,60),0).build();
 
-        Trajectory trajectory3 = drive.trajectoryBuilder(trajectory2.end()).splineTo(new Vector2d(10,64),0).splineTo(new Vector2d(0,40),0).build();
+        trajectory2 = drive.trajectoryBuilder(trajectory1.end()).lineToLinearHeading(new Pose2d(10,58,0)).build();
+
+        trajectory3 = drive.trajectoryBuilder(trajectory2.end()).lineTo(new Vector2d(55,58)).build();
+
+        trajectory4 = drive.trajectoryBuilder(trajectory3.end()).lineTo(new Vector2d(10,58)).build();
+
+        trajectory5 = drive.trajectoryBuilder(trajectory4.end()).lineToLinearHeading(new Pose2d(0,40,Math.toRadians(-135))).build();
 
 
-        armWrapper.SetLevel(3);
+
+        armWrapper.SetLevel(levelInt);
         drive.followTrajectory(trajectory1);
         armWrapper.IntakeReverse(1);
         drive.followTrajectory(trajectory2);
         armWrapper.Intake(1);
+        armWrapper.SetLevel(1);
         drive.followTrajectory(trajectory3);
-        armWrapper.SetLevel(3);
-        armWrapper.IntakeReverse(1);
+        armWrapper.StopIntake();
+
+        drive.followTrajectory(trajectory4);
+
+        for (int i = 0; i < 3; i++) {
+            PickupDrop();
+        }
+
+//        armWrapper.SetLevel(3);
+//        armWrapper.IntakeReverse(1);
 
 
     }
+    public void PickupDrop(){
+        drive.followTrajectory(trajectory5);
+        armWrapper.IntakeReverse(1);
+        drive.followTrajectory(trajectory2);
+        drive.followTrajectory(trajectory3);
+        armWrapper.Intake(1);
+        armWrapper.SetLevel(1);
+        drive.followTrajectory(trajectory4);
+        armWrapper.SetLevel(levelInt);
+    }
+
 }

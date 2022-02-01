@@ -1,5 +1,8 @@
 package org.firstinspires.ftc.teamcode.competitionopmodes;
 
+import com.acmerobotics.roadrunner.geometry.Pose2d;
+import com.acmerobotics.roadrunner.geometry.Vector2d;
+import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -12,6 +15,84 @@ import org.firstinspires.ftc.teamcode.testopmodes.VuforiaWebcamLocalization;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 
 public class AutonomousWrapper {
+
+    public interface IAutonomousRunner {
+        public void run();
+    }
+
+
+    public class BlueHomeRunner implements IAutonomousRunner {
+
+
+        Trajectory trajectory1;
+        Trajectory trajectory2;
+        Trajectory trajectory3;
+        Trajectory trajectory4;
+        Trajectory trajectory5;
+        SampleMecanumDrive drive;
+        ArmWrapper armWrapper;
+        int levelInt = 3;
+
+
+        BlueHomeRunner(SampleMecanumDrive inDrive, ArmWrapper inArm) {
+            drive = inDrive;
+            armWrapper = inArm;
+        }
+
+        @Override
+        public void run() {
+
+            Pose2d startPose = new Pose2d(10, 60, Math.toRadians(-90));
+
+            drive.setPoseEstimate(startPose);
+
+            armWrapper.init(true);
+            trajectory1 = drive.trajectoryBuilder(new Pose2d(10,60, Math.toRadians(-90)))
+                    .splineTo(new Vector2d(0,40),Math.toRadians(-135))
+                    .build();
+
+            trajectory2 = drive.trajectoryBuilder(trajectory1.end()).lineToLinearHeading(new Pose2d(10,58,0)).build();
+
+            trajectory3 = drive.trajectoryBuilder(trajectory2.end()).lineTo(new Vector2d(55,58)).build();
+
+            trajectory4 = drive.trajectoryBuilder(trajectory3.end()).lineTo(new Vector2d(10,58)).build();
+
+            trajectory5 = drive.trajectoryBuilder(trajectory4.end()).lineToLinearHeading(new Pose2d(0,40,Math.toRadians(-135))).build();
+
+
+
+            //armWrapper.SetLevel(levelInt);
+            drive.followTrajectory(trajectory1);
+            armWrapper.IntakeReverse(1);
+            drive.followTrajectory(trajectory2);
+            armWrapper.Intake(1);
+            armWrapper.SetLevel(1);
+            drive.followTrajectory(trajectory3);
+            armWrapper.StopIntake();
+
+            drive.followTrajectory(trajectory4);
+
+            for (int i = 0; i < 3; i++) {
+                PickupDrop();
+            }
+
+        }
+
+        public void PickupDrop(){
+            drive.followTrajectory(trajectory5);
+            armWrapper.IntakeReverse(1);
+            drive.followTrajectory(trajectory2);
+            drive.followTrajectory(trajectory3);
+            armWrapper.Intake(1);
+            armWrapper.SetLevel(1);
+            drive.followTrajectory(trajectory4);
+            armWrapper.SetLevel(levelInt);
+        }
+    }
+
+
+
+
 
     SampleMecanumDrive roadRunner;
     DrivingWrapper driver;
@@ -55,7 +136,30 @@ public class AutonomousWrapper {
         telemetry.update();
 
 
+        SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
+        IAutonomousRunner runner = null;
 
+        arm.init(false);
+        opMode.sleep(1000);
+        arm.SetLevel(OpenCVWrapper.barcodeInt);
+
+        if(location == VuforiaWebcamLocalization.ELocation.BLUECAROUSEL){
+            driver.AutonomousDrive(DrivingWrapper.Direction.SPINLEFT, .9, rotSpeed);
+
+        }else if(location == VuforiaWebcamLocalization.ELocation.BLUEHOME) {
+            runner = new BlueHomeRunner(drive, arm);
+        }else if(location == VuforiaWebcamLocalization.ELocation.REDCAROUSEL) {
+            driver.AutonomousDrive(DrivingWrapper.Direction.SPINRIGHT, .8, rotSpeed);
+        }else if(location == VuforiaWebcamLocalization.ELocation.REDHOME) {
+            driver.AutonomousDrive(DrivingWrapper.Direction.SPINLEFT, .9, rotSpeed);
+        }
+
+        runner.run();
+
+
+
+
+        /*
         arm.init(false);
         opMode.sleep(1000);
         arm.SetLevel(OpenCVWrapper.barcodeInt);
@@ -206,6 +310,8 @@ public class AutonomousWrapper {
 //            driver.AutonomousDrive(DrivingWrapper.Direction.LEFT, 4,speed);
 //            arm.Carousel(10, -1);
         arm.SetLevel(0);
+
+         */
 
     }
 //    public void RunCarousel(boolean isBlue){
