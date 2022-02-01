@@ -1,4 +1,5 @@
 package org.firstinspires.ftc.teamcode.competitionopmodes;
+import com.acmerobotics.dashboard.FtcDashboard;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
@@ -14,6 +15,8 @@ public class AutonomousHomeBlue extends LinearOpMode {
 
         DrivingWrapper driver = new DrivingWrapper(hardwareMap,telemetry);
         ArmWrapper arm = new ArmWrapper(hardwareMap, telemetry);
+
+
 
         AutonomousWrapper autonomousWrapper = new AutonomousWrapper(hardwareMap, telemetry);
 
