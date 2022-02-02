@@ -54,10 +54,10 @@ public class AutonomousWrapper {
     }
     public void RunAutonomous(VuforiaWebcamLocalization.ELocation location, LinearOpMode opMode){
 
-        while (OpenCVWrapper.barcodeInt!=0);
-
-        telemetry.addData("Location" ,location.toString());
-        telemetry.addData("Barcode", OpenCVWrapper.barcodeInt);
+//        while (OpenCVWrapper.barcodeInt!=0);
+//
+//        telemetry.addData("Location" ,location.toString());
+//        telemetry.addData("Barcode", OpenCVWrapper.barcodeInt);
 
 
         telemetry.update();
@@ -74,7 +74,7 @@ public class AutonomousWrapper {
             driver.AutonomousDrive(DrivingWrapper.Direction.SPINLEFT, .9, rotSpeed);
 
         }else if(location == VuforiaWebcamLocalization.ELocation.BLUEHOME) {
-            runner = new BlueHomeRunner(drive, arm);
+            runner = new BlueHomeRunner(drive, arm, opMode);
         }else if(location == VuforiaWebcamLocalization.ELocation.REDCAROUSEL) {
             driver.AutonomousDrive(DrivingWrapper.Direction.SPINRIGHT, .8, rotSpeed);
         }else if(location == VuforiaWebcamLocalization.ELocation.REDHOME) {
