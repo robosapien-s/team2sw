@@ -10,6 +10,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.autonomous.BlueHomeRunner;
 import org.firstinspires.ftc.teamcode.autonomous.IAutonomousRunner;
+import org.firstinspires.ftc.teamcode.autonomous.RedCarouselRunnerV2;
 import org.firstinspires.ftc.teamcode.wrappers.ArmWrapper;
 import org.firstinspires.ftc.teamcode.wrappers.DrivingWrapper;
 import org.firstinspires.ftc.teamcode.wrappers.OpenCvDetection;
@@ -28,7 +29,8 @@ public class AutonomousWrapper {
     double rotSpeed = .25;
     HardwareMap hardwareMap;
     Telemetry telemetry;
-    DcMotor crMotor;
+
+    public DcMotor crMotor;
 
     OpenCvDetection OpenCVWrapper;
 
@@ -80,7 +82,7 @@ public class AutonomousWrapper {
         }else if(location == VuforiaWebcamLocalization.ELocation.BLUEHOME) {
             runner = new BlueHomeRunner(drive, arm, opMode);
         }else if(location == VuforiaWebcamLocalization.ELocation.REDCAROUSEL) {
-            driver.AutonomousDrive(DrivingWrapper.Direction.SPINRIGHT, .8, rotSpeed);
+            runner = new RedCarouselRunnerV2(drive, arm, opMode, this);;
         }else if(location == VuforiaWebcamLocalization.ELocation.REDHOME) {
             driver.AutonomousDrive(DrivingWrapper.Direction.SPINLEFT, .9, rotSpeed);
         }
