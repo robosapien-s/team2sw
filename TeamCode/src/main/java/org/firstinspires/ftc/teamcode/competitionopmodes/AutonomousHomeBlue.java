@@ -17,11 +17,9 @@ public class AutonomousHomeBlue extends LinearOpMode {
         ArmWrapper arm = new ArmWrapper(hardwareMap, telemetry);
 
 
-
         AutonomousWrapper autonomousWrapper = new AutonomousWrapper(hardwareMap, telemetry);
 
         waitForStart();
-
 
 
         if(opModeIsActive()) {

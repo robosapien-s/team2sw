@@ -8,12 +8,13 @@ import org.firstinspires.ftc.teamcode.testopmodes.VuforiaWebcamLocalization;
 
 @Autonomous(name="Home Red", group="Iterative Opmode")
 public class AutonomousHomeRed extends LinearOpMode {
+
     @Override
     public void runOpMode() {
 
-
         DrivingWrapper driver = new DrivingWrapper(hardwareMap,telemetry);
         ArmWrapper arm = new ArmWrapper(hardwareMap, telemetry);
+
 
         AutonomousWrapper autonomousWrapper = new AutonomousWrapper(hardwareMap, telemetry);
 
