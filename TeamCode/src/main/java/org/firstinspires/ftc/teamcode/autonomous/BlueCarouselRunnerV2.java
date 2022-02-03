@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.wrappers.ArmWrapper;
 
-public class BlueCarouselRunner implements IAutonomousRunner {
+public class BlueCarouselRunnerV2 implements IAutonomousRunner {
 
 
     Trajectory trajectory1;
@@ -22,7 +22,7 @@ public class BlueCarouselRunner implements IAutonomousRunner {
     LinearOpMode linearOpMode;
 
 
-    public BlueCarouselRunner(SampleMecanumDrive inDrive, ArmWrapper inArm, LinearOpMode inLinearOpMode) {
+    public BlueCarouselRunnerV2(SampleMecanumDrive inDrive, ArmWrapper inArm, LinearOpMode inLinearOpMode) {
         drive = inDrive;
         armWrapper = inArm;
         linearOpMode = inLinearOpMode;
@@ -37,13 +37,14 @@ public class BlueCarouselRunner implements IAutonomousRunner {
 
         armWrapper.init(true);
         trajectory1 = drive.trajectoryBuilder(startPose)
-                .splineTo(new Vector2d(2,38),Math.toRadians(-135))
+                .splineTo(new Vector2d(-18,34),Math.toRadians(-135))
                 .build();
 
-        trajectory2 = drive.trajectoryBuilder(trajectory1.end()).splineTo(new Vector2d(-50,50),-45).build();
+        trajectory2 = drive.trajectoryBuilder(trajectory1.end()).lineToLinearHeading(new Pose2d(-64,40,0)).build();
 
-        trajectory3 = drive.trajectoryBuilder(trajectory2.end(), 12, 10).splineTo(new Vector2d(-60,36),180).build();
+        trajectory3 = drive.trajectoryBuilder(trajectory2.end(), 6, 5).strafeLeft(5).build();
 
+        trajectory4 = drive.trajectoryBuilder(trajectory3.end(), 6, 5).strafeRight(5).build();
 
 
         armWrapper.SetLevel(3);
@@ -56,6 +57,7 @@ public class BlueCarouselRunner implements IAutonomousRunner {
         armWrapper.IntakeReverse(1);
         armWrapper.SetLevel(0);
         drive.followTrajectory(trajectory3);
+        drive.followTrajectory(trajectory4);
 
 
     }

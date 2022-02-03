@@ -54,11 +54,15 @@ public class AutonomousWrapper {
     }
     public void RunAutonomous(VuforiaWebcamLocalization.ELocation location, LinearOpMode opMode){
 
-//        while (OpenCVWrapper.barcodeInt!=0);
-//
+
 //        telemetry.addData("Location" ,location.toString());
 //        telemetry.addData("Barcode", OpenCVWrapper.barcodeInt);
 
+        OpenCVWrapper.StopCameraStream();
+
+        if (OpenCVWrapper.barcodeInt==0){
+            OpenCVWrapper.barcodeInt=3;
+        }
 
         telemetry.update();
 

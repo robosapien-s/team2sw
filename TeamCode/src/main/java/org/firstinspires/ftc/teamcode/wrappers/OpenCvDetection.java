@@ -54,6 +54,9 @@ public class OpenCvDetection {
     Mat mask = new Mat();
     Mat hierarchy = new Mat();
 
+    int cameraHieght = 600;
+    int cameraWidth = 800;
+
     public void init(boolean webcamBool) {
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         if(webcamBool) {
@@ -100,7 +103,7 @@ public class OpenCvDetection {
                  * For a rear facing camera or a webcam, rotation is defined assuming the camera is facing
                  * away from the user.
                  */
-                webcam.startStreaming(1920, 1080, OpenCvCameraRotation.SIDEWAYS_LEFT);
+                webcam.startStreaming(cameraWidth, cameraHieght, OpenCvCameraRotation.UPRIGHT);
             }
 
             @Override
@@ -175,11 +178,11 @@ public class OpenCvDetection {
                 Point center = new Point();
                 float[] radius = new float[1];
                 Imgproc.minEnclosingCircle(contoursPoly, center, radius);
-                if(boundRect.size().width>100.0){
+                if(boundRect.size().width>50.0){
                     loc = center;
-                    if (loc.x<650){
+                    if (loc.x<(cameraWidth/3)){
                         barcodeInt = 1;
-                    }else if (loc.x<1250){
+                    }else if (loc.x<((cameraWidth*2)/3)){
                         barcodeInt = 2;
                     }else {
                         barcodeInt = 3;
@@ -238,5 +241,8 @@ public class OpenCvDetection {
                 webcam.resumeViewport();
             }
         }
+    }
+    public void StopCameraStream(){
+        webcam.stopStreaming();
     }
 }
