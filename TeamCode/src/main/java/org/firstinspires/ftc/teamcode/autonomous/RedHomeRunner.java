@@ -98,7 +98,7 @@ public class RedHomeRunner implements IAutonomousRunner {
         drive.followTrajectory(trajectory4);
         armWrapper.SetLevel(3);
 
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < 1; i++) {
             PickupDrop();
         }
 
