@@ -77,7 +77,7 @@ public class RedHomeRunner implements IAutonomousRunner {
         armWrapper.SetLevel(levelInt);
         drive.followTrajectory(trajectory1);
         armWrapper.Intake(.25);
-        linearOpMode.sleep(1500);
+        linearOpMode.sleep(1000);
         armWrapper.StopIntake();
         drive.followTrajectory(trajectory2);
 
@@ -98,22 +98,26 @@ public class RedHomeRunner implements IAutonomousRunner {
         drive.followTrajectory(trajectory4);
         armWrapper.SetLevel(3);
 
-        for (int i = 0; i < 1; i++) {
-            PickupDrop();
+        for (int i = 0; i < 2; i++) {
+            PickupDrop(i>=1);
         }
 
     }
 
-    public void PickupDrop(){
+    public void PickupDrop(boolean stay){
         drive.followTrajectory(trajectory5);
         armWrapper.Intake(.25);
-        linearOpMode.sleep(2000);
+        linearOpMode.sleep(1000);
         drive.followTrajectory(trajectory2);
         armWrapper.SetLevel(0);
         armWrapper.IntakeReverse(1);
         drive.followTrajectory(trajectory3);
-        drive.followTrajectory(trajectory4);
-        armWrapper.StopIntake();
-        armWrapper.SetLevel(3);
+        if(!stay){
+            drive.followTrajectory(trajectory4);
+            armWrapper.StopIntake();
+            armWrapper.SetLevel(3);
+        }else {
+            armWrapper.StopIntake();
+        }
     }
 }
