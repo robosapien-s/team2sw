@@ -64,7 +64,6 @@ public class ArmWrapper {
 
     public boolean init(boolean started) {
         if (!started) {
-
             armMotor.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
 
             armMotor.setPower(.5);

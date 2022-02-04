@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.apache.commons.math3.geometry.euclidean.twod.Line;
 import org.firstinspires.ftc.teamcode.autonomous.IAutonomousRunner;
+import org.firstinspires.ftc.teamcode.competitionopmodes.AutonomousWrapper;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.wrappers.ArmWrapper;
 
@@ -22,12 +23,15 @@ public class BlueHomeRunner implements IAutonomousRunner {
     ArmWrapper armWrapper;
     int levelInt = 3;
     LinearOpMode linearOpMode;
+    AutonomousWrapper wrapper;
 
 
-    public BlueHomeRunner(SampleMecanumDrive inDrive, ArmWrapper inArm, LinearOpMode inLinearOpMode) {
+    public BlueHomeRunner(SampleMecanumDrive inDrive, ArmWrapper inArm, LinearOpMode inLinearOpMode, AutonomousWrapper inWrapper) {
         drive = inDrive;
         armWrapper = inArm;
         linearOpMode = inLinearOpMode;
+        wrapper = inWrapper;
+
     }
 
     @Override
@@ -38,6 +42,9 @@ public class BlueHomeRunner implements IAutonomousRunner {
         drive.setPoseEstimate(startPose);
 
         armWrapper.init(true);
+        if (wrapper.OpenCVWrapper.barcodeInt==0){
+            wrapper.OpenCVWrapper.barcodeInt=3;
+        }
         trajectory1 = drive.trajectoryBuilder(new Pose2d(10,60, Math.toRadians(-90)))
                 .splineTo(new Vector2d(2,38),Math.toRadians(-135))
                 .build();

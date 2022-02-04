@@ -8,9 +8,11 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.autonomous.BlueCarouselRunnerV2;
 import org.firstinspires.ftc.teamcode.autonomous.BlueHomeRunner;
 import org.firstinspires.ftc.teamcode.autonomous.IAutonomousRunner;
 import org.firstinspires.ftc.teamcode.autonomous.RedCarouselRunnerV2;
+import org.firstinspires.ftc.teamcode.autonomous.RedHomeRunner;
 import org.firstinspires.ftc.teamcode.wrappers.ArmWrapper;
 import org.firstinspires.ftc.teamcode.wrappers.DrivingWrapper;
 import org.firstinspires.ftc.teamcode.wrappers.OpenCvDetection;
@@ -32,7 +34,7 @@ public class AutonomousWrapper {
 
     public DcMotor crMotor;
 
-    OpenCvDetection OpenCVWrapper;
+    public OpenCvDetection OpenCVWrapper;
 
 
 
@@ -62,9 +64,6 @@ public class AutonomousWrapper {
 
         OpenCVWrapper.StopCameraStream();
 
-        if (OpenCVWrapper.barcodeInt==0){
-            OpenCVWrapper.barcodeInt=3;
-        }
 
         telemetry.update();
 
@@ -74,17 +73,16 @@ public class AutonomousWrapper {
 
         arm.init(false);
         opMode.sleep(1000);
-        arm.SetLevel(OpenCVWrapper.barcodeInt);
 
         if(location == VuforiaWebcamLocalization.ELocation.BLUECAROUSEL){
-            driver.AutonomousDrive(DrivingWrapper.Direction.SPINLEFT, .9, rotSpeed);
+            runner = new BlueCarouselRunnerV2(drive, arm, opMode, this);
 
         }else if(location == VuforiaWebcamLocalization.ELocation.BLUEHOME) {
-            runner = new BlueHomeRunner(drive, arm, opMode);
+            runner = new BlueHomeRunner(drive, arm, opMode, this);
         }else if(location == VuforiaWebcamLocalization.ELocation.REDCAROUSEL) {
-            runner = new RedCarouselRunnerV2(drive, arm, opMode, this);;
+            runner = new RedCarouselRunnerV2(drive, arm, opMode, this);
         }else if(location == VuforiaWebcamLocalization.ELocation.REDHOME) {
-            driver.AutonomousDrive(DrivingWrapper.Direction.SPINLEFT, .9, rotSpeed);
+            runner = new RedHomeRunner(drive, arm, opMode, this);
         }
 
         runner.run();

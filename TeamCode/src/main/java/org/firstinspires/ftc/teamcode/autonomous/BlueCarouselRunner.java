@@ -5,6 +5,7 @@ import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
+import org.firstinspires.ftc.teamcode.competitionopmodes.AutonomousWrapper;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.wrappers.ArmWrapper;
 
@@ -20,12 +21,14 @@ public class BlueCarouselRunner implements IAutonomousRunner {
     ArmWrapper armWrapper;
     int levelInt = 3;
     LinearOpMode linearOpMode;
+    AutonomousWrapper wrapper;
 
 
-    public BlueCarouselRunner(SampleMecanumDrive inDrive, ArmWrapper inArm, LinearOpMode inLinearOpMode) {
+    public BlueCarouselRunner(SampleMecanumDrive inDrive, ArmWrapper inArm, LinearOpMode inLinearOpMode, AutonomousWrapper inWrapper) {
         drive = inDrive;
         armWrapper = inArm;
         linearOpMode = inLinearOpMode;
+        wrapper = inWrapper;
     }
 
     @Override
@@ -35,6 +38,9 @@ public class BlueCarouselRunner implements IAutonomousRunner {
 
         drive.setPoseEstimate(startPose);
 
+        if (wrapper.OpenCVWrapper.barcodeInt==0){
+            wrapper.OpenCVWrapper.barcodeInt=3;
+        }
         armWrapper.init(true);
         trajectory1 = drive.trajectoryBuilder(startPose)
                 .splineTo(new Vector2d(2,38),Math.toRadians(-135))

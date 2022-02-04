@@ -37,10 +37,24 @@ public class RedCarouselRunnerV2 implements IAutonomousRunner {
 
         drive.setPoseEstimate(startPose);
 
+
         armWrapper.init(true);
-        trajectory1 = drive.trajectoryBuilder(startPose)
-                .splineTo(new Vector2d(-26,-36),Math.toRadians(45))
-                .build();
+
+        levelInt = wrapper.OpenCVWrapper.barcodeInt;
+
+        if (wrapper.OpenCVWrapper.barcodeInt==0){
+            wrapper.OpenCVWrapper.barcodeInt=3;
+        }
+
+        if (levelInt==1){
+            trajectory1 = drive.trajectoryBuilder(startPose)
+                    .splineTo(new Vector2d(-30,-40),Math.toRadians(45))
+                    .build();
+        }else {
+            trajectory1 = drive.trajectoryBuilder(startPose)
+                    .splineTo(new Vector2d(-26,-36),Math.toRadians(45))
+                    .build();
+        }
 
         trajectory2 = drive.trajectoryBuilder(trajectory1.end())
                 .lineToLinearHeading(new Pose2d(-64,-40,Math.toRadians(90)))
@@ -51,11 +65,11 @@ public class RedCarouselRunnerV2 implements IAutonomousRunner {
                 .build();
 
         trajectory4 = drive.trajectoryBuilder(trajectory3.end(), 6, 5)
-                .forward(20)
+                .forward(18)
                 .build();
 
 
-        armWrapper.SetLevel(3);
+        armWrapper.SetLevel(levelInt);
         drive.followTrajectory(trajectory1);
         armWrapper.Intake(1);
         linearOpMode.sleep(1000);
@@ -65,8 +79,8 @@ public class RedCarouselRunnerV2 implements IAutonomousRunner {
 
         drive.followTrajectory(trajectory3);
 
-        wrapper.crMotor.setPower(1);
-        linearOpMode.sleep(5000);
+        wrapper.crMotor.setPower(-.5);
+        linearOpMode.sleep(3500);
         wrapper.crMotor.setPower(0);
 
         drive.followTrajectory(trajectory4);
