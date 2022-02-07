@@ -82,6 +82,7 @@ public class BlueCarouselRunnerV2 implements IAutonomousRunner {
         wrapper.crMotor.setPower(0);
 
         drive.followTrajectory(trajectory4);
+        armWrapper.ResetArm();
 
 
     }

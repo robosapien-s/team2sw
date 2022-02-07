@@ -101,7 +101,7 @@ public class RedHomeRunner implements IAutonomousRunner {
         for (int i = 0; i < 2; i++) {
             PickupDrop(i>=1);
         }
-
+        armWrapper.ResetArm();
     }
 
     public void PickupDrop(boolean stay){

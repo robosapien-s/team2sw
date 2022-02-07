@@ -99,6 +99,7 @@ public class BlueHomeRunner implements IAutonomousRunner {
         for (int i = 0; i < 2; i++) {
             PickupDrop(i>=1);
         }
+        armWrapper.ResetArm();
 
     }
 

@@ -48,7 +48,7 @@ public class RedCarouselRunnerV2 implements IAutonomousRunner {
 
         if (levelInt==1){
             trajectory1 = drive.trajectoryBuilder(startPose)
-                    .splineTo(new Vector2d(-30,-40),Math.toRadians(45))
+                    .splineTo(new Vector2d(-35,-40),Math.toRadians(45))
                     .build();
         }else {
             trajectory1 = drive.trajectoryBuilder(startPose)
@@ -71,7 +71,7 @@ public class RedCarouselRunnerV2 implements IAutonomousRunner {
 
         armWrapper.SetLevel(levelInt);
         drive.followTrajectory(trajectory1);
-        armWrapper.Intake(1);
+        armWrapper.Intake(.2);
         linearOpMode.sleep(1000);
         armWrapper.StopIntake();
 
@@ -84,6 +84,7 @@ public class RedCarouselRunnerV2 implements IAutonomousRunner {
         wrapper.crMotor.setPower(0);
 
         drive.followTrajectory(trajectory4);
+        armWrapper.ResetArm();
 
 
     }
