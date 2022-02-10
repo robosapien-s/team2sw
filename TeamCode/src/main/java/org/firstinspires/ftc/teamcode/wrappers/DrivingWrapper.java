@@ -75,22 +75,22 @@ public class DrivingWrapper {
         if (joystickWrapper.gamepad1GetRightBumperRaw()){
             telemetry.addData("Move", "Back Right");
             y=-1;
-            x=1;
+            x=.3;
         }
         if (joystickWrapper.gamepad1GetLeftBumperRaw()){
             telemetry.addData("Move", "Back Left");
             y=-1;
-            x=-1;
+            x=-.3;
         }
         if (joystickWrapper.gamepad1GetRightTriggerPressed()){
             telemetry.addData("Move", "Forward Right");
             y=1;
-            x=1;
+            x=.3;
         }
         if (joystickWrapper.gamepad1GetLeftTriggerPressed()){
             telemetry.addData("Move", "Forward Left");
             y=1;
-            x=-1;
+            x=-.3;
         }
 
 
