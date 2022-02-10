@@ -194,9 +194,11 @@ public class JoystickWrapper {
         }
     }
 
-    public boolean gamepad1GetRightBumperRaw() {
-        return gamepad1.right_bumper;
-    }
+    public boolean gamepad1GetLeftTriggerPressed() { return gamepad1.left_trigger>.5; }
+
+    public boolean gamepad1GetRightTriggerPressed() { return gamepad1.right_trigger>.5; }
+
+    public boolean gamepad1GetRightBumperRaw() { return gamepad1.right_bumper; }
 
     public boolean gamepad1GetLeftBumperRaw() {
         return gamepad1.left_bumper;
@@ -229,6 +231,7 @@ public class JoystickWrapper {
     public double gamepad1GetLeftStickY() {
         return gamepad1.left_stick_y;
     }
+
 
 
     public boolean gamepad2GetX() {

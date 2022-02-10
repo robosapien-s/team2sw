@@ -73,15 +73,26 @@ public class DrivingWrapper {
         double rx = joystickWrapper.gamepad1GetRightStickX(); // Defining the rx (right x) variable
 
         if (joystickWrapper.gamepad1GetRightBumperRaw()){
-            telemetry.addData("Move", "Right");
+            telemetry.addData("Move", "Back Right");
             y=-1;
             x=1;
         }
         if (joystickWrapper.gamepad1GetLeftBumperRaw()){
-            telemetry.addData("Move", "Left");
+            telemetry.addData("Move", "Back Left");
             y=-1;
             x=-1;
         }
+        if (joystickWrapper.gamepad1GetRightTriggerPressed()){
+            telemetry.addData("Move", "Forward Right");
+            y=1;
+            x=1;
+        }
+        if (joystickWrapper.gamepad1GetLeftTriggerPressed()){
+            telemetry.addData("Move", "Forward Left");
+            y=1;
+            x=-1;
+        }
+
 
         double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1); // Defining the denominator variable
 
@@ -130,11 +141,11 @@ public class DrivingWrapper {
             y = 0;
             rx = -1;
         }else if (direction == Direction.FORWARDRIGHT){
-            x = 1;
+            x = .1;
             y = 1;
             rx = 0;
         }else if (direction == Direction.FORWARDLEFT){
-            x = 1;
+            x = .1;
             y = -1;
             rx = 0;
         }else if (direction == Direction.BACKWARDLEFT){
