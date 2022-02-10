@@ -27,6 +27,9 @@ public class JoystickWrapper {
     boolean gamepad1leftStickPressed = false;
     boolean gamepad1rightStickPressed = false;
 
+    boolean gamepad1leftTriggerPressed = false;
+    boolean gamepad1rightTriggerPressed = false;
+
     boolean gamepad2xPressed = false;
     boolean gamepad2yPressed = false;
     boolean gamepad2aPressed = false;
@@ -40,6 +43,12 @@ public class JoystickWrapper {
     boolean gamepad2leftBumperPressed = false;
     boolean gamepad2rightBumperPressed = false;
 
+    boolean gamepad2leftStickPressed = false;
+    boolean gamepad2rightStickPressed = false;
+
+    boolean gamepad2leftTriggerPressed = false;
+    boolean gamepad2rightTriggerPressed = false;
+
 
     public JoystickWrapper(Gamepad inGamepad1, Gamepad inGamepad2) {
         gamepad1 = inGamepad1; //Making a reference to the type Gampad in opmodes
@@ -49,6 +58,10 @@ public class JoystickWrapper {
     /*Everything below is what happens in certain cases of keys being pressed to prevent them from
      being pressed multiple times when we don't want them to
      */
+
+    //Gamepad 1
+
+
     public boolean gamepad1GetX() {
         if (!gamepad1xPressed && gamepad1.x) {
             gamepad1xPressed = true;
@@ -60,7 +73,6 @@ public class JoystickWrapper {
             return false;
         }
     }
-
 
     public boolean gamepad1GetY() {
         if (!gamepad1yPressed && gamepad1.y) {
@@ -110,7 +122,6 @@ public class JoystickWrapper {
         }
     }
 
-
     public boolean gamepad1GetDDown() {
         if (!gamepad1dDownPressed && gamepad1.dpad_down) {
             gamepad1dDownPressed = true;
@@ -147,7 +158,7 @@ public class JoystickWrapper {
         }
     }
 
-    public boolean gamepad1GetLeftBumper() {
+    public boolean gamepad1GetLeftBumperDown() {
         if (!gamepad1leftBumperPressed && gamepad1.left_bumper) {
             gamepad1leftBumperPressed = true;
             return true;
@@ -159,7 +170,7 @@ public class JoystickWrapper {
         }
     }
 
-    public boolean gamepad1GetRightBumper() {
+    public boolean gamepad1GetRightBumperDown() {
         if (!gamepad1rightBumperPressed && gamepad1.right_bumper) {
             gamepad1rightBumperPressed = true;
             return true;
@@ -171,7 +182,7 @@ public class JoystickWrapper {
         }
     }
 
-    public boolean gamepad1GetLeftStick() {
+    public boolean gamepad1GetLeftStickDown() {
         if (!gamepad1leftStickPressed && gamepad1.left_stick_button) {
             gamepad1leftStickPressed = true;
             return true;
@@ -182,7 +193,8 @@ public class JoystickWrapper {
             return false;
         }
     }
-    public boolean gamepad1GetRightStick() {
+
+    public boolean gamepad1GetRightStickDown() {
         if (!gamepad1rightStickPressed && gamepad1.right_stick_button) {
             gamepad1rightStickPressed = true;
             return true;
@@ -194,19 +206,53 @@ public class JoystickWrapper {
         }
     }
 
-    public boolean gamepad1GetLeftTriggerPressed() { return gamepad1.left_trigger>.5; }
+    public boolean gamepad1GetLeftTriggerDown() {
+        if (!gamepad1leftTriggerPressed && gamepad1GetLeftTriggerPressed()) {
+            gamepad1leftTriggerPressed = true;
+            return true;
+        } else if (gamepad1leftTriggerPressed && !gamepad1GetLeftTriggerPressed()) {
+            gamepad1leftTriggerPressed = false;
+            return false;
+        } else {
+            return false;
+        }
+    }
 
-    public boolean gamepad1GetRightTriggerPressed() { return gamepad1.right_trigger>.5; }
+    public boolean gamepad1GetRightTriggerDown() {
+        if (!gamepad1rightTriggerPressed && gamepad1GetRightTriggerPressed()) {
+            gamepad1rightTriggerPressed = true;
+            return true;
+        } else if (gamepad1rightTriggerPressed && !gamepad1GetRightTriggerPressed()) {
+            gamepad1rightTriggerPressed = false;
+            return false;
+        } else {
+            return false;
+        }
+    }
 
-    public boolean gamepad1GetRightBumperRaw() { return gamepad1.right_bumper; }
+    public boolean gamepad1GetLeftTriggerPressed() {
+        return gamepad1.left_trigger>.5;
+    }
+
+    public boolean gamepad1GetRightTriggerPressed() {
+        return gamepad1.right_trigger>.5;
+    }
+
+    public boolean gamepad1GetRightBumperRaw() {
+        return gamepad1.right_bumper;
+    }
 
     public boolean gamepad1GetLeftBumperRaw() {
         return gamepad1.left_bumper;
     }
 
-    public boolean gamepad1GetRightStickDown() { return gamepad1.right_stick_button; }
+    public boolean gamepad1GetRightStick() {
+        return gamepad1.right_stick_button;
+    }
 
-    public boolean gamepad1GetLeftStickDown() { return gamepad1.left_stick_button; }
+    public boolean gamepad1GetLeftStick() {
+        return gamepad1.left_stick_button;
+    }
 
     public double gamepad1GetRightTrigger() {
         return gamepad1.right_trigger;
@@ -232,7 +278,7 @@ public class JoystickWrapper {
         return gamepad1.left_stick_y;
     }
 
-
+    //Gamepad 2
 
     public boolean gamepad2GetX() {
         if (!gamepad2xPressed && gamepad2.x) {
@@ -245,7 +291,6 @@ public class JoystickWrapper {
             return false;
         }
     }
-
 
     public boolean gamepad2GetY() {
         if (!gamepad2yPressed && gamepad2.y) {
@@ -295,7 +340,6 @@ public class JoystickWrapper {
         }
     }
 
-
     public boolean gamepad2GetDDown() {
         if (!gamepad2dDownPressed && gamepad2.dpad_down) {
             gamepad2dDownPressed = true;
@@ -332,7 +376,7 @@ public class JoystickWrapper {
         }
     }
 
-    public boolean gamepad2GetLeftBumper() {
+    public boolean gamepad2GetLeftBumperDown() {
         if (!gamepad2leftBumperPressed && gamepad2.left_bumper) {
             gamepad2leftBumperPressed = true;
             return true;
@@ -344,7 +388,7 @@ public class JoystickWrapper {
         }
     }
 
-    public boolean gamepad2GetRightBumper() {
+    public boolean gamepad2GetRightBumperDown() {
         if (!gamepad2rightBumperPressed && gamepad2.right_bumper) {
             gamepad2rightBumperPressed = true;
             return true;
@@ -356,41 +400,63 @@ public class JoystickWrapper {
         }
     }
 
-    public boolean gamepad2GetRightBumperRaw() {
-        return gamepad2.right_bumper;
+    public boolean gamepad2GetRightStickDown() {
+        if (!gamepad2rightStickPressed && gamepad2.right_stick_button) {
+            gamepad2rightStickPressed = true;
+            return true;
+        } else if (gamepad2rightStickPressed && !gamepad2.right_stick_button) {
+            gamepad2rightStickPressed = false;
+            return false;
+        } else {
+            return false;
+        }
     }
 
-    public boolean gamepad2GetLeftBumperRaw() {
-        return gamepad2.left_bumper;
+    public boolean gamepad2GetLeftTriggerDown() {
+        if (!gamepad2leftTriggerPressed && gamepad2GetLeftTriggerPressed()) {
+            gamepad2leftTriggerPressed = true;
+            return true;
+        } else if (gamepad2leftTriggerPressed && !gamepad2GetLeftTriggerPressed()) {
+            gamepad2leftTriggerPressed = false;
+            return false;
+        } else {
+            return false;
+        }
     }
 
-    public boolean gamepad2GetRightStickDown() { return gamepad2.right_stick_button; }
-
-    public boolean gamepad2GetLeftStickDown() {
-        return gamepad2.left_stick_button;
+    public boolean gamepad2GetRightTriggerDown() {
+        if (!gamepad2rightTriggerPressed && gamepad2GetRightTriggerPressed()) {
+            gamepad1rightTriggerPressed = true;
+            return true;
+        } else if (gamepad2rightTriggerPressed && !gamepad2GetRightTriggerPressed()) {
+            gamepad2rightTriggerPressed = false;
+            return false;
+        } else {
+            return false;
+        }
     }
 
-    public double gamepad2GetRightTrigger() {
-        return gamepad2.right_trigger;
-    }
+    public boolean gamepad2GetLeftTriggerPressed() { return gamepad2.left_trigger>.5; }
 
-    public double gamepad2GetLeftTrigger() {
-        return gamepad2.left_trigger;
-    }
+    public boolean gamepad2GetRightTriggerPressed() { return gamepad2.right_trigger>.5; }
 
-    public double gamepad2GetRightStickX() {
-        return gamepad2.right_stick_x;
-    }
+    public boolean gamepad2GetRightBumperRaw() { return gamepad2.right_bumper; }
 
-    public double gamepad2GetRightStickY() {
-        return gamepad2.right_stick_y;
-    }
+    public boolean gamepad2GetLeftBumperRaw() { return gamepad2.left_bumper; }
 
-    public double gamepad2GetLeftStickX() {
-        return gamepad2.left_stick_x;
-    }
+    public boolean gamepad2GetRightStick() { return gamepad2.right_stick_button; }
 
-    public double gamepad2GetLeftStickY() {
-        return gamepad2.left_stick_y;
-    }
+    public boolean gamepad2GetLeftStickDown() { return gamepad2.left_stick_button; }
+
+    public double gamepad2GetRightTrigger() { return gamepad2.right_trigger; }
+
+    public double gamepad2GetLeftTrigger() { return gamepad2.left_trigger; }
+
+    public double gamepad2GetRightStickX() { return gamepad2.right_stick_x; }
+
+    public double gamepad2GetRightStickY() { return gamepad2.right_stick_y; }
+
+    public double gamepad2GetLeftStickX() { return gamepad2.left_stick_x; }
+
+    public double gamepad2GetLeftStickY() { return gamepad2.left_stick_y; }
 }

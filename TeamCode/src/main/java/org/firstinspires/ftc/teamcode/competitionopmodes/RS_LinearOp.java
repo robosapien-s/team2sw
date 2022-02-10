@@ -88,10 +88,10 @@ public class RS_LinearOp extends LinearOpMode {
             if (joystickWrapper.gamepad2GetDLeft()) {
                 telemetry.addData("KeyPressed:", "DLeft");
             }
-            if (joystickWrapper.gamepad2GetLeftBumper()) {
+            if (joystickWrapper.gamepad2GetLeftBumperDown()) {
                 telemetry.addData("KeyPressed:", "Left Bumper");
             }
-            if (joystickWrapper.gamepad2GetRightBumper()) {
+            if (joystickWrapper.gamepad2GetRightBumperDown()) {
                 telemetry.addData("KeyPressed:", "Right Bumper");
             }
             if (joystickWrapper.gamepad2GetLeftTrigger() >= .5) {
