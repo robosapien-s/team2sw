@@ -5,14 +5,12 @@ import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-import org.apache.commons.math3.geometry.euclidean.twod.Line;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.autonomous.IAutonomousRunner;
 import org.firstinspires.ftc.teamcode.competitionopmodes.AutonomousWrapper;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.wrappers.ArmWrapper;
 
-public class BlueHomeRunner implements IAutonomousRunner {
+public class RedHomeRunnerV2 implements IAutonomousRunner {
 
 
     Trajectory trajectory1;
@@ -27,24 +25,29 @@ public class BlueHomeRunner implements IAutonomousRunner {
     AutonomousWrapper wrapper;
     Telemetry telemetry;
 
+    double Rotation = -240;
 
-    public BlueHomeRunner(SampleMecanumDrive inDrive, ArmWrapper inArm, LinearOpMode inLinearOpMode, AutonomousWrapper inWrapper) {
+
+
+    public RedHomeRunnerV2(SampleMecanumDrive inDrive, ArmWrapper inArm, LinearOpMode inLinearOpMode, AutonomousWrapper inWrapper, double InRot) {
         drive = inDrive;
         armWrapper = inArm;
         linearOpMode = inLinearOpMode;
         wrapper = inWrapper;
+        Rotation = InRot;
     }
 
     @Override
     public void run() {
 
-        Pose2d startPose = new Pose2d(10, 60, Math.toRadians(-90));
+        Pose2d startPose = new Pose2d(10, -60, Math.toRadians(90));
 
         drive.setPoseEstimate(startPose);
 
         armWrapper.init(true);
 
-        levelInt = wrapper.OpenCVWrapper.barcodeInt;
+        levelInt = wrapper.OpenCVWrapper.barcodeInt - 1;
+
 
 
 
@@ -52,23 +55,23 @@ public class BlueHomeRunner implements IAutonomousRunner {
             levelInt=3;
         }
         trajectory1 = drive.trajectoryBuilder(startPose)
-                .splineTo(new Vector2d(5,38),Math.toRadians(-120))
+                .splineTo(new Vector2d(5,-38),Math.toRadians(120))
                 .build();
 
-        trajectory2 = drive.trajectoryBuilder(trajectory1.end())
-                .lineToLinearHeading(new Pose2d(10,58,0))
+        trajectory2 = drive.trajectoryBuilder(trajectory1.end(),20, 18)
+                .lineToLinearHeading(new Pose2d(10,-60,0))
                 .build();
 
         trajectory3 = drive.trajectoryBuilder(trajectory2.end())
-                .lineTo(new Vector2d(45,58))
+                .lineTo(new Vector2d(45,-60))
                 .build();
 
         trajectory4 = drive.trajectoryBuilder(trajectory3.end())
-                .lineTo(new Vector2d(10,58))
+                .lineTo(new Vector2d(10,-60))
                 .build();
 
         trajectory5 = drive.trajectoryBuilder(trajectory4.end())
-                .lineToLinearHeading(new Pose2d(5,35,Math.toRadians(-130)))
+                .splineTo(new Vector2d(5,-35), Math.toRadians(Rotation))
                 .build();
 
 
@@ -95,13 +98,16 @@ public class BlueHomeRunner implements IAutonomousRunner {
         armWrapper.StopIntake();
 
         drive.followTrajectory(trajectory4);
-        armWrapper.SetLevel(3);
+        armWrapper.SetLevel(2);
+
+//        Testing
+        drive.followTrajectory(trajectory5);
+//        Testing
 
         for (int i = 0; i < 2; i++) {
-            PickupDrop(i>=1);
+//            PickupDrop(i>=1);
         }
         armWrapper.ResetArm();
-
     }
 
     public void PickupDrop(boolean stay){
@@ -115,7 +121,7 @@ public class BlueHomeRunner implements IAutonomousRunner {
         if(!stay){
             drive.followTrajectory(trajectory4);
             armWrapper.StopIntake();
-            armWrapper.SetLevel(3);
+            armWrapper.SetLevel(4);
         }else {
             armWrapper.StopIntake();
         }

@@ -13,6 +13,7 @@ import org.firstinspires.ftc.teamcode.autonomous.BlueHomeRunner;
 import org.firstinspires.ftc.teamcode.autonomous.IAutonomousRunner;
 import org.firstinspires.ftc.teamcode.autonomous.RedCarouselRunnerV2;
 import org.firstinspires.ftc.teamcode.autonomous.RedHomeRunner;
+import org.firstinspires.ftc.teamcode.autonomous.RedHomeRunnerV2;
 import org.firstinspires.ftc.teamcode.wrappers.ArmWrapper;
 import org.firstinspires.ftc.teamcode.wrappers.DrivingWrapper;
 import org.firstinspires.ftc.teamcode.wrappers.OpenCvDetection;
@@ -82,7 +83,7 @@ public class AutonomousWrapper {
         }else if(location == VuforiaWebcamLocalization.ELocation.REDCAROUSEL) {
             runner = new RedCarouselRunnerV2(drive, arm, opMode, this);
         }else if(location == VuforiaWebcamLocalization.ELocation.REDHOME) {
-            runner = new RedHomeRunner(drive, arm, opMode, this);
+            runner = new RedHomeRunnerV2(drive, arm, opMode, this);
         }
 
         runner.run();

@@ -5,14 +5,12 @@ import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-import org.apache.commons.math3.geometry.euclidean.twod.Line;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.autonomous.IAutonomousRunner;
 import org.firstinspires.ftc.teamcode.competitionopmodes.AutonomousWrapper;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.wrappers.ArmWrapper;
 
-public class BlueHomeRunner implements IAutonomousRunner {
+public class BlueHomeRunnerV2 implements IAutonomousRunner {
 
 
     Trajectory trajectory1;
@@ -28,7 +26,7 @@ public class BlueHomeRunner implements IAutonomousRunner {
     Telemetry telemetry;
 
 
-    public BlueHomeRunner(SampleMecanumDrive inDrive, ArmWrapper inArm, LinearOpMode inLinearOpMode, AutonomousWrapper inWrapper) {
+    public BlueHomeRunnerV2(SampleMecanumDrive inDrive, ArmWrapper inArm, LinearOpMode inLinearOpMode, AutonomousWrapper inWrapper) {
         drive = inDrive;
         armWrapper = inArm;
         linearOpMode = inLinearOpMode;

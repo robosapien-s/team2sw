@@ -59,7 +59,7 @@ public class ArmWrapper {
         return servoPositions[level2int(newIntakeLevel)];
     }
     Double encoderTicks = 537.7;
-    int[] levelPositions = {1000, 1500, 2500, 3500, 7500};
+    int[] levelPositions = {1000, 1500, 2500, 3500, 7000};
     double[] servoPositions = {.38, .38, .31, 0.23, .41};
 
     public boolean init(boolean started) {
