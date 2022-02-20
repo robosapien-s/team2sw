@@ -23,8 +23,8 @@ class MeepMeepTesting {
                                 .splineTo(new Vector2d(5,-38),Math.toRadians(120))
                                 .lineToLinearHeading(new Pose2d(10,-60,0))
                                 .lineTo(new Vector2d(45,-60))
-                                .lineTo(new Vector2d(10,-60))
-                                .splineTo(new Vector2d(5,-35), Math.toRadians(-240))
+                                .lineTo(new Vector2d(20,-60))
+                                .splineTo(new Vector2d(0,-37.5), Math.toRadians(-240))
                                 .build()
                 );
 

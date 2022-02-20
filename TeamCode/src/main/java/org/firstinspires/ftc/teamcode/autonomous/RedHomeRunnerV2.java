@@ -67,11 +67,11 @@ public class RedHomeRunnerV2 implements IAutonomousRunner {
                 .build();
 
         trajectory4 = drive.trajectoryBuilder(trajectory3.end())
-                .lineTo(new Vector2d(10,-60))
+                .lineTo(new Vector2d(20,-60))
                 .build();
 
         trajectory5 = drive.trajectoryBuilder(trajectory4.end())
-                .splineTo(new Vector2d(5,-35), Math.toRadians(Rotation))
+                .splineTo(new Vector2d(0,-37.5), Math.toRadians(Rotation))
                 .build();
 
 
