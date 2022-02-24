@@ -28,6 +28,23 @@ public class RedHomeRunnerV3 implements IAutonomousRunner {
 
     double Rotation = -60;
 
+    final static int IndexStart = 0;
+    final static int IndexDrop1 = 1;
+    final static int IndexOutsideWH = 2;
+    final static int IndexInsideWH = 3;
+    final static int IndexOutsideWH2 = 4;
+    final static int IndexDrop2 = 5;
+
+    Pose2d[] poseLocationsRed = new Pose2d[] {
+            new Pose2d(10, -60, Math.toRadians(90)),
+            new Pose2d(5,-38,Math.toRadians(130)),
+            new Pose2d(10,-60,0),
+            new Pose2d(45,-60,0),
+            new Pose2d(20,-60, 0),
+            new Pose2d(-6,-39, Math.toRadians(-250))
+
+    };
+
 
 
     public RedHomeRunnerV3(SampleMecanumDrive inDrive, ArmWrapper inArm, LinearOpMode inLinearOpMode, AutonomousWrapper inWrapper, double InRot) {
@@ -49,13 +66,47 @@ public class RedHomeRunnerV3 implements IAutonomousRunner {
 
         levelInt = wrapper.OpenCVWrapper.barcodeInt - 1;
 
-         TrajectorySequence trajectorySequence  = drive.trajectorySequenceBuilder(startPose)
-                .splineTo(new Vector2d(5,-38),Math.toRadians(120))
-                 .lineToLinearHeading(new Pose2d(10,-60,0))
-                 .lineTo(new Vector2d(45,-60))
-                 .lineTo(new Vector2d(10,-60))
-                 .splineTo(new Vector2d(5,-35), Math.toRadians(Rotation))
+        drive.trajectorySequenceBuilder(poseLocationsRed[IndexStart])
+                .splineTo(new Vector2d(poseLocationsRed[IndexDrop1].getX(),poseLocationsRed[IndexDrop1].getY()),poseLocationsRed[IndexDrop1].getHeading()) //1
+                .lineToLinearHeading(poseLocationsRed[IndexOutsideWH]) //2
+                .lineTo(new Vector2d(poseLocationsRed[IndexInsideWH].getX(),poseLocationsRed[IndexInsideWH].getY())) //3
+                .lineTo(new Vector2d(poseLocationsRed[IndexOutsideWH2].getX(),poseLocationsRed[IndexOutsideWH2].getY())) //4
+                .splineTo(new Vector2d(poseLocationsRed[IndexDrop2].getX(),poseLocationsRed[IndexDrop2].getY()), poseLocationsRed[IndexDrop2].getHeading()) //5
+                .waitSeconds(.1)
+                .splineTo(new Vector2d(poseLocationsRed[IndexOutsideWH2].getX(),poseLocationsRed[IndexOutsideWH2].getY()),poseLocationsRed[IndexOutsideWH2].getHeading()) //4
+                .lineTo(new Vector2d(poseLocationsRed[IndexInsideWH].getX(),poseLocationsRed[IndexInsideWH].getY())) //3
+
+
+                .lineTo(new Vector2d(poseLocationsRed[IndexOutsideWH2].getX(),poseLocationsRed[IndexOutsideWH2].getY())) //4
+                .splineTo(new Vector2d(poseLocationsRed[IndexDrop2].getX(),poseLocationsRed[IndexDrop2].getY()), poseLocationsRed[IndexDrop2].getHeading()) //5
+                .waitSeconds(.1)
+                .splineTo(new Vector2d(poseLocationsRed[IndexOutsideWH2].getX(),poseLocationsRed[IndexOutsideWH2].getY()),poseLocationsRed[IndexOutsideWH2].getHeading()) //4
+                .lineTo(new Vector2d(poseLocationsRed[IndexInsideWH].getX(),poseLocationsRed[IndexInsideWH].getY())) //3
+
+                .lineTo(new Vector2d(poseLocationsRed[IndexOutsideWH2].getX(),poseLocationsRed[IndexOutsideWH2].getY())) //4
+                .splineTo(new Vector2d(poseLocationsRed[IndexDrop2].getX(),poseLocationsRed[IndexDrop2].getY()), poseLocationsRed[IndexDrop2].getHeading()) //5
+                .waitSeconds(.1)
+                .splineTo(new Vector2d(poseLocationsRed[IndexOutsideWH2].getX(),poseLocationsRed[IndexOutsideWH2].getY()),poseLocationsRed[IndexOutsideWH2].getHeading()) //4
+                .lineTo(new Vector2d(poseLocationsRed[IndexInsideWH].getX(),poseLocationsRed[IndexInsideWH].getY())) //3
+
+
+                .lineTo(new Vector2d(poseLocationsRed[IndexOutsideWH2].getX(),poseLocationsRed[IndexOutsideWH2].getY())) //4
+                .splineTo(new Vector2d(poseLocationsRed[IndexDrop2].getX(),poseLocationsRed[IndexDrop2].getY()), poseLocationsRed[IndexDrop2].getHeading()) //5
+                .waitSeconds(.1)
+                .splineTo(new Vector2d(poseLocationsRed[IndexOutsideWH2].getX(),poseLocationsRed[IndexOutsideWH2].getY()),poseLocationsRed[IndexOutsideWH2].getHeading()) //4
+                .lineTo(new Vector2d(poseLocationsRed[IndexInsideWH].getX(),poseLocationsRed[IndexInsideWH].getY())) //3
+
+
+                .lineTo(new Vector2d(poseLocationsRed[IndexOutsideWH2].getX(),poseLocationsRed[IndexOutsideWH2].getY())) //4
+                .splineTo(new Vector2d(poseLocationsRed[IndexDrop2].getX(),poseLocationsRed[IndexDrop2].getY()), poseLocationsRed[IndexDrop2].getHeading()) //5
+                .waitSeconds(.1)
+                .splineTo(new Vector2d(poseLocationsRed[IndexOutsideWH2].getX(),poseLocationsRed[IndexOutsideWH2].getY()),poseLocationsRed[IndexOutsideWH2].getHeading()) //4
+                .lineTo(new Vector2d(poseLocationsRed[IndexInsideWH].getX(),poseLocationsRed[IndexInsideWH].getY())) //3
+
                 .build();
+
+
+
 
 
         if (levelInt<=0){

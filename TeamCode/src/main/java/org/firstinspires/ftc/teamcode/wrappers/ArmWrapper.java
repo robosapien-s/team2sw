@@ -34,7 +34,8 @@ public class ArmWrapper {
         ONE,
         TWO,
         THREE,
-        BACK
+        BACK,
+        TWODOWN
     }
     Level level = Level.START;
     int level2int(Level inLevel) {
@@ -46,9 +47,11 @@ public class ArmWrapper {
             return 2;
         } else if(inLevel == Level.THREE){
             return 3;
-        }else {
+        }else if (inLevel == Level.BACK){
             return 4;
-        }
+        }else {
+        return 5;
+    }
     }
     int getNewPosition(Level previousLevel, Level newLevel) {
         int result = levelPositions[level2int(newLevel)] - levelPositions[level2int(previousLevel)];
@@ -59,8 +62,8 @@ public class ArmWrapper {
         return servoPositions[level2int(newIntakeLevel)];
     }
     Double encoderTicks = 537.7;
-    int[] levelPositions = {1000, 1500, 2500, 3500, 7000};
-    double[] servoPositions = {.38, .38, .31, 0.23, .41};
+    int[] levelPositions = {1000, 1500, 2500, 3500, 7000,2500};
+    double[] servoPositions = {.38, .38, .31, 0.23, .41,0};
 
     public boolean init(boolean started) {
         if (!started) {
@@ -126,6 +129,11 @@ public class ArmWrapper {
         }
         if (joystickWrapper.gamepad2GetRightStickDown()){
             level = Level.BACK;
+            telemetry.addData("input","RD");
+            //telemetry.addData("KeyPressed","B");
+        }
+        if (joystickWrapper.gamepad2GetRightStickDown()){
+            level = Level.TWODOWN;
             telemetry.addData("input","RD");
             //telemetry.addData("KeyPressed","B");
         }
