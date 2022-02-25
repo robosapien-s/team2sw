@@ -132,7 +132,7 @@ public class ArmWrapper {
             telemetry.addData("input","RD");
             //telemetry.addData("KeyPressed","B");
         }
-        if (joystickWrapper.gamepad2GetRightStickDown()){
+        if (joystickWrapper.gamepad2GetLeftStickDown()){
             level = Level.TWODOWN;
             telemetry.addData("input","RD");
             //telemetry.addData("KeyPressed","B");

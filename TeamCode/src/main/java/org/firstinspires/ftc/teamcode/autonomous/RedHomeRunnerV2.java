@@ -25,16 +25,14 @@ public class RedHomeRunnerV2 implements IAutonomousRunner {
     AutonomousWrapper wrapper;
     Telemetry telemetry;
 
-    double Rotation = -240;
 
 
 
-    public RedHomeRunnerV2(SampleMecanumDrive inDrive, ArmWrapper inArm, LinearOpMode inLinearOpMode, AutonomousWrapper inWrapper, double InRot) {
+    public RedHomeRunnerV2(SampleMecanumDrive inDrive, ArmWrapper inArm, LinearOpMode inLinearOpMode, AutonomousWrapper inWrapper) {
         drive = inDrive;
         armWrapper = inArm;
         linearOpMode = inLinearOpMode;
         wrapper = inWrapper;
-        Rotation = InRot;
     }
 
     @Override
@@ -71,7 +69,7 @@ public class RedHomeRunnerV2 implements IAutonomousRunner {
                 .build();
 
         trajectory5 = drive.trajectoryBuilder(trajectory4.end())
-                .splineTo(new Vector2d(0,-37.5), Math.toRadians(Rotation))
+                .splineTo(new Vector2d(0,-37.5), Math.toRadians(-240))
                 .build();
 
 
