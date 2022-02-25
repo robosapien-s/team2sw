@@ -67,10 +67,19 @@ public class RedHomeRunnerV3 implements IAutonomousRunner {
         levelInt = wrapper.OpenCVWrapper.barcodeInt - 1;
 
         drive.trajectorySequenceBuilder(poseLocationsRed[IndexStart])
+                .UNSTABLE_addTemporalMarkerOffset(0,()->{armWrapper.SetLevel(levelInt);})
                 .splineTo(new Vector2d(poseLocationsRed[IndexDrop1].getX(),poseLocationsRed[IndexDrop1].getY()),poseLocationsRed[IndexDrop1].getHeading()) //1
+                .UNSTABLE_addTemporalMarkerOffset(0,()->{armWrapper.Intake(.25);})
+                .waitSeconds(1)
+                .UNSTABLE_addTemporalMarkerOffset(0,()->{armWrapper.StopIntake();})
                 .lineToLinearHeading(poseLocationsRed[IndexOutsideWH]) //2
+                .UNSTABLE_addTemporalMarkerOffset(0,()->{
+                    armWrapper.SetLevel(0);
+                    armWrapper.IntakeReverse(1);})
                 .lineTo(new Vector2d(poseLocationsRed[IndexInsideWH].getX(),poseLocationsRed[IndexInsideWH].getY())) //3
+                .UNSTABLE_addTemporalMarkerOffset(0,()->{armWrapper.StopIntake();})
                 .lineTo(new Vector2d(poseLocationsRed[IndexOutsideWH2].getX(),poseLocationsRed[IndexOutsideWH2].getY())) //4
+                .UNSTABLE_addTemporalMarkerOffset(0,()->{        armWrapper.SetLevel(2);})
                 .splineTo(new Vector2d(poseLocationsRed[IndexDrop2].getX(),poseLocationsRed[IndexDrop2].getY()), poseLocationsRed[IndexDrop2].getHeading()) //5
                 .waitSeconds(.1)
                 .splineTo(new Vector2d(poseLocationsRed[IndexOutsideWH2].getX(),poseLocationsRed[IndexOutsideWH2].getY()),poseLocationsRed[IndexOutsideWH2].getHeading()) //4
