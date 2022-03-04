@@ -13,6 +13,8 @@ import org.firstinspires.ftc.teamcode.autonomous.BlueHomeRunner;
 import org.firstinspires.ftc.teamcode.autonomous.IAutonomousRunner;
 import org.firstinspires.ftc.teamcode.autonomous.RedCarouselRunnerV2;
 import org.firstinspires.ftc.teamcode.autonomous.RedHomeRunner;
+import org.firstinspires.ftc.teamcode.autonomous.RedHomeRunnerV2;
+import org.firstinspires.ftc.teamcode.autonomous.RedHomeRunnerV3;
 import org.firstinspires.ftc.teamcode.wrappers.ArmWrapper;
 import org.firstinspires.ftc.teamcode.wrappers.DrivingWrapper;
 import org.firstinspires.ftc.teamcode.wrappers.OpenCvDetection;
@@ -36,17 +38,21 @@ public class AutonomousWrapper {
 
     public OpenCvDetection OpenCVWrapper;
 
+    SampleMecanumDrive drive;
+
+    IAutonomousRunner runner = null;
 
 
-    public AutonomousWrapper(HardwareMap map, Telemetry inTelemetry){
+
+    public AutonomousWrapper(HardwareMap map, Telemetry inTelemetry, VuforiaWebcamLocalization.ELocation location,LinearOpMode opMode){
         hardwareMap = map;
         telemetry = inTelemetry;
         roadRunner = new SampleMecanumDrive(hardwareMap);
         crMotor  = hardwareMap.get(DcMotor.class, "carouselMotor");
-        init();
+        init(location,opMode);
     }
 
-    public void init(){
+    public void init(VuforiaWebcamLocalization.ELocation location,LinearOpMode opMode){
         driver = new DrivingWrapper(hardwareMap,telemetry);
         arm = new ArmWrapper(hardwareMap, telemetry);
 
@@ -54,7 +60,21 @@ public class AutonomousWrapper {
 
         OpenCVWrapper.init(true);
 
+        runner = null;
+
         telemetry.addData("barcode", OpenCVWrapper.barcodeInt);
+        if(location == VuforiaWebcamLocalization.ELocation.BLUECAROUSEL){
+            runner = new BlueCarouselRunnerV2(drive, arm, opMode, this);
+
+        }else if(location == VuforiaWebcamLocalization.ELocation.BLUEHOME) {
+            runner = new BlueHomeRunner(drive, arm, opMode, this);
+        }else if(location == VuforiaWebcamLocalization.ELocation.REDCAROUSEL) {
+            runner = new RedCarouselRunnerV2(drive, arm, opMode, this);
+        }else if(location == VuforiaWebcamLocalization.ELocation.REDHOME) {
+            runner = new RedHomeRunnerV3(drive, arm, opMode, this);
+        }
+        drive = new SampleMecanumDrive(hardwareMap);
+        arm.init(false);
     }
     public void RunAutonomous(VuforiaWebcamLocalization.ELocation location, LinearOpMode opMode){
 
@@ -68,22 +88,9 @@ public class AutonomousWrapper {
         telemetry.update();
 
 
-        SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
-        IAutonomousRunner runner = null;
 
-        arm.init(false);
-        opMode.sleep(1000);
 
-        if(location == VuforiaWebcamLocalization.ELocation.BLUECAROUSEL){
-            runner = new BlueCarouselRunnerV2(drive, arm, opMode, this);
 
-        }else if(location == VuforiaWebcamLocalization.ELocation.BLUEHOME) {
-            runner = new BlueHomeRunner(drive, arm, opMode, this);
-        }else if(location == VuforiaWebcamLocalization.ELocation.REDCAROUSEL) {
-            runner = new RedCarouselRunnerV2(drive, arm, opMode, this);
-        }else if(location == VuforiaWebcamLocalization.ELocation.REDHOME) {
-            runner = new RedHomeRunner(drive, arm, opMode, this);
-        }
 
         runner.run();
 
