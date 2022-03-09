@@ -16,7 +16,7 @@ public class AutonomousCarouselBlue extends LinearOpMode {
         DrivingWrapper driver = new DrivingWrapper(hardwareMap,telemetry);
         ArmWrapper arm = new ArmWrapper(hardwareMap, telemetry);
 
-        AutonomousWrapper autonomousWrapper = new AutonomousWrapper(hardwareMap, telemetry);
+        AutonomousWrapper autonomousWrapper = new AutonomousWrapper(hardwareMap, telemetry,VuforiaWebcamLocalization.ELocation.BLUECAROUSEL,this);
 
         waitForStart();
 

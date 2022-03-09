@@ -1,11 +1,13 @@
 package org.firstinspires.ftc.teamcode.competitionopmodes;
 
+import com.qualcomm.ftccommon.SoundPlayer;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.robotcore.external.android.AndroidSoundPool;
 import org.firstinspires.ftc.teamcode.autonomous.IRunnableTeleOp;
 import org.firstinspires.ftc.teamcode.autonomous.SharedShipping;
 import org.firstinspires.ftc.teamcode.autonomous.TestRunnable;
@@ -26,6 +28,7 @@ public class RS_LinearOp extends LinearOpMode {
     IRunnableTeleOp runnable;
 
     double speed = 1;
+    double rotSpeed = 1;
 
     DcMotor crMotor;
     /**
@@ -49,8 +52,11 @@ public class RS_LinearOp extends LinearOpMode {
 //        armWrapper.started = armWrapper.init(armWrapper.started);
         waitForStart();
 
+
+
         while (!isStopRequested()){
-            drivingWrapper.Drive(joystickWrapper, speed); //Driving code. See DrivingWrapper
+
+            drivingWrapper.Drive(joystickWrapper, speed, rotSpeed); //Driving code. See DrivingWrapper
             armWrapper.ArmMove(joystickWrapper);
             //Everything below is what happens when every key is pressed, besides the joysticks because they are used to drive (above).
 
@@ -73,21 +79,22 @@ public class RS_LinearOp extends LinearOpMode {
 
             telemetry.addData("speed", speed);
 
-            if (joystickWrapper.gamepad2GetDUp()) {
-                telemetry.addData("KeyPressed:", "DUp");
+            if (joystickWrapper.gamepad1GetDUp()) {
+                rotSpeed = 1;
             }
 
-            if (joystickWrapper.gamepad2GetDDown()) {
-                telemetry.addData("KeyPressed:", "DDown");
+            if (joystickWrapper.gamepad1GetDDown()) {
+                rotSpeed = .25;
             }
 
-            if (joystickWrapper.gamepad2GetDRight()) {
-                telemetry.addData("KeyPressed:", "DRight");
+            if (joystickWrapper.gamepad1GetDRight()) {
+                rotSpeed = .75;
             }
 
-            if (joystickWrapper.gamepad2GetDLeft()) {
-                telemetry.addData("KeyPressed:", "DLeft");
+            if (joystickWrapper.gamepad1GetDLeft()) {
+                rotSpeed = .5;
             }
+            telemetry.addData("Rotational Speed", rotSpeed);
             if (joystickWrapper.gamepad2GetLeftBumperDown()) {
                 telemetry.addData("KeyPressed:", "Left Bumper");
             }
@@ -98,7 +105,7 @@ public class RS_LinearOp extends LinearOpMode {
                 armWrapper.IntakeReverse(1);
 
             }else if (joystickWrapper.gamepad2GetRightTrigger() >= .5) {
-                armWrapper.Intake(.75);
+                armWrapper.Intake(.25);
             }else{
                 armWrapper.StopIntake();
             }

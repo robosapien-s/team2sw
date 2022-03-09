@@ -9,7 +9,7 @@ public class AutonomousCarouselRed extends LinearOpMode {
 
     @Override
     public void runOpMode() {
-        AutonomousWrapper autonomousWrapper = new AutonomousWrapper(hardwareMap, telemetry);
+        AutonomousWrapper autonomousWrapper = new AutonomousWrapper(hardwareMap, telemetry,VuforiaWebcamLocalization.ELocation.REDCAROUSEL,this);
 
         waitForStart();
 

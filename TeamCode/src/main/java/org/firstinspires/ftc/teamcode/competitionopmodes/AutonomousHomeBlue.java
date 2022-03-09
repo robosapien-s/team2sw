@@ -17,7 +17,7 @@ public class AutonomousHomeBlue extends LinearOpMode {
         ArmWrapper arm = new ArmWrapper(hardwareMap, telemetry);
 
 
-        AutonomousWrapper autonomousWrapper = new AutonomousWrapper(hardwareMap, telemetry);
+        AutonomousWrapper autonomousWrapper = new AutonomousWrapper(hardwareMap, telemetry,VuforiaWebcamLocalization.ELocation.BLUEHOME,this);
 
         waitForStart();
 

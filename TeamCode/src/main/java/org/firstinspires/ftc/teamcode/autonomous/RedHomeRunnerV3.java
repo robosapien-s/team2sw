@@ -9,6 +9,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.competitionopmodes.AutonomousWrapper;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
+import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequenceBuilder;
 import org.firstinspires.ftc.teamcode.wrappers.ArmWrapper;
 
 public class RedHomeRunnerV3 implements IAutonomousRunner {
@@ -57,19 +58,30 @@ public class RedHomeRunnerV3 implements IAutonomousRunner {
 
         drive.setPoseEstimate(startPose);
 
+
+
+
         armWrapper.init(true);
 
         levelInt = wrapper.OpenCVWrapper.barcodeInt - 1;
+
+
+
+
+        if (levelInt<=0){
+            levelInt=3;
+        }
     }
 
     @Override
     public void run() {
 
 
-        TrajectorySequence trajectorySequence = drive.trajectorySequenceBuilder(poseLocationsRed[IndexStart])
+        TrajectorySequenceBuilder builder = drive.trajectorySequenceBuilder(poseLocationsRed[IndexStart])
             .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                 armWrapper.SetLevel(levelInt);
             })
+                // 1st Go for initial drop
             .splineTo(new Vector2d(poseLocationsRed[IndexDrop1].getX(), poseLocationsRed[IndexDrop1].getY()), poseLocationsRed[IndexDrop1].getHeading()) //1
             .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                 armWrapper.Intake(.25);
@@ -78,105 +90,117 @@ public class RedHomeRunnerV3 implements IAutonomousRunner {
             .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                 armWrapper.StopIntake() ;
             })
+                // 1st Go to outside wharehouse
             .lineToLinearHeading(poseLocationsRed[IndexOutsideWH]) //2
-            .UNSTABLE_addTemporalMarkerOffset(0, () -> {
+            .UNSTABLE_addTemporalMarkerOffset(-1.5, () -> {
                 armWrapper.SetLevel(0);
                 armWrapper.IntakeReverse(1);
             })
-//            .lineTo(new Vector2d(poseLocationsRed[IndexInsideWH].getX(), poseLocationsRed[IndexInsideWH].getY())) //3
-//            .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-//                armWrapper.StopIntake();
-//            })
-//            .lineTo(new Vector2d(poseLocationsRed[IndexOutsideWH2].getX(), poseLocationsRed[IndexOutsideWH2].getY())) //4
-//            .UNSTABLE_addTemporalMarkerOffset(-1.5, () -> {
-//                armWrapper.SetLevel(4);
-//            })
-//            .splineTo(new Vector2d(poseLocationsRed[IndexDrop2].getX(), poseLocationsRed[IndexDrop2].getY()), poseLocationsRed[IndexDrop2].getHeading()) //5
-//            .UNSTABLE_addTemporalMarkerOffset(-.2, () -> {
-//                armWrapper.Intake(.25);
-//            })
-//            .waitSeconds(.1)
-//            .UNSTABLE_addTemporalMarkerOffset(0, () ->{
-//                armWrapper.StopIntake();
-//            })
-//            .splineTo(new Vector2d(poseLocationsRed[IndexOutsideWH2].getX(), poseLocationsRed[IndexOutsideWH2].getY()), poseLocationsRed[IndexOutsideWH2].getHeading()) //4
-//            .lineTo(new Vector2d(poseLocationsRed[IndexInsideWH].getX(), poseLocationsRed[IndexInsideWH].getY())) //3
-//            .UNSTABLE_addTemporalMarkerOffset(-1,()->{
-//                armWrapper.SetLevel(0);
-//            })
-//            .UNSTABLE_addTemporalMarkerOffset(-.5,() -> {
-//                armWrapper.IntakeReverse(1);
-//            })
-//
-//
-//            .lineTo(new Vector2d(poseLocationsRed[IndexOutsideWH2].getX(), poseLocationsRed[IndexOutsideWH2].getY())) //4
-//            .splineTo(new Vector2d(poseLocationsRed[IndexDrop2].getX(), poseLocationsRed[IndexDrop2].getY()), poseLocationsRed[IndexDrop2].getHeading()) //5
-//                .UNSTABLE_addTemporalMarkerOffset(-.2, () -> {
-//                    armWrapper.Intake(.25);
-//                })
-//                .waitSeconds(.1)
-//                .UNSTABLE_addTemporalMarkerOffset(0, () ->{
-//                    armWrapper.StopIntake();
-//                })
-//            .splineTo(new Vector2d(poseLocationsRed[IndexOutsideWH2].getX(), poseLocationsRed[IndexOutsideWH2].getY()), poseLocationsRed[IndexOutsideWH2].getHeading()) //4
-//                .lineTo(new Vector2d(poseLocationsRed[IndexInsideWH].getX(), poseLocationsRed[IndexInsideWH].getY())) //3
-//                .UNSTABLE_addTemporalMarkerOffset(-1.5,()->{
-//                    armWrapper.SetLevel(0);
-//                })
-//                .UNSTABLE_addTemporalMarkerOffset(-.5,() -> {
-//                    armWrapper.IntakeReverse(1);
-//                })
-//
-//
-//            .lineTo(new Vector2d(poseLocationsRed[IndexOutsideWH2].getX(), poseLocationsRed[IndexOutsideWH2].getY())) //4
-//            .splineTo(new Vector2d(poseLocationsRed[IndexDrop2].getX(), poseLocationsRed[IndexDrop2].getY()), poseLocationsRed[IndexDrop2].getHeading()) //5
-//            .UNSTABLE_addTemporalMarkerOffset(-.2, () -> {
-//                armWrapper.Intake(.25);
-//            })
-//            .waitSeconds(.1)
-//            .UNSTABLE_addTemporalMarkerOffset(0, () ->{
-//                armWrapper.StopIntake();
-//            })
-//            .splineTo(new Vector2d(poseLocationsRed[IndexOutsideWH2].getX(), poseLocationsRed[IndexOutsideWH2].getY()), poseLocationsRed[IndexOutsideWH2].getHeading()) //4
-//            .lineTo(new Vector2d(poseLocationsRed[IndexInsideWH].getX(), poseLocationsRed[IndexInsideWH].getY())) //3
-//            .UNSTABLE_addTemporalMarkerOffset(-.5,() -> {
-//                armWrapper.IntakeReverse(1);
-//            })
-//
+            .waitSeconds(.5)
+                // 1st go inside wharehouse
+            .lineTo(new Vector2d(poseLocationsRed[IndexInsideWH].getX(), poseLocationsRed[IndexInsideWH].getY())) //3
+            .UNSTABLE_addTemporalMarkerOffset(0, () -> {
+                armWrapper.StopIntake();
+            });
 
-//            .lineTo(new Vector2d(poseLocationsRed[IndexOutsideWH2].getX(), poseLocationsRed[IndexOutsideWH2].getY())) //4
-//            .splineTo(new Vector2d(poseLocationsRed[IndexDrop2].getX(), poseLocationsRed[IndexDrop2].getY()), poseLocationsRed[IndexDrop2].getHeading()) //5
-//            .UNSTABLE_addTemporalMarkerOffset(-.2, () -> {
-//                armWrapper.Intake(.25);
-//            })
-//            .waitSeconds(.1)
-//            .UNSTABLE_addTemporalMarkerOffset(0, () ->{
-//                armWrapper.StopIntake();
-//            })
-//            .splineTo(new Vector2d(poseLocationsRed[IndexOutsideWH2].getX(), poseLocationsRed[IndexOutsideWH2].getY()), poseLocationsRed[IndexOutsideWH2].getHeading()) //4
-//            .lineTo(new Vector2d(poseLocationsRed[IndexInsideWH].getX(), poseLocationsRed[IndexInsideWH].getY())) //3
-//            .UNSTABLE_addTemporalMarkerOffset(-.5,() -> {
-//                armWrapper.IntakeReverse(1);
-//            })
-//
-//
-//            .lineTo(new Vector2d(poseLocationsRed[IndexOutsideWH2].getX(), poseLocationsRed[IndexOutsideWH2].getY())) //4
-//            .splineTo(new Vector2d(poseLocationsRed[IndexDrop2].getX(), poseLocationsRed[IndexDrop2].getY()), poseLocationsRed[IndexDrop2].getHeading()) //5
-//            .UNSTABLE_addTemporalMarkerOffset(-.2, () -> {
-//                armWrapper.Intake(.25);
-//            })
-//            .waitSeconds(.1)
-//            .UNSTABLE_addTemporalMarkerOffset(0, () ->{
-//                armWrapper.StopIntake();
-//            })
-//            .splineTo(new Vector2d(poseLocationsRed[IndexOutsideWH2].getX(), poseLocationsRed[IndexOutsideWH2].getY()), poseLocationsRed[IndexOutsideWH2].getHeading()) //4
-//            .lineTo(new Vector2d(poseLocationsRed[IndexInsideWH].getX(), poseLocationsRed[IndexInsideWH].getY())) //3
-//            .UNSTABLE_addTemporalMarkerOffset(-.5,() -> {
-//                armWrapper.IntakeReverse(1);
-//            })
 
-            .build();
 
+             for(int i = 0; i < 2; i++) {
+                 builder = builder.lineTo(new Vector2d(poseLocationsRed[IndexOutsideWH2].getX(), poseLocationsRed[IndexOutsideWH2].getY())) //4
+                         .UNSTABLE_addTemporalMarkerOffset(-1.5, () -> {
+                             armWrapper.SetLevel(4);
+                         })
+                         // 2nd drop
+                         .splineTo(new Vector2d(poseLocationsRed[IndexDrop2].getX(), poseLocationsRed[IndexDrop2].getY()), poseLocationsRed[IndexDrop2].getHeading()) //5
+                         .UNSTABLE_addTemporalMarkerOffset(-.2, () -> {
+                             armWrapper.Intake(.25);
+                         })
+                         .waitSeconds(.1)
+                         .UNSTABLE_addTemporalMarkerOffset(0, () -> {
+                             armWrapper.StopIntake();
+                         })
+                         .UNSTABLE_addTemporalMarkerOffset(0, () -> {
+                             armWrapper.SetLevel(0);
+                         })
+                         .waitSeconds(.5)
+                         .splineTo(new Vector2d(poseLocationsRed[IndexOutsideWH2].getX(), poseLocationsRed[IndexOutsideWH2].getY()), poseLocationsRed[IndexOutsideWH2].getHeading()) //4
+                         .lineTo(new Vector2d(poseLocationsRed[IndexInsideWH].getX(), poseLocationsRed[IndexInsideWH].getY())) //3
+                         .UNSTABLE_addTemporalMarkerOffset(-.5, () -> {
+                             armWrapper.IntakeReverse(1);
+                         })
+                         .waitSeconds(.5);
+             }
+
+
+               /*
+            .lineTo(new Vector2d(poseLocationsRed[IndexOutsideWH2].getX(), poseLocationsRed[IndexOutsideWH2].getY())) //4
+            .splineTo(new Vector2d(poseLocationsRed[IndexDrop2].getX(), poseLocationsRed[IndexDrop2].getY()), poseLocationsRed[IndexDrop2].getHeading()) //5
+                .UNSTABLE_addTemporalMarkerOffset(-.2, () -> {
+                    armWrapper.Intake(.25);
+                })
+                .waitSeconds(.1)
+                .UNSTABLE_addTemporalMarkerOffset(0, () ->{
+                    armWrapper.StopIntake();
+                })
+            .splineTo(new Vector2d(poseLocationsRed[IndexOutsideWH2].getX(), poseLocationsRed[IndexOutsideWH2].getY()), poseLocationsRed[IndexOutsideWH2].getHeading()) //4
+            .lineTo(new Vector2d(poseLocationsRed[IndexInsideWH].getX(), poseLocationsRed[IndexInsideWH].getY())) //3
+            .UNSTABLE_addTemporalMarkerOffset(-2,()->{
+                armWrapper.SetLevel(0);
+            })
+            .UNSTABLE_addTemporalMarkerOffset(-.5,() -> {
+                armWrapper.IntakeReverse(1);
+            })
+
+
+            .lineTo(new Vector2d(poseLocationsRed[IndexOutsideWH2].getX(), poseLocationsRed[IndexOutsideWH2].getY())) //4
+            .splineTo(new Vector2d(poseLocationsRed[IndexDrop2].getX(), poseLocationsRed[IndexDrop2].getY()), poseLocationsRed[IndexDrop2].getHeading()) //5
+            .UNSTABLE_addTemporalMarkerOffset(-.2, () -> {
+                armWrapper.Intake(.25);
+            })
+            .waitSeconds(.1)
+            .UNSTABLE_addTemporalMarkerOffset(0, () ->{
+                armWrapper.StopIntake();
+            })
+            .splineTo(new Vector2d(poseLocationsRed[IndexOutsideWH2].getX(), poseLocationsRed[IndexOutsideWH2].getY()), poseLocationsRed[IndexOutsideWH2].getHeading()) //4
+            .lineTo(new Vector2d(poseLocationsRed[IndexInsideWH].getX(), poseLocationsRed[IndexInsideWH].getY())) //3
+            .UNSTABLE_addTemporalMarkerOffset(-.5,() -> {
+                armWrapper.IntakeReverse(1);
+            })
+
+
+            .lineTo(new Vector2d(poseLocationsRed[IndexOutsideWH2].getX(), poseLocationsRed[IndexOutsideWH2].getY())) //4
+            .splineTo(new Vector2d(poseLocationsRed[IndexDrop2].getX(), poseLocationsRed[IndexDrop2].getY()), poseLocationsRed[IndexDrop2].getHeading()) //5
+            .UNSTABLE_addTemporalMarkerOffset(-.2, () -> {
+                armWrapper.Intake(.25);
+            })
+            .waitSeconds(.1)
+            .UNSTABLE_addTemporalMarkerOffset(0, () ->{
+                armWrapper.StopIntake();
+            })
+            .splineTo(new Vector2d(poseLocationsRed[IndexOutsideWH2].getX(), poseLocationsRed[IndexOutsideWH2].getY()), poseLocationsRed[IndexOutsideWH2].getHeading()) //4
+            .lineTo(new Vector2d(poseLocationsRed[IndexInsideWH].getX(), poseLocationsRed[IndexInsideWH].getY())) //3
+            .UNSTABLE_addTemporalMarkerOffset(-.5,() -> {
+                armWrapper.IntakeReverse(1);
+            })
+
+
+            .lineTo(new Vector2d(poseLocationsRed[IndexOutsideWH2].getX(), poseLocationsRed[IndexOutsideWH2].getY())) //4
+            .splineTo(new Vector2d(poseLocationsRed[IndexDrop2].getX(), poseLocationsRed[IndexDrop2].getY()), poseLocationsRed[IndexDrop2].getHeading()) //5
+            .UNSTABLE_addTemporalMarkerOffset(-.2, () -> {
+                armWrapper.Intake(.25);
+            })
+            .waitSeconds(.1)
+            .UNSTABLE_addTemporalMarkerOffset(0, () ->{
+                armWrapper.StopIntake();
+            })
+            .splineTo(new Vector2d(poseLocationsRed[IndexOutsideWH2].getX(), poseLocationsRed[IndexOutsideWH2].getY()), poseLocationsRed[IndexOutsideWH2].getHeading()) //4
+            .lineTo(new Vector2d(poseLocationsRed[IndexInsideWH].getX(), poseLocationsRed[IndexInsideWH].getY())) //3
+            .UNSTABLE_addTemporalMarkerOffset(-.5,() -> {
+                armWrapper.IntakeReverse(1);
+            })
+*/
+           // .build();
+        TrajectorySequence trajectorySequence = builder.build();
         drive.followTrajectorySequence(trajectorySequence);
 
 

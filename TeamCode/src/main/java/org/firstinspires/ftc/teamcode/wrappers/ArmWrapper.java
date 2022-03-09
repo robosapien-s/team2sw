@@ -77,14 +77,14 @@ public class ArmWrapper {
             armMotor.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
 
             armServo.setDirection(Servo.Direction.REVERSE);
-/*
+
             try {
                 Thread.sleep(500);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
 
- */
+
 
             armServo.setPosition(servoPositions[0]);
 

@@ -67,10 +67,10 @@ public class DrivingWrapper {
         return backRightPower;
     }
 
-    public void Drive(JoystickWrapper joystickWrapper, double speed) {
+    public void Drive(JoystickWrapper joystickWrapper, double speed, double rotSpeed) {
         double y = -joystickWrapper.gamepad1GetLeftStickY(); // Remember, this is reversed! | Defining the y variable
         double x = joystickWrapper.gamepad1GetLeftStickX() * 1.1; // Counteract imperfect strafing | Defining the x variable
-        double rx = joystickWrapper.gamepad1GetRightStickX(); // Defining the rx (right x) variable
+        double rx = joystickWrapper.gamepad1GetRightStickX() * rotSpeed; // Defining the rx (right x) variable
 
         if (joystickWrapper.gamepad1GetRightBumperRaw()){
             telemetry.addData("Move", "Back Right");
@@ -96,10 +96,10 @@ public class DrivingWrapper {
 
         double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1); // Defining the denominator variable
 
-        motorFrontLeft.setPower(FrontLeftPower(denominator, y, x, rx) * speed); //setting the power for the motors
-        motorBackLeft.setPower(BackLeftPower(denominator, y, x, rx) * speed);
-        motorFrontRight.setPower(FrontRightPower(denominator, y, x, rx) * speed);
-        motorBackRight.setPower(BackRightPower(denominator, y, x, rx) * speed);
+        motorFrontLeft.setPower(FrontLeftPower(denominator, y, x, rx/speed) * speed); //setting the power for the motors
+        motorBackLeft.setPower(BackLeftPower(denominator, y, x, rx/speed) * speed);
+        motorFrontRight.setPower(FrontRightPower(denominator, y, x, rx/speed) * speed);
+        motorBackRight.setPower(BackRightPower(denominator, y, x, rx/speed) * speed);
     }
     public double calculateDenominator(double x, double y, double rx) {
         return Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);

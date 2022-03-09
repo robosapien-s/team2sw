@@ -16,7 +16,7 @@ public class AutonomousHomeRed extends LinearOpMode {
         ArmWrapper arm = new ArmWrapper(hardwareMap, telemetry);
 
 
-        AutonomousWrapper autonomousWrapper = new AutonomousWrapper(hardwareMap, telemetry);
+        AutonomousWrapper autonomousWrapper = new AutonomousWrapper(hardwareMap, telemetry,VuforiaWebcamLocalization.ELocation.REDHOME,this);
 
         waitForStart();
 
