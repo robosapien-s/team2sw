@@ -121,6 +121,7 @@ public class RedHomeRunnerV1 implements IAutonomousRunner {
             PickupDrop(i>=1);
         }
         armWrapper.ResetArm();
+        linearOpMode.sleep(500);
     }
 
     public void PickupDrop(boolean stay){

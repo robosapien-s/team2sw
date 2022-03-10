@@ -85,6 +85,7 @@ public class RedCarouselRunnerV2 implements IAutonomousRunner {
 
         drive.followTrajectory(trajectory4);
         armWrapper.ResetArm();
+        linearOpMode.sleep(500);
 
 
     }

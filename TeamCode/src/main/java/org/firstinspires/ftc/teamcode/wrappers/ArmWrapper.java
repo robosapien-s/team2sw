@@ -78,11 +78,11 @@ public class ArmWrapper {
 
             armServo.setDirection(Servo.Direction.REVERSE);
 
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+//            try {
+//                Thread.sleep(500);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
 
 
 
@@ -96,9 +96,11 @@ public class ArmWrapper {
     }
 
     public void ResetArm(){
-        armServo.setPosition(servoPositions[0]);
+
 
         SetLevel(0);
+
+        armServo.setPosition(.7);
 
     }
 
