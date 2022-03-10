@@ -98,7 +98,7 @@ public class AutonomousWrapper {
         telemetry.update();
 
 
-
+        arm.init(false);
 
 
 
