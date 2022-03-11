@@ -42,7 +42,6 @@ public class RedHomeRunner implements IAutonomousRunner {
 
         drive.setPoseEstimate(startPose);
 
-        armWrapper.init(true);
 
         levelInt = wrapper.OpenCVWrapper.barcodeInt - 1;
 
@@ -75,6 +74,7 @@ public class RedHomeRunner implements IAutonomousRunner {
 
 
         armWrapper.SetLevel(levelInt);
+        linearOpMode.sleep(500);
         drive.followTrajectory(trajectory1);
         armWrapper.Intake(.25);
         linearOpMode.sleep(1000);
@@ -102,6 +102,7 @@ public class RedHomeRunner implements IAutonomousRunner {
             PickupDrop(i>=1);
         }
         armWrapper.ResetArm();
+        linearOpMode.sleep(5000000);
     }
 
     public void PickupDrop(boolean stay){

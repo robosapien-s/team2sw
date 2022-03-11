@@ -11,6 +11,7 @@ import org.firstinspires.ftc.teamcode.autonomous.IAutonomousRunner;
 import org.firstinspires.ftc.teamcode.competitionopmodes.AutonomousWrapper;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.wrappers.ArmWrapper;
+import org.openftc.easyopencv.OpenCvWebcam;
 
 public class BlueHomeRunner implements IAutonomousRunner {
 
@@ -42,38 +43,38 @@ public class BlueHomeRunner implements IAutonomousRunner {
 
         drive.setPoseEstimate(startPose);
 
-        armWrapper.init(true);
-
         levelInt = wrapper.OpenCVWrapper.barcodeInt;
-
-
 
         if (levelInt<=0){
             levelInt=3;
         }
+
+        wrapper.OpenCVWrapper.StopCameraStream();
+
         trajectory1 = drive.trajectoryBuilder(startPose)
                 .splineTo(new Vector2d(5,38),Math.toRadians(-120))
                 .build();
 
         trajectory2 = drive.trajectoryBuilder(trajectory1.end())
-                .lineToLinearHeading(new Pose2d(10,58,0))
+                .lineToLinearHeading(new Pose2d(10,59,0))
                 .build();
 
         trajectory3 = drive.trajectoryBuilder(trajectory2.end())
-                .lineTo(new Vector2d(45,58))
+                .lineTo(new Vector2d(45,59))
                 .build();
 
         trajectory4 = drive.trajectoryBuilder(trajectory3.end())
-                .lineTo(new Vector2d(10,58))
+                .lineTo(new Vector2d(10,59))
                 .build();
 
         trajectory5 = drive.trajectoryBuilder(trajectory4.end())
-                .lineToLinearHeading(new Pose2d(5,35,Math.toRadians(-130)))
+                .lineToLinearHeading(new Pose2d(5,35,Math.toRadians(-140)))
                 .build();
 
 
 
-        armWrapper.SetLevel(levelInt);
+        armWrapper.SetLevelAut(levelInt, linearOpMode);
+        linearOpMode.sleep(1000);
         drive.followTrajectory(trajectory1);
         armWrapper.Intake(.25);
         linearOpMode.sleep(1000);
@@ -81,6 +82,7 @@ public class BlueHomeRunner implements IAutonomousRunner {
         drive.followTrajectory(trajectory2);
 
         armWrapper.SetLevel(0);
+
         armWrapper.IntakeReverse(1);
 
 //        armWrapper.SetLevel(0);
@@ -101,12 +103,13 @@ public class BlueHomeRunner implements IAutonomousRunner {
             PickupDrop(i>=1);
         }
         armWrapper.ResetArm();
+        linearOpMode.sleep(5000000);
 
     }
 
     public void PickupDrop(boolean stay){
         drive.followTrajectory(trajectory5);
-        armWrapper.Intake(.25);
+        armWrapper.Intake(.5);
         linearOpMode.sleep(1000);
         drive.followTrajectory(trajectory2);
         armWrapper.SetLevel(0);

@@ -49,7 +49,7 @@ public class RS_LinearOp extends LinearOpMode {
         armWrapper = new ArmWrapper(hardwareMap, telemetry); //see ArmWrapper
         crMotor  = hardwareMap.get(DcMotor.class, "carouselMotor");
         runnable = new TestRunnable(drive, armWrapper);
-//        armWrapper.started = armWrapper.init(armWrapper.started);
+        //armWrapper.init(false);
         waitForStart();
 
 
@@ -105,16 +105,16 @@ public class RS_LinearOp extends LinearOpMode {
                 armWrapper.IntakeReverse(1);
 
             }else if (joystickWrapper.gamepad2GetRightTrigger() >= .5) {
-                armWrapper.Intake(.25);
+                armWrapper.Intake(.5);
             }else{
                 armWrapper.StopIntake();
             }
 
             if (joystickWrapper.gamepad2GetRightBumperRaw()){
-                crMotor.setPower(-.5);
+                crMotor.setPower(-.75);
             }else {
                 if (joystickWrapper.gamepad2GetLeftBumperRaw()){
-                    crMotor.setPower(.5);
+                    crMotor.setPower(.75);
                 }else {
                     crMotor.setPower(0);
                 }

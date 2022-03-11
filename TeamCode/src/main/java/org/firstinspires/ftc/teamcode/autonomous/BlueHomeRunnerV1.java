@@ -38,7 +38,10 @@ public class BlueHomeRunnerV1 implements IAutonomousRunner {
     }
 
     @Override
+
     public void run() {
+
+
 
         Pose2d startPose = new Pose2d(-10, -60, Math.toRadians(90));
 
@@ -92,7 +95,8 @@ public class BlueHomeRunnerV1 implements IAutonomousRunner {
             .UNSTABLE_addTemporalMarkerOffset(0,()->{armWrapper.SetLevel(3);})
             .build();
 
-        armWrapper.SetLevel(levelInt);
+        armWrapper.SetLevelAut(levelInt, linearOpMode);
+        linearOpMode.sleep(500);
         drive.followTrajectory(trajectory1);
         armWrapper.Intake(.25);
         linearOpMode.sleep(500);
@@ -120,7 +124,7 @@ public class BlueHomeRunnerV1 implements IAutonomousRunner {
             PickupDrop(i>=1);
         }
         armWrapper.ResetArm();
-        linearOpMode.sleep(500);
+        linearOpMode.sleep(5000000);
     }
 
     public void PickupDrop(boolean stay){

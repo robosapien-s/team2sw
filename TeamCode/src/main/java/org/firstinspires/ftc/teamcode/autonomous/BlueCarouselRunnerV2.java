@@ -43,7 +43,6 @@ public class BlueCarouselRunnerV2 implements IAutonomousRunner {
         if (wrapper.OpenCVWrapper.barcodeInt==0){
             wrapper.OpenCVWrapper.barcodeInt=3;
         }
-        armWrapper.init(true);
 
         if (levelInt==1){
             trajectory1 = drive.trajectoryBuilder(startPose)
@@ -68,9 +67,10 @@ public class BlueCarouselRunnerV2 implements IAutonomousRunner {
 
 
         armWrapper.SetLevel(levelInt);
+        linearOpMode.sleep(1000);
         drive.followTrajectory(trajectory1);
         armWrapper.Intake(.3);
-        linearOpMode.sleep(1500);
+        linearOpMode.sleep(500);
         armWrapper.StopIntake();
 
         drive.followTrajectory(trajectory2);
@@ -83,7 +83,7 @@ public class BlueCarouselRunnerV2 implements IAutonomousRunner {
 
         drive.followTrajectory(trajectory4);
         armWrapper.ResetArm();
-        linearOpMode.sleep(500);
+        linearOpMode.sleep(5000000);
 
 
     }

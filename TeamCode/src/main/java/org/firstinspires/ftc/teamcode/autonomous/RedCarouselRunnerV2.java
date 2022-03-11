@@ -38,7 +38,6 @@ public class RedCarouselRunnerV2 implements IAutonomousRunner {
         drive.setPoseEstimate(startPose);
 
 
-        armWrapper.init(true);
 
         levelInt = wrapper.OpenCVWrapper.barcodeInt;
 
@@ -70,6 +69,7 @@ public class RedCarouselRunnerV2 implements IAutonomousRunner {
 
 
         armWrapper.SetLevel(levelInt);
+        linearOpMode.sleep(1000);
         drive.followTrajectory(trajectory1);
         armWrapper.Intake(.2);
         linearOpMode.sleep(1000);
@@ -85,7 +85,7 @@ public class RedCarouselRunnerV2 implements IAutonomousRunner {
 
         drive.followTrajectory(trajectory4);
         armWrapper.ResetArm();
-        linearOpMode.sleep(500);
+        linearOpMode.sleep(5000000);
 
 
     }

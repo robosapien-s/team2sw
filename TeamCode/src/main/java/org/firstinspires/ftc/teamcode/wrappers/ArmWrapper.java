@@ -1,4 +1,5 @@
 package org.firstinspires.ftc.teamcode.wrappers;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -63,33 +64,24 @@ public class ArmWrapper {
     }
     Double encoderTicks = 537.7;
     int[] levelPositions = {1000, 1500, 2500, 3500, 7000,2500};
-    double[] servoPositions = {.38, .38, .31, 0.23, .41,0};
+    double[] servoPositions = {.38, .38, .27, 0.15, .41,0};
 
     public boolean init(boolean started) {
         if (!started) {
+
+
+            armServo.setDirection(Servo.Direction.REVERSE);
+            armServo.setPosition(servoPositions[0]);
             armMotor.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
 
             armMotor.setPower(.5);
 
+
             armMotor.setTargetPosition(-620);
 
 
+
             armMotor.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
-
-            armServo.setDirection(Servo.Direction.REVERSE);
-
-//            try {
-//                Thread.sleep(500);
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
-
-
-
-            armServo.setPosition(servoPositions[0]);
-
-            telemetry.addData("position:",armServo.getPosition());
-
             started = true;
         }
         return started;
@@ -100,7 +92,7 @@ public class ArmWrapper {
 
         SetLevel(0);
 
-        armServo.setPosition(.7);
+        armServo.setPosition(.9);
 
     }
 
@@ -183,8 +175,9 @@ public class ArmWrapper {
             telemetry.update();
         }
     }
-    public void SetLevel(int lev) {
-        started = init(started);
+    public void SetLevelTele(int lev) {
+//        started = init(started);
+        if (armMotor.isBusy()) return;
         double armPower = 1;
         Level previousLevel = level;
         if(lev == 0) {
@@ -209,7 +202,83 @@ public class ArmWrapper {
             //telemetry.addData("Arm Position:", newPosition);
             //telemetry.addData("current position", armMotor.getCurrentPosition());
             armServo.setPosition(newServoPosition);
-            System.out.println(newServoPosition);
+
+//            System.out.println(newServoPosition);
+            armMotor.setPower(armPower);
+            armMotor.setTargetPosition(-newPosition);
+            armMotor.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+            telemetry.addData("Actual Intake Position", armServo.getPosition());
+            telemetry.update();
+        }
+    }
+
+
+    public void SetLevelAut(int lev, LinearOpMode opMode) {
+//        started = init(started);
+        double armPower = 1;
+        Level previousLevel = level;
+        if(lev == 0) {
+            level = Level.START;
+        }else if(lev == 1) {
+            level = Level.ONE;
+        }else if(lev == 2) {
+            level = Level.TWO;
+        }else if(lev == 3) {
+            level = Level.THREE;
+        }else if(lev == 4){
+            level = Level.BACK;
+        }
+        if(previousLevel != level) {
+            armMotor.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+            double newServoPosition = getIntakePosition(previousLevel, level);
+            int newPosition = getNewPosition(previousLevel, level);
+            telemetry.addData("Target Pos:", armMotor.getTargetPosition());
+            //telemetry.addData("LEVEL:", level);
+            //telemetry.addData("P_LEVEL:", previousLevel);
+            telemetry.addData("New Intake Position:" ,newServoPosition);
+            //telemetry.addData("Arm Position:", newPosition);
+            //telemetry.addData("current position", armMotor.getCurrentPosition());
+            armServo.setPosition(newServoPosition);
+            if(opMode != null) {
+                opMode.sleep(200);
+            }
+
+//            System.out.println(newServoPosition);
+            armMotor.setPower(armPower);
+            armMotor.setTargetPosition(-newPosition);
+            armMotor.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+            telemetry.addData("Actual Intake Position", armServo.getPosition());
+            telemetry.update();
+        }
+    }
+    public void SetLevel(int lev) {
+//        started = init(started);
+        double armPower = 1;
+        Level previousLevel = level;
+        if(lev == 0) {
+            level = Level.START;
+        }else if(lev == 1) {
+            level = Level.ONE;
+        }else if(lev == 2) {
+            level = Level.TWO;
+        }else if(lev == 3) {
+            level = Level.THREE;
+        }else if(lev == 4){
+            level = Level.BACK;
+        }
+        if(previousLevel != level) {
+            armMotor.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+            double newServoPosition = getIntakePosition(previousLevel, level);
+            int newPosition = getNewPosition(previousLevel, level);
+            telemetry.addData("Target Pos:", armMotor.getTargetPosition());
+            //telemetry.addData("LEVEL:", level);
+            //telemetry.addData("P_LEVEL:", previousLevel);
+            telemetry.addData("New Intake Position:" ,newServoPosition);
+            //telemetry.addData("Arm Position:", newPosition);
+            //telemetry.addData("current position", armMotor.getCurrentPosition());
+            armServo.setPosition(newServoPosition);
+
+//            System.out.println(newServoPosition);
             armMotor.setPower(armPower);
             armMotor.setTargetPosition(-newPosition);
             armMotor.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);

@@ -47,7 +47,7 @@ public class RedHomeRunnerV1 implements IAutonomousRunner {
 
         armWrapper.init(true);
 
-        levelInt = wrapper.OpenCVWrapper.barcodeInt - 1;
+        levelInt = 2;//wrapper.OpenCVWrapper.barcodeInt - 1;
 
 
 
@@ -93,9 +93,10 @@ public class RedHomeRunnerV1 implements IAutonomousRunner {
             .UNSTABLE_addTemporalMarkerOffset(0,()->{armWrapper.SetLevel(3);})
             .build();
 
-        armWrapper.SetLevel(levelInt);
+        armWrapper.SetLevelAut(levelInt,linearOpMode);
+        linearOpMode.sleep(1000);
         drive.followTrajectory(trajectory1);
-        armWrapper.Intake(.25);
+        armWrapper.Intake(.5);
         linearOpMode.sleep(500);
         armWrapper.StopIntake();
         drive.followTrajectory(trajectory2);
@@ -121,7 +122,7 @@ public class RedHomeRunnerV1 implements IAutonomousRunner {
             PickupDrop(i>=1);
         }
         armWrapper.ResetArm();
-        linearOpMode.sleep(500);
+        linearOpMode.sleep(5000000);
     }
 
     public void PickupDrop(boolean stay){

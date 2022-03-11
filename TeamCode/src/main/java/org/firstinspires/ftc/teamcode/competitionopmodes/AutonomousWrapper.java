@@ -36,8 +36,8 @@ public class AutonomousWrapper {
     SampleMecanumDrive roadRunner;
     DrivingWrapper driver;
     ArmWrapper arm;
-    double speed = .25;
-    double rotSpeed = .25;
+    double speed = .25; //Unused
+    double rotSpeed = .25; //Unused
     HardwareMap hardwareMap;
     Telemetry telemetry;
 
@@ -79,7 +79,7 @@ public class AutonomousWrapper {
             runner = new BlueCarouselRunnerV2(drive, arm, opMode, this);
 
         }else if(location == VuforiaWebcamLocalization.ELocation.BLUEHOME) {
-            runner = new BlueHomeRunnerV1(drive, arm, opMode, this);
+            runner = new BlueHomeRunner(drive, arm, opMode, this);
         }else if(location == VuforiaWebcamLocalization.ELocation.REDCAROUSEL) {
             runner = new RedCarouselRunnerV2(drive, arm, opMode, this);
         }else if(location == VuforiaWebcamLocalization.ELocation.REDHOME) {
@@ -100,7 +100,7 @@ public class AutonomousWrapper {
 
         arm.init(false);
 
-        
+
 
         runner.run();
 
