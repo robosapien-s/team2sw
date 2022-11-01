@@ -163,7 +163,7 @@ public class DrivingWrapper {
         motorBackLeft.setPower(BackLeftPower(denominator, y, x, rx)*speed);
         motorFrontRight.setPower(FrontRightPower(denominator, y, x, rx)*speed);
         motorBackRight.setPower(BackRightPower(denominator, y, x, rx)*speed);
-//        try
+//
 //            Thread.sleep((long) (1000*time));
 //        } catch (InterruptedException e) {
 //            e.printStackTrace();

@@ -26,8 +26,8 @@ public class PowerPlayArmWrapper {
 
     }
     public void PPArmMove(JoystickWrapper joystickWrapper) {
-        bottomMotor.setPower(-joystickWrapper.gamepad1GetLeftStickX() * 0.25);
-        topMotor.setPower(joystickWrapper.gamepad1GetLeftStickY());
+        bottomMotor.setPower(-joystickWrapper.gamepad1GetRightStickX() * 0.25);
+        topMotor.setPower(joystickWrapper.gamepad1GetRightStickY());
         if(joystickWrapper.gamepad1GetA()) {
             if (open) {
                 clawServo.setPosition(10);
