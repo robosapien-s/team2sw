@@ -17,7 +17,7 @@ import org.firstinspires.ftc.teamcode.wrappers.ArmWrapper;
 import org.firstinspires.ftc.teamcode.wrappers.DrivingWrapper;
 import org.firstinspires.ftc.teamcode.wrappers.JoystickWrapper;
 import org.firstinspires.ftc.teamcode.wrappers.PowerPlayArmWrapper;
-
+//lol
 @TeleOp
 public class Test_New_Arm extends LinearOpMode{
 
