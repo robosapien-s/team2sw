@@ -32,8 +32,8 @@ public class BriansRobotTest extends LinearOpMode {
         bottomMotor = hardwareMap.get(DcMotor.class, "bottomMotor");
         waitForStart();
         while (!isStopRequested()) {
-            telemetry.addData("JoystickLeftStickValue",String.valueOf(joystickWrapper.gamepad1GetLeftStickX()));
-            bottomMotor.setPower(joystickWrapper.gamepad1GetLeftStickX());
+            telemetry.addData("JoystickLeftStickValue",String.valueOf(joystickWrapper.gamepad2GetRightStickX()));
+            bottomMotor.setPower(joystickWrapper.gamepad2GetRightStickX());
         }
     }
 }
