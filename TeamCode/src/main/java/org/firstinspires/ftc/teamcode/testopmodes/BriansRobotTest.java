@@ -1,5 +1,5 @@
 package org.firstinspires.ftc.teamcode.testopmodes;
-
+//dfjskla;
 import com.qualcomm.ftccommon.SoundPlayer;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
@@ -20,20 +20,18 @@ import org.firstinspires.ftc.teamcode.wrappers.PowerPlayArmWrapper;
 @TeleOp
 public class BriansRobotTest extends LinearOpMode {
     JoystickWrapper joystickWrapper;
-
-    DcMotor bottomMotor;
-    // hiii
-
+    PowerPlayArmWrapper powerPlayArmWrapper;
+    DcMotor slideMotor;
+    //DrivingWrapper drivingWrapper;
     @Override
     public void runOpMode(){
         joystickWrapper = new JoystickWrapper(gamepad1, gamepad2);  //see JoystickWrapper
-        //powerPlayArmWrapper = new PowerPlayArmWrapper(hardwareMap, telemetry);
-        //drivingWrapper = new DrivingWrapper(hardwareMap, telemetry); //see DrivingWrapper
-        bottomMotor = hardwareMap.get(DcMotor.class, "bottomMotor");
+        powerPlayArmWrapper = new PowerPlayArmWrapper(hardwareMap, telemetry);
+        slideMotor = hardwareMap.get(DcMotor.class, "slideMotor");
+        //drivingWrapper = new DrivingWrapper(hardwareMap, telemetry); //see DrivingWrappee
         waitForStart();
         while (!isStopRequested()) {
-            telemetry.addData("JoystickLeftStickValue",String.valueOf(joystickWrapper.gamepad2GetRightStickX()));
-            bottomMotor.setPower(joystickWrapper.gamepad2GetRightStickX());
+            slideMotor.setPower(joystickWrapper.gamepad2GetRightStickY()*0.25);
         }
     }
 }
