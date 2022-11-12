@@ -49,11 +49,11 @@ public class OpenCvDetection2 {
     Mat mask = new Mat();
     Mat hierarchy = new Mat();
 
-    int cameraHieght = 600;
-    int cameraWidth = 800;
+    int cameraHieght = 1088;
+    int cameraWidth = 1088;
 
     public void init(boolean webcamBool) {
-        telemetry.addData("pipi in caki,", "in pipi cakalat.");
+        telemetry.addData("pipi und caki,", "in pipi cakalat.");
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         if(webcamBool) {
             webcam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
