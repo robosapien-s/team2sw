@@ -13,6 +13,7 @@ public class PowerPlayArmWrapper {
     DcMotor bottomMotor;
     DcMotor topMotor;
     Servo clawServo;
+    DcMotor slideMotor;
 
     boolean open = true;
     public PowerPlayArmWrapper(HardwareMap inHardwareMap, Telemetry inTelemetry) {
@@ -21,13 +22,15 @@ public class PowerPlayArmWrapper {
         bottomMotor  = hardwareMap.get(DcMotor.class, "bottomMotor");
         topMotor  = hardwareMap.get(DcMotor.class, "topMotor");
         clawServo = hardwareMap.get(Servo.class, "clawServo");
+        slideMotor  = hardwareMap.get(DcMotor.class, "slideMotor");
 
 
 
     }
     public void PPArmMove(JoystickWrapper joystickWrapper) {
         bottomMotor.setPower(-joystickWrapper.gamepad2GetLeftStickX() * 0.25);
-        topMotor.setPower(joystickWrapper.gamepad2GetLeftStickY()*-1);
+        slideMotor.setPower(joystickWrapper.gamepad2GetRightStickY()*0.5);
+        topMotor.setPower(joystickWrapper.gamepad2GetLeftStickY());
         if(joystickWrapper.gamepad2GetA()) {
             if (open) {
                 clawServo.setPosition(10);
