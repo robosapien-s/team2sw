@@ -5,14 +5,14 @@ import com.acmerobotics.roadrunner.geometry.Vector2d;
 
 public class QuikMaths {
 
-    public double RadToDeg = 57.2957795,
-    DegToRad = 0.01745329,
-    FtToM = 0.3048,
-    MToFt = 3.2808399,
-    MiToFt = 5280,
-    FtToMi = 0.00018939,
-    InToFt = 0.08333333,
-    FtToIn = 12;
+    public double RadToDeg = 57.2957795;
+    public double DegToRad = 0.01745329;
+    public double FtToM = 0.3048;
+    public double MToFt = 3.2808399;
+    public double MiToFt = 5280;
+    public double FtToMi = 0.00018939;
+    public double InToFt = 0.08333333;
+    public double FtToIn = 12;
 
     public float Clamp(float min, float max, float n){
         if (n>max){
