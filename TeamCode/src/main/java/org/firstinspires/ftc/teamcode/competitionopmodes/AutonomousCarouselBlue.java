@@ -4,7 +4,6 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.wrappers.ArmWrapper;
 import org.firstinspires.ftc.teamcode.wrappers.DrivingWrapper;
-import org.firstinspires.ftc.teamcode.testopmodes.VuforiaWebcamLocalization;
 
 @Autonomous(name="Carousel Blue", group="Iterative Opmode")
 public class AutonomousCarouselBlue extends LinearOpMode {
