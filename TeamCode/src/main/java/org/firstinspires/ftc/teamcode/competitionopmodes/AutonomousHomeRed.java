@@ -4,7 +4,6 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.wrappers.ArmWrapper;
 import org.firstinspires.ftc.teamcode.wrappers.DrivingWrapper;
-import org.firstinspires.ftc.teamcode.testopmodes.VuforiaWebcamLocalization;
 
 @Autonomous(name="Home Red", group="Iterative Opmode")
 public class AutonomousHomeRed extends LinearOpMode {

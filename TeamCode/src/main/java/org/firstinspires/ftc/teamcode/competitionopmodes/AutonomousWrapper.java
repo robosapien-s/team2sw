@@ -1,32 +1,18 @@
 package org.firstinspires.ftc.teamcode.competitionopmodes;
 
-import android.media.MediaPlayer;
-import android.media.SoundPool;
-
-import com.acmerobotics.roadrunner.geometry.Pose2d;
-import com.acmerobotics.roadrunner.geometry.Vector2d;
-import com.acmerobotics.roadrunner.trajectory.Trajectory;
-import com.qualcomm.ftccommon.SoundPlayer;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.*;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.robotcore.external.android.AndroidSoundPool;
 import org.firstinspires.ftc.teamcode.autonomous.BlueCarouselRunnerV2;
 import org.firstinspires.ftc.teamcode.autonomous.BlueHomeRunner;
-import org.firstinspires.ftc.teamcode.autonomous.BlueHomeRunnerV1;
 import org.firstinspires.ftc.teamcode.autonomous.IAutonomousRunner;
 import org.firstinspires.ftc.teamcode.autonomous.RedCarouselRunnerV2;
-import org.firstinspires.ftc.teamcode.autonomous.RedHomeRunner;
 import org.firstinspires.ftc.teamcode.autonomous.RedHomeRunnerV1;
-import org.firstinspires.ftc.teamcode.autonomous.RedHomeRunnerV2;
-import org.firstinspires.ftc.teamcode.autonomous.RedHomeRunnerV3;
 import org.firstinspires.ftc.teamcode.wrappers.ArmWrapper;
 import org.firstinspires.ftc.teamcode.wrappers.DrivingWrapper;
 import org.firstinspires.ftc.teamcode.wrappers.OpenCvDetection;
-import org.firstinspires.ftc.teamcode.testopmodes.VuforiaWebcamLocalization;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 
 public class AutonomousWrapper {
