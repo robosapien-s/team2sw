@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.wrappers;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
@@ -13,7 +14,7 @@ public class PowerPlayArmWrapper {
     DcMotor bottomMotor;
     DcMotor topMotor;
     Servo clawServo;
-    DcMotor slideMotor;
+    DcMotorEx slideMotor;
 
     boolean open = true;
     public PowerPlayArmWrapper(HardwareMap inHardwareMap, Telemetry inTelemetry) {
@@ -22,14 +23,21 @@ public class PowerPlayArmWrapper {
         bottomMotor  = hardwareMap.get(DcMotor.class, "bottomMotor");
         topMotor  = hardwareMap.get(DcMotor.class, "topMotor");
         clawServo = hardwareMap.get(Servo.class, "clawServo");
-        slideMotor  = hardwareMap.get(DcMotor.class, "slideMotor");
+        slideMotor  = hardwareMap.get(DcMotorEx.class, "slideMotor");
 
 
 
     }
     public void PPArmMove(JoystickWrapper joystickWrapper) {
         bottomMotor.setPower(-joystickWrapper.gamepad2GetLeftStickX() * 0.25);
-        slideMotor.setPower(joystickWrapper.gamepad2GetRightStickY()*0.5);
+        if (slideMotor.getTargetPosition() < 0) {
+            slideMotor.setPower(-.5);
+            slideMotor.setTargetPosition(1);
+            slideMotor.setPower(0);
+        }
+        else {
+            slideMotor.setPower(-joystickWrapper.gamepad2GetRightStickY()*0.75);
+        }
         topMotor.setPower(joystickWrapper.gamepad2GetLeftStickY());
         if(joystickWrapper.gamepad2GetA()) {
             if (open) {
