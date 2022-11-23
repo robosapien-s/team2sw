@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.wrappers;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
@@ -16,6 +17,9 @@ public class PowerPlayArmWrapper {
     Servo clawServo;
     DcMotorEx slideMotor;
 
+    int slidePos = 0;
+    final int slideEncoderFactor = 200;
+
     boolean open = true;
     public PowerPlayArmWrapper(HardwareMap inHardwareMap, Telemetry inTelemetry) {
         hardwareMap = inHardwareMap;
@@ -24,20 +28,25 @@ public class PowerPlayArmWrapper {
         topMotor  = hardwareMap.get(DcMotor.class, "topMotor");
         clawServo = hardwareMap.get(Servo.class, "clawServo");
         slideMotor  = hardwareMap.get(DcMotorEx.class, "slideMotor");
-
-
+        slideMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        slideMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 
     }
     public void PPArmMove(JoystickWrapper joystickWrapper) {
+
         bottomMotor.setPower(-joystickWrapper.gamepad2GetLeftStickX() * 0.25);
-        if (slideMotor.getTargetPosition() < 0) {
-            slideMotor.setPower(-.5);
-            slideMotor.setTargetPosition(1);
-            slideMotor.setPower(0);
+        slidePos = slideMotor.getCurrentPosition() + (int)(joystickWrapper.gamepad2GetRightStickY()*slideEncoderFactor);
+        if (slidePos>-5) {
+            slidePos = -5;
         }
-        else {
-            slideMotor.setPower(-joystickWrapper.gamepad2GetRightStickY()*0.75);
-        }
+        telemetry.addData("CurrentPosition", slideMotor.getCurrentPosition());
+        telemetry.addData("TargetPosition", slidePos);
+        telemetry.update();
+        slideMotor.setPower(1);
+        slideMotor.setTargetPosition(slidePos);
+
+        slideMotor.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+
         topMotor.setPower(joystickWrapper.gamepad2GetLeftStickY());
         if(joystickWrapper.gamepad2GetA()) {
             if (open) {
