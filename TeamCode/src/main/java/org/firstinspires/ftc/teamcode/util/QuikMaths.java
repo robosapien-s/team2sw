@@ -6,14 +6,14 @@ import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
 
 public class QuikMaths {
-
-    public static double RadToDeg = 57.2957795;
+    public static final double PI = 3.14159265358979323846;
+    public static double RadToDeg = 180/PI;
     public static double DegToRad = 0.01745329;
     public static double FtToM = 0.3048;
     public static double MToFt = 3.2808399;
     public static double MiToFt = 5280;
-    public static double FtToMi = 0.00018939;
-    public static double InToFt = 0.08333333;
+    public static double FtToMi = 1/5280;
+    public static double InToFt = 1/12;
     public static double FtToIn = 12;
 
     public static float Clamp(float min, float max, float n){
