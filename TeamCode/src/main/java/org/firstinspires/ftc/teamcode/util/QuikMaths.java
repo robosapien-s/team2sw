@@ -40,16 +40,44 @@ public class QuikMaths {
     }
 
     public static double GetAngleFromVector(float x, float y){
-       return Atan2(x, y) * RadToDeg+90;
+        double r =  Atan2(x, y) * RadToDeg;
+        if (r>180){
+            r -= 180;
+        }
+        else if (r<-180){
+            r += 180;
+        }
+        return r;
     }
     public static double GetAngleFromVector(double x, double y){
-        return Atan2(x, y) * RadToDeg+90;
+        double r = Atan2(x, y) * RadToDeg;
+        if (r>180){
+            r -= 180;
+        }
+        else if (r<-180){
+            r += 180;
+        }
+        return r;
     }
     public static double GetAngleFromVector(Vector2d vector2d){
-        return Atan2(vector2d) * RadToDeg+90;
+        double r = Atan2(vector2d) * RadToDeg;
+        if (r>180){
+            r -= 180;
+        }
+        else if (r<-180){
+            r += 180;
+        }
+        return r;
     }
     public static double GetAngleFromVector(Pose2d pose2d){
-        return Atan2(pose2d) * RadToDeg+90;
+        double r = Atan2(pose2d) * RadToDeg;
+        if (r>180){
+            r -= 180;
+        }
+        else if (r<-180){
+            r += 180;
+        }
+        return r;
     }
 
     public static void QuikMeths(){
