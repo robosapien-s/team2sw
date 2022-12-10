@@ -18,6 +18,7 @@ import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 import org.openftc.easyopencv.OpenCvInternalCamera;
 import org.openftc.easyopencv.OpenCvPipeline;
+import org.firstinspires.ftc.teamcode.util.QuikMaths;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,8 +47,15 @@ public class OpenCvDetection2 {
     }
 
     Mat cvtMat = new Mat();
-    Mat mask = new Mat();
     Mat hierarchy = new Mat();
+
+    Mat RedMask = new Mat();
+    Mat GreenMask = new Mat();
+    Mat BlueMask = new Mat();
+
+    double RedSize;
+    double GreenSize;
+    double BlueSize;
 
     int cameraHieght = 960;
     int cameraWidth = 1280;
@@ -152,12 +160,19 @@ public class OpenCvDetection2 {
             Green(input);
             Blue(input);
 
+            int color = QuikMaths.LargestOfThree(RedSize,GreenSize,BlueSize);
+            if (color == 0){
+                return RedMask;
+            }else if(color == 1){
+                return GreenMask;
+            }else {
+                return BlueMask;
+            }
 
             //cvtMat.release();
             //input.release();
             //hierarchy.release();
 
-            return mask;
 
 
             //return input;
@@ -210,11 +225,11 @@ public class OpenCvDetection2 {
 
 
 
-        Core.inRange(cvtMat, minValues, maxValues, mask);
+        Core.inRange(cvtMat, minValues, maxValues, BlueMask);
 
 
         List<MatOfPoint> contours = new ArrayList<>();
-        Imgproc.findContours(mask, contours, hierarchy, Imgproc.RETR_CCOMP, Imgproc.CHAIN_APPROX_SIMPLE);
+        Imgproc.findContours(BlueMask, contours, hierarchy, Imgproc.RETR_CCOMP, Imgproc.CHAIN_APPROX_SIMPLE);
 
 
         //MatOfPoint2f[] contoursPoly  = new MatOfPoint2f[contours.size()];
@@ -228,19 +243,17 @@ public class OpenCvDetection2 {
             Point center = new Point();
             float[] radius = new float[1];
             Imgproc.minEnclosingCircle(contoursPoly, center, radius);
-            if(boundRect.size().width>50.0){
-
+            if(((boundRect.size().width+boundRect.size().height)/2)>50.0){
                 telemetry.addData("Found:", "Blue");
-
                 telemetry.update();
-
                 contoursPoly.release();
 
+                BlueSize = ((boundRect.size().width+boundRect.size().height)/2);
 
                 break;
             }
         }
-        return mask;
+        return BlueMask;
     }
 
     public Mat Red(Mat input){
@@ -253,11 +266,11 @@ public class OpenCvDetection2 {
 
 
 
-        Core.inRange(cvtMat, minValues, maxValues, mask);
+        Core.inRange(cvtMat, minValues, maxValues, RedMask);
 
 
         List<MatOfPoint> contours = new ArrayList<>();
-        Imgproc.findContours(mask, contours, hierarchy, Imgproc.RETR_CCOMP, Imgproc.CHAIN_APPROX_SIMPLE);
+        Imgproc.findContours(RedMask, contours, hierarchy, Imgproc.RETR_CCOMP, Imgproc.CHAIN_APPROX_SIMPLE);
 
 
         //MatOfPoint2f[] contoursPoly  = new MatOfPoint2f[contours.size()];
@@ -271,20 +284,18 @@ public class OpenCvDetection2 {
             Point center = new Point();
             float[] radius = new float[1];
             Imgproc.minEnclosingCircle(contoursPoly, center, radius);
-            if(boundRect.size().width>50.0){
-
+            if(((boundRect.size().width+boundRect.size().height)/2)>50.0){
                 telemetry.addData("Found:", "Red");
-
                 telemetry.update();
-
                 contoursPoly.release();
 
+                RedSize = ((boundRect.size().width+boundRect.size().height)/2);
 
                 break;
             }
 
         }
-        return mask;
+        return RedMask;
     }
 
     public Mat Green(Mat input){
@@ -297,11 +308,11 @@ public class OpenCvDetection2 {
 
 
 
-        Core.inRange(cvtMat, minValues, maxValues, mask);
+        Core.inRange(cvtMat, minValues, maxValues, GreenMask);
 
 
         List<MatOfPoint> contours = new ArrayList<>();
-        Imgproc.findContours(mask, contours, hierarchy, Imgproc.RETR_CCOMP, Imgproc.CHAIN_APPROX_SIMPLE);
+        Imgproc.findContours(GreenMask, contours, hierarchy, Imgproc.RETR_CCOMP, Imgproc.CHAIN_APPROX_SIMPLE);
 
 
         //MatOfPoint2f[] contoursPoly  = new MatOfPoint2f[contours.size()];
@@ -315,19 +326,17 @@ public class OpenCvDetection2 {
             Point center = new Point();
             float[] radius = new float[1];
             Imgproc.minEnclosingCircle(contoursPoly, center, radius);
-            if(boundRect.size().width>50.0){
-
+            if(((boundRect.size().width+boundRect.size().height)/2)>50.0){
                 telemetry.addData("Found:", "Green");
-
                 telemetry.update();
-
                 contoursPoly.release();
 
+                GreenSize = ((boundRect.size().width+boundRect.size().height)/2);
 
                 break;
             }
         }
 
-        return mask;
+        return GreenMask;
     }
 }

@@ -26,6 +26,16 @@ public class QuikMaths {
         return n;
     }
 
+    public static int LargestOfThree(double zero, double first, double second){
+        if(zero>first&&zero>second){
+            return 0;
+        }else if(first>zero&&first>second){
+            return 1;
+        }else {
+            return 2;
+        }
+    }
+
     public static double Atan2(float x, float y){
         return Math.atan2(y,x);
     }

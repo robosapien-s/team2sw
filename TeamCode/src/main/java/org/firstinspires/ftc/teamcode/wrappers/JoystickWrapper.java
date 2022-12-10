@@ -32,6 +32,9 @@ public class JoystickWrapper {
     boolean gamepad1leftTriggerPressed = false;
     boolean gamepad1rightTriggerPressed = false;
 
+    double gamepad1leftStickLastDirection;
+    double gamepad1rightStickLastDirection;
+
     boolean gamepad2xPressed = false;
     boolean gamepad2yPressed = false;
     boolean gamepad2aPressed = false;
@@ -50,6 +53,9 @@ public class JoystickWrapper {
 
     boolean gamepad2leftTriggerPressed = false;
     boolean gamepad2rightTriggerPressed = false;
+
+    double gamepad2leftStickLastDirection;
+    double gamepad2rightStickLastDirection;
 
 
     public JoystickWrapper(Gamepad inGamepad1, Gamepad inGamepad2) {
@@ -235,6 +241,19 @@ public class JoystickWrapper {
     public boolean gamepad1GetLeftStick() {
         return gamepad1.left_stick_button;
     }
+    public boolean gamepad1GetRightStickUsed(float deadzone){
+        return deadzone < Math.abs(gamepad1GetRightStickX()) + Math.abs(gamepad1GetRightStickY()) || deadzone == Math.abs(gamepad1GetRightStickX()) + Math.abs(gamepad1GetRightStickY());
+    }
+    public boolean gamepad1GetRightStickUsed(double deadzone){
+        return deadzone < Math.abs(gamepad1GetRightStickX()) + Math.abs(gamepad1GetRightStickY()) || deadzone == Math.abs(gamepad1GetRightStickX()) + Math.abs(gamepad1GetRightStickY());
+    }
+    public boolean gamepad1GetLeftStickUsed(double deadzone) {
+        return deadzone < Math.abs(gamepad1GetLeftStickX()) + Math.abs(gamepad1GetLeftStickY()) || deadzone == Math.abs(gamepad1GetLeftStickX()) + Math.abs(gamepad1GetLeftStickY());
+    }
+    public boolean gamepad1GetLeftStickUsed(float deadzone){
+        return deadzone < Math.abs(gamepad1GetLeftStickX()) + Math.abs(gamepad1GetLeftStickY()) || deadzone == Math.abs(gamepad1GetLeftStickX()) + Math.abs(gamepad1GetLeftStickY());
+    }
+
 
     public double gamepad1GetRightTrigger() {
         return gamepad1.right_trigger;
@@ -255,9 +274,26 @@ public class JoystickWrapper {
         return gamepad1.left_stick_y;
     }
     public double gamepad1GetLeftStickAngle(){
-        return QuikMaths.GetAngleFromVector(gamepad1.left_stick_x,gamepad1.left_stick_y);
+        if(gamepad1GetLeftStickUsed(.75)){
+            gamepad1leftStickLastDirection = gamepad1GetLeftStickAngleRaw();
+            return gamepad1leftStickLastDirection;
+        }else {
+            return gamepad1leftStickLastDirection;
+        }
     }
     public double gamepad1GetRightStickAngle(){
+        if(gamepad1GetRightStickUsed(.75)){
+            gamepad1rightStickLastDirection = gamepad2GetRightStickAngleRaw();
+            return gamepad1rightStickLastDirection;
+        }else {
+            return gamepad1rightStickLastDirection;
+        }
+    }
+
+    public double gamepad1GetLeftStickAngleRaw(){
+        return QuikMaths.GetAngleFromVector(gamepad1.left_stick_x,gamepad1.left_stick_y);
+    }
+    public double gamepad1GetRightStickAngleRaw(){
         return QuikMaths.GetAngleFromVector(gamepad1.right_stick_x,gamepad1.right_stick_y);
     }
 
@@ -412,6 +448,20 @@ public class JoystickWrapper {
     public boolean gamepad2GetLeftBumperRaw() { return gamepad2.left_bumper; }
     public boolean gamepad2GetRightStick() { return gamepad2.right_stick_button; }
     public boolean gamepad2GetLeftStickDown() { return gamepad2.left_stick_button; }
+    public boolean gamepad2GetRightStickUsed(float deadzone){
+        return deadzone < Math.abs(gamepad2GetRightStickX()) + Math.abs(gamepad2GetRightStickY()) || deadzone == Math.abs(gamepad2GetRightStickX()) + Math.abs(gamepad2GetRightStickY());
+    }
+    public boolean gamepad2GetRightStickUsed(double deadzone){
+        return deadzone < Math.abs(gamepad2GetRightStickX()) + Math.abs(gamepad2GetRightStickY()) || deadzone == Math.abs(gamepad2GetRightStickX()) + Math.abs(gamepad2GetRightStickY());
+    }
+    public boolean gamepad2GetLeftStickUsed(double deadzone) {
+        return deadzone < Math.abs(gamepad2GetLeftStickX()) + Math.abs(gamepad2GetLeftStickY()) || deadzone == Math.abs(gamepad2GetLeftStickX()) + Math.abs(gamepad2GetLeftStickY());
+    }
+    public boolean gamepad2GetLeftStickUsed(float deadzone){
+        return deadzone < Math.abs(gamepad2GetLeftStickX()) + Math.abs(gamepad2GetLeftStickY()) || deadzone == Math.abs(gamepad2GetLeftStickX()) + Math.abs(gamepad2GetLeftStickY());
+    }
+
+
 
     public double gamepad2GetRightTrigger() { return gamepad2.right_trigger; }
     public double gamepad2GetLeftTrigger() { return gamepad2.left_trigger; }
@@ -420,9 +470,27 @@ public class JoystickWrapper {
     public double gamepad2GetLeftStickX() { return gamepad2.left_stick_x; }
     public double gamepad2GetLeftStickY() { return gamepad2.left_stick_y; }
     public double gamepad2GetLeftStickAngle(){
-        return QuikMaths.GetAngleFromVector(gamepad2.left_stick_x,gamepad2.left_stick_y);
+        if(gamepad2GetLeftStickUsed(.75)){
+            gamepad2leftStickLastDirection = gamepad2GetLeftStickAngleRaw();
+            return gamepad2leftStickLastDirection;
+        }else {
+            return gamepad2leftStickLastDirection;
+        }
     }
     public double gamepad2GetRightStickAngle(){
+        if(gamepad2GetRightStickUsed(.75)){
+            gamepad2rightStickLastDirection = gamepad2GetRightStickAngleRaw();
+            return gamepad2rightStickLastDirection;
+        }else {
+            return gamepad2rightStickLastDirection;
+        }
+    }
+
+    public double gamepad2GetLeftStickAngleRaw(){
+        return QuikMaths.GetAngleFromVector(gamepad2.left_stick_x,gamepad2.left_stick_y);
+    }
+    public double gamepad2GetRightStickAngleRaw(){
         return QuikMaths.GetAngleFromVector(gamepad2.right_stick_x,gamepad2.right_stick_y);
     }
+
 }
