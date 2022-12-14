@@ -11,8 +11,8 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 public class ExtensionArmWrapper {
     HardwareMap hardwareMap;
     Telemetry telemetry;
-    DcMotor bottomMotor;
-    DcMotor topMotor;
+    //DcMotor bottomMotor;
+    //DcMotor topMotor;
     Servo clawServo;
     Servo clawBase;
     DcMotorEx slideMotor;
@@ -33,8 +33,8 @@ public class ExtensionArmWrapper {
         hardwareMap = inHardwareMap;
         telemetry = inTelemetry;
 
-        bottomMotor  = hardwareMap.get(DcMotor.class, "bottomMotor");
-        topMotor  = hardwareMap.get(DcMotor.class, "topMotor");
+        //bottomMotor  = hardwareMap.get(DcMotor.class, "bottomMotor");
+        //topMotor  = hardwareMap.get(DcMotor.class, "topMotor");
         clawServo = hardwareMap.get(Servo.class, "clawServo");
         clawBase = hardwareMap.get(Servo.class, "clawBase");
         slideMotor  = hardwareMap.get(DcMotorEx.class, "slideMotor");
@@ -70,7 +70,7 @@ public class ExtensionArmWrapper {
         slideMotor.setTargetPosition(slidePos);
 
         slideMotor.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
-        topMotor.setPower(-joystickWrapper.gamepad2GetLeftStickY());
+        //topMotor.setPower(-joystickWrapper.gamepad2GetLeftStickY());
 
         if(joystickWrapper.gamepad2GetA()) {
             if (open) {
@@ -83,14 +83,14 @@ public class ExtensionArmWrapper {
         }
     }
 
-    public double GetCurrentRotation(){
+    /*public double GetCurrentRotation(){
         double n = (360*(bottomMotor.getCurrentPosition()/(MotorTicks*Ratio)))%360;
         if(n>180){
             return n-360;
         }else return n;
-    }
+    }*/
 
-    public void RotateArm(double angle){
+    /*public void RotateArm(double angle){
         if(0>angle - GetCurrentRotation()){
             bottomMotor.setPower(-1 * 0.25);
             telemetry.addData("Input", "Negative");
@@ -99,7 +99,7 @@ public class ExtensionArmWrapper {
             telemetry.addData("Input", "Positive");
         }
         telemetry.update();
-    }
+    }*/
 
 }
 
