@@ -68,7 +68,7 @@ public class DrivingWrapper {
     }
 
     public void Drive(JoystickWrapper joystickWrapper, double speed, double rotSpeed) {
-        double y = -joystickWrapper.gamepad1GetLeftStickY(); // Remember, this is reversed! | Defining the y variable
+        double y = joystickWrapper.gamepad1GetLeftStickY(); // Remember, this is reversed! | Defining the y variable
         double x = joystickWrapper.gamepad1GetLeftStickX() * 1.1; // Counteract imperfect strafing | Defining the x variable
         double rx = -joystickWrapper.gamepad1GetRightStickX() * rotSpeed; // Defining the rx (right x) variable
 

@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.wrappers;
 
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -14,7 +15,7 @@ public class ExtensionArmWrapper {
     //DcMotor bottomMotor;
     //DcMotor topMotor;
     Servo clawServo;
-    Servo clawBase;
+    CRServo clawBase;
     DcMotorEx slideMotor;
 
     int slidePos = 0;
@@ -22,7 +23,7 @@ public class ExtensionArmWrapper {
     final int slideEncoderFactor = 10;
 
 
-    double servoPos = 0.5;
+    //double servoPos = 0.5;
     double currentRotation;
     double MotorTicks = ((((1+(46/17))) * (1+(46/11))) * 28);
 
@@ -36,7 +37,7 @@ public class ExtensionArmWrapper {
         //bottomMotor  = hardwareMap.get(DcMotor.class, "bottomMotor");
         //topMotor  = hardwareMap.get(DcMotor.class, "topMotor");
         clawServo = hardwareMap.get(Servo.class, "clawServo");
-        clawBase = hardwareMap.get(Servo.class, "clawBase");
+        clawBase = hardwareMap.get(CRServo.class, "clawBase");
         slideMotor  = hardwareMap.get(DcMotorEx.class, "slideMotor");
         slideMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         slideMotor.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -49,13 +50,16 @@ public class ExtensionArmWrapper {
 
         slidePos = slideMotor.getTargetPosition() + (int)(joystickWrapper.gamepad2GetRightStickY()*slideEncoderFactor);
 
-        if (joystickWrapper.gamepad2GetDDown()) {
-            servoPos = servoPos - .01;
+        /*if (joystickWrapper.gamepad2GetDDown()) {
+            clawBase.setPower(-.5);
+            servoPos = clawBase.getPosition() - .01;
         }
-        else if (joystickWrapper.gamepad2GetDUp()) {
-            servoPos = servoPos + .01;
-        }
-        clawBase.setPosition(servoPos);
+        if(joystickWrapper.gamepad2GetDUp()) {
+            servoPos = clawBase.getPosition() + .01;
+
+        }*/
+
+        clawBase.setPower(joystickWrapper.gamepad2GetLeftStickY());
 
         if (joystickWrapper.gamepad2GetA()) {
             slidePos = -5;
@@ -85,7 +89,7 @@ public class ExtensionArmWrapper {
         slideMotor.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
         //topMotor.setPower(-joystickWrapper.gamepad2GetLeftStickY());
 
-        if(joystickWrapper.gamepad2GetRightBumperDown()) {
+        if(joystickWrapper.gamepad2GetLeftBumperDown()) {
             if (open) {
                 clawServo.setPosition(.5);
                 open = false;
