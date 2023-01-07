@@ -105,7 +105,11 @@ public class VuforiaWebcamLocalization extends LinearOpMode implements Localizer
         BLUECAROUSEL,
         REDCAROUSEL,
         BLUEHOME,
-        REDHOME
+        REDHOME,
+        BLUECORNER,
+        REDCORNER,
+        BLUEMIDDLE,
+        REDMIDDLE
     }
     ELocation place;
 

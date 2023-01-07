@@ -50,10 +50,6 @@ public class OpenCvDetection2 {
     Mat GreenMask = new Mat();
     Mat BlueMask = new Mat();
 
-    MatOfPoint BlueContour;
-    MatOfPoint RedContour;
-    MatOfPoint GreenContour;
-
     double RedSize;
     double GreenSize;
     double BlueSize;
@@ -158,22 +154,45 @@ public class OpenCvDetection2 {
             //Scalar maxValues = new Scalar(255,255,164);
 
 
+            Mat outYellow = new Mat();
+            Mat outRed = new Mat();
+            Mat outBlue = new Mat();
 
-            Red(input);
-            Green(input);
-            Blue(input);
+            double greenSize = DetectColor(input, new Scalar(60, 50, 40), new Scalar(90, 255, 255), outYellow);
+            double redSize = DetectColor(input, new Scalar(136, 87, 111), new Scalar(180, 255, 255), outRed);
+            double blueSize = DetectColor(input, new Scalar(85, 80, 2), new Scalar(120, 255, 255), outBlue);
 
-            int color = QuikMaths.LargestOfThree(RedSize,GreenSize,BlueSize);
-            if (color == 0){
-                Imgproc.fillConvexPoly(RedMask,RedContour,new Scalar(255,0,0));
-                return RedMask;
-            }else if(color == 1){
-                Imgproc.fillConvexPoly(GreenMask,GreenContour,new Scalar(0,255,0));
-                return GreenMask;
-            }else {
-                Imgproc.fillConvexPoly(BlueMask,BlueContour,new Scalar(0,0,255));
-                return BlueMask;
-            }
+            telemetry.addData("Green", greenSize);
+            telemetry.addData("Red", redSize);
+            telemetry.addData("Blue", blueSize);
+
+            outRed.release();
+            outBlue.release();
+
+//            Red(input);
+//            Green(input);
+//            Blue(input);
+
+//            int color = QuikMaths.LargestOfThree(RedSize,GreenSize,BlueSize);
+//            if (color == 0){
+//                telemetry.addData("Red", RedSize);
+//                telemetry.addData("Blue", BlueSize);
+//                telemetry.addData("Green", GreenSize);
+//                telemetry.addData("Found", "Red");
+//                return RedMask;
+//            }else if(color == 1){
+//                telemetry.addData("Red", RedSize);
+//                telemetry.addData("Blue", BlueSize);
+//                telemetry.addData("Green", GreenSize);
+//                telemetry.addData("Found", "Green");
+//                return GreenMask;
+//            }else {
+//                telemetry.addData("Red", RedSize);
+//                telemetry.addData("Blue", BlueSize);
+//                telemetry.addData("Green", GreenSize);
+//                telemetry.addData("Found", "Blue");
+//                return BlueMask;
+//            }
 
             //cvtMat.release();
             //input.release();
@@ -181,7 +200,7 @@ public class OpenCvDetection2 {
 
 
 
-            //return input;
+            return outYellow;
         }
 
 
@@ -221,7 +240,7 @@ public class OpenCvDetection2 {
         webcam.stopStreaming();
     }
 
-    public Mat Blue(Mat input){
+    /*public Mat Blue(Mat input){
         Mat cvtMat = new Mat();
         Mat hierarchy = new Mat();
 
@@ -263,9 +282,96 @@ public class OpenCvDetection2 {
             }
         }
         return BlueMask;
+    }*/
+
+    public double DetectColor(Mat input, Scalar minValues, Scalar maxValues, Mat outMask){
+        Mat cvtMat = new Mat();
+        Mat hierarchy = new Mat();
+        double size = 0;
+
+        Imgproc.cvtColor(input, cvtMat, Imgproc.COLOR_RGB2HSV);
+        Imgproc.GaussianBlur(cvtMat,cvtMat,new Size(3,3),0);
+
+
+
+        //Scalar minValues = new Scalar(0, 0, 80);
+        //Scalar maxValues = new Scalar(122, 122, 255);
+
+
+
+        Core.inRange(cvtMat, minValues, maxValues, outMask);
+
+
+        List<MatOfPoint> contours = new ArrayList<>();
+        Imgproc.findContours(outMask, contours, hierarchy, Imgproc.RETR_CCOMP, Imgproc.CHAIN_APPROX_SIMPLE);
+
+        //MatOfPoint2f[] contoursPoly  = new MatOfPoint2f[contours.size()];
+        //Rect[] boundRect = new Rect[contours.size()];
+        //Point[] centers = new Point[contours.size()];
+        //float[][] radius = new float[contours.size()][1];
+        for (int i = 0; i < contours.size(); i++) {
+            MatOfPoint2f contoursPoly = new MatOfPoint2f();
+            Imgproc.approxPolyDP(new MatOfPoint2f(contours.get(i).toArray()), contoursPoly, 3, true);
+            Rect boundRect = Imgproc.boundingRect(new MatOfPoint(contoursPoly.toArray()));
+            Point center = new Point();
+            float[] radius = new float[1];
+            Imgproc.minEnclosingCircle(contoursPoly, center, radius);
+            contoursPoly.release();
+            size = size + boundRect.size().width+boundRect.size().height;
+
+        }
+        cvtMat.release();
+        hierarchy.release();
+
+        return size;
     }
 
-    public Mat Red(Mat input){
+
+    public Mat Blue(Mat input){
+        Mat cvtMat = new Mat();
+        Mat hierarchy = new Mat();
+
+        Imgproc.cvtColor(input, cvtMat, Imgproc.COLOR_RGB2HSV);
+        Imgproc.GaussianBlur(cvtMat,cvtMat,new Size(3,3),0);
+
+
+
+        Scalar minValues = new Scalar(0, 0, 80);
+        Scalar maxValues = new Scalar(122, 122, 255);
+
+
+
+        Core.inRange(cvtMat, minValues, maxValues, BlueMask);
+
+
+        List<MatOfPoint> contours = new ArrayList<>();
+        Imgproc.findContours(BlueMask, contours, hierarchy, Imgproc.RETR_CCOMP, Imgproc.CHAIN_APPROX_SIMPLE);
+        BlueSize = 0;
+
+        //MatOfPoint2f[] contoursPoly  = new MatOfPoint2f[contours.size()];
+        //Rect[] boundRect = new Rect[contours.size()];
+        //Point[] centers = new Point[contours.size()];
+        //float[][] radius = new float[contours.size()][1];
+        for (int i = 0; i < contours.size(); i++) {
+            MatOfPoint2f contoursPoly = new MatOfPoint2f();
+            Imgproc.approxPolyDP(new MatOfPoint2f(contours.get(i).toArray()), contoursPoly, 3, true);
+            Rect boundRect = Imgproc.boundingRect(new MatOfPoint(contoursPoly.toArray()));
+            Point center = new Point();
+            float[] radius = new float[1];
+            Imgproc.minEnclosingCircle(contoursPoly, center, radius);
+            contoursPoly.release();
+            BlueSize = BlueSize + boundRect.size().width+boundRect.size().height;
+
+        }
+        cvtMat.release();
+        hierarchy.release();
+
+        return BlueMask;
+    }
+
+
+
+    /*public Mat Red(Mat input){
         Mat cvtMat = new Mat();
         Mat hierarchy = new Mat();
 
@@ -309,7 +415,50 @@ public class OpenCvDetection2 {
 
         }
         return RedMask;
+    }*/
+    public Mat Red(Mat input){
+        Mat cvtMat = new Mat();
+        Mat hierarchy = new Mat();
+
+        Imgproc.cvtColor(input, cvtMat, Imgproc.COLOR_RGB2HSV);
+        Imgproc.GaussianBlur(cvtMat,cvtMat,new Size(3,3),0);
+
+
+
+        Scalar minValues = new Scalar(80, 0, 0);
+        Scalar maxValues = new Scalar(255, 122, 122);
+
+
+
+        Core.inRange(cvtMat, minValues, maxValues, RedMask);
+
+
+        List<MatOfPoint> contours = new ArrayList<>();
+        Imgproc.findContours(RedMask, contours, hierarchy, Imgproc.RETR_CCOMP, Imgproc.CHAIN_APPROX_SIMPLE);
+        RedSize = 0;
+
+        //MatOfPoint2f[] contoursPoly  = new MatOfPoint2f[contours.size()];
+        //Rect[] boundRect = new Rect[contours.size()];
+        //Point[] centers = new Point[contours.size()];
+        //float[][] radius = new float[contours.size()][1];
+        for (int i = 0; i < contours.size(); i++) {
+            MatOfPoint2f contoursPoly = new MatOfPoint2f();
+            Imgproc.approxPolyDP(new MatOfPoint2f(contours.get(i).toArray()), contoursPoly, 3, true);
+            Rect boundRect = Imgproc.boundingRect(new MatOfPoint(contoursPoly.toArray()));
+            Point center = new Point();
+            float[] radius = new float[1];
+            Imgproc.minEnclosingCircle(contoursPoly, center, radius);
+            contoursPoly.release();
+            RedSize = RedSize + boundRect.size().width+boundRect.size().height;
+
+        }
+        cvtMat.release();
+        hierarchy.release();
+
+        return RedMask;
     }
+
+
 
     /*public Mat Green(Mat input){
         Mat cvtMat = new Mat();
@@ -375,7 +524,7 @@ public class OpenCvDetection2 {
 
         List<MatOfPoint> contours = new ArrayList<>();
         Imgproc.findContours(GreenMask, contours, hierarchy, Imgproc.RETR_CCOMP, Imgproc.CHAIN_APPROX_SIMPLE);
-
+        GreenSize = 0;
 
         //MatOfPoint2f[] contoursPoly  = new MatOfPoint2f[contours.size()];
         //Rect[] boundRect = new Rect[contours.size()];
@@ -388,17 +537,13 @@ public class OpenCvDetection2 {
             Point center = new Point();
             float[] radius = new float[1];
             Imgproc.minEnclosingCircle(contoursPoly, center, radius);
-            if(((boundRect.size().width+boundRect.size().height)/2)>100){
-                telemetry.addData("Found:", "Green");
-                telemetry.update();
-                contoursPoly.release();
-                GreenContour = contours.get(i);
-                GreenSize = ((boundRect.size().width+boundRect.size().height)/2);
+            contoursPoly.release();
+            GreenSize = GreenSize + boundRect.size().width+boundRect.size().height;
 
-                break;
-            }
+
         }
-
+        cvtMat.release();
+        hierarchy.release();
         return GreenMask;
     }
 }

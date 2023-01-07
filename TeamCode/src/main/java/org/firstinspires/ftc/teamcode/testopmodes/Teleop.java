@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import org.firstinspires.ftc.teamcode.wrappers.OpenCvDetection;
 import org.firstinspires.ftc.teamcode.wrappers.OpenCvDetection2;
 
-@TeleOp(name = "Testin")
+@TeleOp(name = "e")
 public class Teleop extends OpMode {
 
     OpenCvDetection2 opencv;
