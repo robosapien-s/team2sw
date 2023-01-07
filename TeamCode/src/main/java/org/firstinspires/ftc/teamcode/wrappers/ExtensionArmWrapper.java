@@ -41,6 +41,7 @@ public class ExtensionArmWrapper {
         slideMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         slideMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         slideMotor.setTargetPosition(0);
+        servoPos = clawBase.getPosition();
     }
 
     public void PPArmMove(JoystickWrapper joystickWrapper) {
@@ -49,10 +50,10 @@ public class ExtensionArmWrapper {
         slidePos = slideMotor.getTargetPosition() + (int)(joystickWrapper.gamepad2GetRightStickY()*slideEncoderFactor);
 
         if (joystickWrapper.gamepad2GetDDown()) {
-            servoPos = clawBase.getPosition() - .01;
+            servoPos = servoPos - .01;
         }
         else if (joystickWrapper.gamepad2GetDUp()) {
-            servoPos = clawBase.getPosition() + .01;
+            servoPos = servoPos + .01;
         }
         clawBase.setPosition(servoPos);
 
