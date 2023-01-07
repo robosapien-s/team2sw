@@ -42,7 +42,6 @@ public class ExtensionArmWrapper {
         slideMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         slideMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         slideMotor.setTargetPosition(0);
-        servoPos = clawBase.getPosition();
     }
 
     public void PPArmMove(JoystickWrapper joystickWrapper) {
