@@ -23,7 +23,7 @@ public class ExtensionArmWrapper {
     final int slideEncoderFactor = 10;
 
 
-    //double servoPos = 0.5;
+    double servoPos = 0.5;
     double currentRotation;
     double MotorTicks = ((((1+(46/17))) * (1+(46/11))) * 28);
 
@@ -49,12 +49,12 @@ public class ExtensionArmWrapper {
 
         slidePos = slideMotor.getTargetPosition() + (int)(joystickWrapper.gamepad2GetRightStickY()*slideEncoderFactor);
 
-        /*if (joystickWrapper.gamepad2GetDDown()) {
+       /* if (joystickWrapper.gamepad2GetDDown()) {
             clawBase.setPower(-.5);
             servoPos = clawBase.getPosition() - .01;
         }
         if(joystickWrapper.gamepad2GetDUp()) {
-            servoPos = clawBase.getPosition() + .01;
+            servoPos = clawBase.getPosition();
 
         }*/
 
@@ -80,6 +80,7 @@ public class ExtensionArmWrapper {
         telemetry.addData("CurrentPosition:slide", slideMotor.getCurrentPosition());
         telemetry.addData("CurrentPosition:servo", clawServo.getPosition());
         telemetry.addData("TargetPosition", slidePos);
+        telemetry.addData("ClawBase", clawBase.getPower());
         telemetry.update();
 
         slideMotor.setPower(1);
@@ -120,3 +121,11 @@ public class ExtensionArmWrapper {
 }
 
 
+
+
+
+/*
+init 192.168.43.1:5555 at ip ADB
+push REABD library -- =: 17
+POP REABD library -- =: 17(grade.strip().split(1::2))
+ */
