@@ -58,7 +58,7 @@ public class ExtensionArmWrapper {
 
         }*/
 
-        clawBase.setPower(joystickWrapper.gamepad2GetLeftStickY());
+        clawBase.setPower(-joystickWrapper.gamepad2GetLeftStickY());
 
         if (joystickWrapper.gamepad2GetA()) {
             slidePos = -5;
