@@ -1,17 +1,17 @@
 package org.firstinspires.ftc.teamcode.testopmodes;
+
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.wrappers.DrivingWrapper;
 import org.firstinspires.ftc.teamcode.wrappers.DrivingWrapper2;
-import org.firstinspires.ftc.teamcode.wrappers.JoystickWrapper;
 import org.firstinspires.ftc.teamcode.wrappers.ExtensionArmWrapper;
+import org.firstinspires.ftc.teamcode.wrappers.JoystickWrapper;
 
 @TeleOp
-public class DorukRobotTest extends LinearOpMode {
+public class DorukRobotTest2 extends LinearOpMode {
     JoystickWrapper joystickWrapper;
     ExtensionArmWrapper extensionArmWrapper;
-    DrivingWrapper drivingWrapper;
+    DrivingWrapper2 drivingWrapper;
 
     double speed = 0.5;
     double rotspeed = 0.5;;
@@ -21,7 +21,7 @@ public class DorukRobotTest extends LinearOpMode {
     public void runOpMode() {
         joystickWrapper = new JoystickWrapper(gamepad1, gamepad2);
         extensionArmWrapper = new ExtensionArmWrapper(hardwareMap, telemetry);
-        drivingWrapper = new DrivingWrapper(hardwareMap, telemetry);
+        drivingWrapper = new DrivingWrapper2(hardwareMap, telemetry);
         waitForStart();
         while (!isStopRequested()){
             extensionArmWrapper.PPArmMove(joystickWrapper);

@@ -34,7 +34,7 @@ public class ExtensionArmWrapper {
         hardwareMap = inHardwareMap;
         telemetry = inTelemetry;
 
-        //bottomMotor  = hardwareMap.get(DcMotor.class, "bottomMotor");
+        //bottomMotor  = hardwareMap.get(tDcMotor.class, "bottomMotor");
         //topMotor  = hardwareMap.get(DcMotor.class, "topMotor");
         clawServo = hardwareMap.get(Servo.class, "clawServo");
         clawBase = hardwareMap.get(CRServo.class, "clawBase");
@@ -58,7 +58,7 @@ public class ExtensionArmWrapper {
 
         }*/
 
-        clawBase.setPower(joystickWrapper.gamepad2GetLeftStickY());
+        clawBase.setPower(-joystickWrapper.gamepad2GetLeftStickY());
 
         if (joystickWrapper.gamepad2GetA()) {
             slidePos = -5;
@@ -81,7 +81,7 @@ public class ExtensionArmWrapper {
         telemetry.addData("CurrentPosition:servo", clawServo.getPosition());
         telemetry.addData("TargetPosition", slidePos);
         telemetry.addData("ClawBase", clawBase.getPower());
-        telemetry.update();
+//        telemetry.update();
 
         slideMotor.setPower(1);
         slideMotor.setTargetPosition(slidePos);
