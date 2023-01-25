@@ -1,12 +1,17 @@
 package org.firstinspires.ftc.teamcode.wrappers;
 
+import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.acmerobotics.roadrunner.geometry.Pose2d;
+import com.acmerobotics.roadrunner.geometry.Vector2d;
 
+import org.firstinspires.ftc.teamcode.util.QuikMaths;
+import org.firstinspires.ftc.teamcode.drive.StandardTrackingWheelLocalizer;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
-public class DrivingWrapper {
+public class DrivingWrapper2 {
     public enum Direction {
         LEFT,
         RIGHT,
@@ -28,9 +33,18 @@ public class DrivingWrapper {
     DcMotor motorFrontRight;
     DcMotor motorBackRight;
 
-    public DrivingWrapper(HardwareMap inHardwareMap, Telemetry inTelemetry) {
+    StandardTrackingWheelLocalizer myLocalizer;
+
+    public DrivingWrapper2(HardwareMap inHardwareMap, Telemetry inTelemetry) {
+
         hardwareMap = inHardwareMap;// making a reference to HardwareMap in opModes
         telemetry = inTelemetry;// making a reference to Telemetry in opModes
+
+        myLocalizer = new StandardTrackingWheelLocalizer(hardwareMap);
+
+
+        myLocalizer.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
+
 
         //Motor 0
         motorFrontLeft = hardwareMap.dcMotor.get("motorFrontLeft"); //setting up the motors with hardwaremaps
@@ -68,32 +82,30 @@ public class DrivingWrapper {
     }
 
     public void Drive(JoystickWrapper joystickWrapper, double speed, double rotSpeed) {
-        double y = -joystickWrapper.gamepad1GetLeftStickY(); // Remember, this is reversed! | Defining the y variable
-        double x = joystickWrapper.gamepad1GetLeftStickX() * 1.1; // Counteract imperfect strafing | Defining the x variable
+        myLocalizer.update();
+        Pose2d myPose = myLocalizer.getPoseEstimate();
+        double inputAngle=0;
+
+        if (joystickWrapper.gamepad1GetLeftStickUsed(.4)){
+            inputAngle = joystickWrapper.gamepad1GetLeftStickAngle();
+        }else{
+            inputAngle=0;
+        }
+
+        Vector2d input = QuikMaths.a2s(inputAngle+(Math.toDegrees(myPose.getHeading() + 180) % 360 - 180));
+        double y = input.getY();// Remember, this is reversed! | Defining the y variable
+        double x = input.getX(); // Counteract imperfect strafing | Defining the x variable
         double rx = -joystickWrapper.gamepad1GetRightStickX() * rotSpeed; // Defining the rx (right x) variable
 
-        if (joystickWrapper.gamepad1GetRightBumperRaw()){
-            telemetry.addData("Move", "Back Right");
-            y=-1;
-            x=.3;
-        }
-        if (joystickWrapper.gamepad1GetLeftBumperRaw()){
-            telemetry.addData("Move", "Back Left");
-            y=-1;
-            x=-.3;
-        }
-        if (joystickWrapper.gamepad1GetRightTriggerPressed()){
-            telemetry.addData("Move", "Forward Right");
-            y=1;
-            x=.3;
-        }
-        if (joystickWrapper.gamepad1GetLeftTriggerPressed()){
-            telemetry.addData("Move", "Forward Left");
-            y=1;
-            x=-.3;
-        }
+        telemetry.addData("Input Angle: ", joystickWrapper.gamepad1GetLeftStickAngle()+(Math.toDegrees(myPose.getHeading() + 180) % 360 - 180));
+        telemetry.addData("Joystick: ", joystickWrapper.gamepad1GetLeftStickAngle());
+        telemetry.addData("Rotation: ", (Math.toDegrees(myPose.getHeading() + 180) % 360 - 180))
+        ;
+        telemetry.addData("Y-Input: ",y);
+        telemetry.addData("X-Input: ",x);
+        telemetry.addData("Input: ", input);
 
-
+        telemetry.update();
         double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1); // Defining the denominator variable
 
         motorFrontLeft.setPower(FrontLeftPower(denominator, y, x, rx/speed) * speed); //setting the power for the motors

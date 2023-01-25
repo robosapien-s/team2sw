@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
-public class DrivingWrapper {
+public class DrivingWrapper69 {
     public enum Direction {
         LEFT,
         RIGHT,
@@ -28,7 +28,7 @@ public class DrivingWrapper {
     DcMotor motorFrontRight;
     DcMotor motorBackRight;
 
-    public DrivingWrapper(HardwareMap inHardwareMap, Telemetry inTelemetry) {
+    public DrivingWrapper69(HardwareMap inHardwareMap, Telemetry inTelemetry) {
         hardwareMap = inHardwareMap;// making a reference to HardwareMap in opModes
         telemetry = inTelemetry;// making a reference to Telemetry in opModes
 
@@ -70,28 +70,8 @@ public class DrivingWrapper {
     public void Drive(JoystickWrapper joystickWrapper, double speed, double rotSpeed) {
         double y = -joystickWrapper.gamepad1GetLeftStickY(); // Remember, this is reversed! | Defining the y variable
         double x = joystickWrapper.gamepad1GetLeftStickX() * 1.1; // Counteract imperfect strafing | Defining the x variable
-        double rx = -joystickWrapper.gamepad1GetRightStickX() * rotSpeed; // Defining the rx (right x) variable
+        double rx = joystickWrapper.gamepad1GetRightStickX() * rotSpeed; // Defining the rx (right x) variable
 
-        if (joystickWrapper.gamepad1GetRightBumperRaw()){
-            telemetry.addData("Move", "Back Right");
-            y=-1;
-            x=.3;
-        }
-        if (joystickWrapper.gamepad1GetLeftBumperRaw()){
-            telemetry.addData("Move", "Back Left");
-            y=-1;
-            x=-.3;
-        }
-        if (joystickWrapper.gamepad1GetRightTriggerPressed()){
-            telemetry.addData("Move", "Forward Right");
-            y=1;
-            x=.3;
-        }
-        if (joystickWrapper.gamepad1GetLeftTriggerPressed()){
-            telemetry.addData("Move", "Forward Left");
-            y=1;
-            x=-.3;
-        }
 
 
         double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1); // Defining the denominator variable

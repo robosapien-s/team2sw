@@ -5,6 +5,8 @@ import androidx.annotation.NonNull;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
 
+import org.opencv.core.Mat;
+
 public class QuikMaths {
     public static final double PI = 3.14159265358979323846;
     public static double RadToDeg = 180/PI;
@@ -34,6 +36,55 @@ public class QuikMaths {
         }else {
             return 2;
         }
+    }
+
+    public static double csc(double a){
+        return 1/Math.sin(a);
+    }
+    public static double sec(double a){
+        return 1/Math.cos(a);
+    }
+    public static double cot(double a){
+        return 1/Math.tan(a);
+    }
+
+    public static Vector2d a2s(double A){
+
+        if(A<90 && A>0){
+            double C = 90;
+            double B = 180- (A+C);
+            double c = Math.min(Math.abs(QuikMaths.csc(A%90)),Math.abs(QuikMaths.sec(A%90)));
+
+
+            Vector2d ab = new Vector2d(c*Math.sin(A),c*Math.sin(B));
+            return ab;
+        }else if (A>90){
+            double C = 90;
+            double B = 180- (A+C);
+            double c = Math.min(Math.abs(QuikMaths.csc(A%90)),Math.abs(QuikMaths.sec(A%90)));
+
+
+            Vector2d ab = new Vector2d(c*Math.sin(A),-c*Math.sin(B));
+            return ab;
+        }else if (A<0 && A>-90){
+            double C = 90;
+            double B = 180- (A+C);
+            double c = Math.min(Math.abs(QuikMaths.csc(A%90)),Math.abs(QuikMaths.sec(A%90)));
+
+
+            Vector2d ab = new Vector2d(-c*Math.sin(A),c*Math.sin(B));
+            return ab;
+        }else if(A<-90){
+            double C = 90;
+            double B = 180- (A+C);
+            double c = Math.min(Math.abs(QuikMaths.csc(A%90)),Math.abs(QuikMaths.sec(A%90)));
+
+
+            Vector2d ab = new Vector2d(-c*Math.sin(A),-c*Math.sin(B));
+            return ab;
+        }
+
+        return null;
     }
 
     public static double Atan2(float x, float y){

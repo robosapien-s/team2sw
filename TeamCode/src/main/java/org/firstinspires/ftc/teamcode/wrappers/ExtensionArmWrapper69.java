@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
-public class ExtensionArmWrapper {
+public class ExtensionArmWrapper69 {
     HardwareMap hardwareMap;
     Telemetry telemetry;
     //DcMotor bottomMotor;
@@ -30,7 +30,7 @@ public class ExtensionArmWrapper {
 
     boolean open = true;
 
-    public ExtensionArmWrapper(HardwareMap inHardwareMap, Telemetry inTelemetry) {
+    public ExtensionArmWrapper69(HardwareMap inHardwareMap, Telemetry inTelemetry) {
         hardwareMap = inHardwareMap;
         telemetry = inTelemetry;
 
@@ -47,7 +47,7 @@ public class ExtensionArmWrapper {
     public void PPArmMove(JoystickWrapper joystickWrapper) {
 
 
-        slidePos = slideMotor.getTargetPosition() + (int)(joystickWrapper.gamepad2GetRightStickY()*slideEncoderFactor);
+        slidePos = slideMotor.getTargetPosition() + (int)(joystickWrapper.gamepad1GetRightStickY()*slideEncoderFactor);
 
        /* if (joystickWrapper.gamepad2GetDDown()) {
             clawBase.setPower(-.5);
@@ -58,30 +58,30 @@ public class ExtensionArmWrapper {
 
         }*/
 
-        clawBase.setPower(-joystickWrapper.gamepad2GetLeftStickY());
+        clawBase.setPower(joystickWrapper.gamepad1GetLeftStickY());
 
-        if (joystickWrapper.gamepad2GetA()) {
-            slidePos = -5;
-        }else if (joystickWrapper.gamepad2GetX()) {
-            slidePos = -1900;
+        if (joystickWrapper.gamepad1GetDDown()) {
+            slidePos = 5;
+        }else if (joystickWrapper.gamepad1GetDLeft()) {
+            slidePos = 1900;
         }
-        else if (joystickWrapper.gamepad2GetY()) {
-            slidePos = -3000;
-        }else if (joystickWrapper.gamepad2GetB()) {
-            slidePos = -4000;
+        else if (joystickWrapper.gamepad1GetDUp()) {
+            slidePos = 3000;
+        }else if (joystickWrapper.gamepad1GetDRight()) {
+            slidePos = 4000;
         }
 
-        if (slidePos>-5) {
-            slidePos = -5;
+        if (slidePos<5) {
+            slidePos = 5;
         }
-        if (slidePos<-4000) {
-            slidePos = -4000;
+        if (slidePos>4000) {
+            slidePos = 4000;
         }
         telemetry.addData("CurrentPosition:slide", slideMotor.getCurrentPosition());
         telemetry.addData("CurrentPosition:servo", clawServo.getPosition());
         telemetry.addData("TargetPosition", slidePos);
         telemetry.addData("ClawBase", clawBase.getPower());
-//        telemetry.update();
+        telemetry.update();
 
         slideMotor.setPower(1);
         slideMotor.setTargetPosition(slidePos);
@@ -89,7 +89,7 @@ public class ExtensionArmWrapper {
         slideMotor.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
         //topMotor.setPower(-joystickWrapper.gamepad2GetLeftStickY());
 
-        if(joystickWrapper.gamepad2GetLeftBumperDown()) {
+        if(joystickWrapper.gamepad1GetLeftBumperDown()) {
             if (open) {
                 clawServo.setPosition(.5);
                 open = false;

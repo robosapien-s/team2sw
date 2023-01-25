@@ -14,7 +14,7 @@ public class AutonomousHomeBlue extends LinearOpMode {
     public void runOpMode() {
 
         DrivingWrapper driver = new DrivingWrapper(hardwareMap,telemetry);
-        ArmWrapper arm = new ArmWrapper(hardwareMap, telemetry);
+//        ArmWrapper arm = new ArmWrapper(hardwareMap, telemetry);
 
 
         AutonomousWrapper autonomousWrapper = new AutonomousWrapper(hardwareMap, telemetry,VuforiaWebcamLocalization.ELocation.BLUEHOME,this);
@@ -23,7 +23,7 @@ public class AutonomousHomeBlue extends LinearOpMode {
 
 
         if(opModeIsActive()) {
-            autonomousWrapper.RunAutonomous(VuforiaWebcamLocalization.ELocation.BLUEHOME, this);
+//            autonomousWrapper.RunAutonomous(VuforiaWebcamLocalization.ELocation.BLUEHOME, this);
         }
 
 
