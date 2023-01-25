@@ -1,54 +1,43 @@
 package org.firstinspires.ftc.teamcode.competitionopmodes;
 
-import com.qualcomm.ftccommon.SoundPlayer;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.robotcore.external.android.AndroidSoundPool;
 import org.firstinspires.ftc.teamcode.autonomous.IRunnableTeleOp;
-import org.firstinspires.ftc.teamcode.autonomous.SharedShipping;
 import org.firstinspires.ftc.teamcode.autonomous.TestRunnable;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
+import org.firstinspires.ftc.teamcode.util.Encoder;
 import org.firstinspires.ftc.teamcode.wrappers.ArmWrapper;
 import org.firstinspires.ftc.teamcode.wrappers.DrivingWrapper;
 import org.firstinspires.ftc.teamcode.wrappers.JoystickWrapper;
 
 
-@TeleOp(name="RS_LinearOp")
-public class RS_LinearOp extends OpMode {
+@TeleOp(name="Teleop")
+public class Teleop extends OpMode {
 
+    private Encoder leftEncoder, rightEncoder, frontEncoder;
 
+    private int leftEncoderTicks, rightEncoderTicks, frontEncoderTicks;
 
-    JoystickWrapper joystickWrapper;
-    DrivingWrapper drivingWrapper;
-    ArmWrapper armWrapper;
-    IRunnableTeleOp runnable;
-
-    double speed = 1;
-    double rotSpeed = 1;
-
-    DcMotor crMotor;
-    /**
-     * See all: JoystickWrapper, DrivingWrapper, and ArmWrapper
-     */
-
-
-    ElapsedTime stateTimer = new ElapsedTime();
-    //Used to keep the time during a TeleOp. We don't use this currently
-
-
-
-    @Override
     public void init() {
-
+        leftEncoder = new Encoder(hardwareMap.get(DcMotorEx.class, "leftEncoder"));
+        rightEncoder = new Encoder(hardwareMap.get(DcMotorEx.class, "rightEncoder"));
+        frontEncoder = new Encoder(hardwareMap.get(DcMotorEx.class, "middleEncoder"));
+        leftEncoderTicks = leftEncoder.getCurrentPosition();
+        rightEncoderTicks = rightEncoder.getCurrentPosition();
+        frontEncoderTicks = frontEncoder.getCurrentPosition();
     }
 
     @Override
     public void loop() {
-
+        telemetry.addData("Left:",leftEncoder.getCurrentPosition()-leftEncoderTicks);
+        telemetry.addData("Right: ", rightEncoder.getCurrentPosition() - rightEncoderTicks);
+        telemetry.addData("Front: ",frontEncoder.getCurrentPosition() - frontEncoderTicks);
+        telemetry.update();
     }
 //    @Override
 //    public void loop() {

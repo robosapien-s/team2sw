@@ -7,6 +7,8 @@ public interface IGamepadInput {
     public double ChassisRotate();
     public Vector2d ChassisMove();
     public double ChassisSpeed();
+    public double ChassisRotSpeed();
+
     public int ChassisPreset();
 
     public double ArmMove();

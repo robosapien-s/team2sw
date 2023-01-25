@@ -1,13 +1,14 @@
 package org.firstinspires.ftc.teamcode.competitionopmodes;
+
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import org.firstinspires.ftc.teamcode.testopmodes.VuforiaWebcamLocalization;
 
+import org.firstinspires.ftc.teamcode.testopmodes.VuforiaWebcamLocalization;
 import org.firstinspires.ftc.teamcode.wrappers.ArmWrapper;
 import org.firstinspires.ftc.teamcode.wrappers.DrivingWrapper;
 
-@Autonomous(name="Home Red", group="Iterative Opmode")
-public class AutonomousHomeRed extends LinearOpMode {
+@Autonomous(name="Middle Blue", group="Iterative Opmode")
+public class AutonomousMiddleBlue extends LinearOpMode {
 
     @Override
     public void runOpMode() {
@@ -16,13 +17,13 @@ public class AutonomousHomeRed extends LinearOpMode {
 //        ArmWrapper arm = new ArmWrapper(hardwareMap, telemetry);
 
 
-        AutonomousWrapper autonomousWrapper = new AutonomousWrapper(hardwareMap, telemetry,VuforiaWebcamLocalization.ELocation.REDHOME,this);
+        AutonomousWrapper autonomousWrapper = new AutonomousWrapper(hardwareMap, telemetry,VuforiaWebcamLocalization.ELocation.BLUEMIDDLE ,this);
 
         waitForStart();
 
 
         if(opModeIsActive()) {
-//            autonomousWrapper.RunAutonomous(VuforiaWebcamLocalization.ELocation.REDHOME, this);
+            autonomousWrapper.RunAutonomous(VuforiaWebcamLocalization.ELocation.BLUEMIDDLE, this);
         }
 
 

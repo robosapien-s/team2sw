@@ -19,7 +19,9 @@ public class RobotInputWrapper {
         robot.ChassisRotate(gamepadInput.ChassisRotate());
         robot.ChassisMove(gamepadInput.ChassisMove());
         robot.ChassisSpeed(gamepadInput.ChassisSpeed());
+        robot.ChassisRotSpeed(gamepadInput.ChassisRotSpeed());
         robot.ChassisPreset(gamepadInput.ChassisPreset());
+
 
         robot.ArmMove(gamepadInput.ArmMove());
         robot.ArmSpeed(gamepadInput.ArmSpeed());
@@ -28,5 +30,7 @@ public class RobotInputWrapper {
         robot.GenericVector2d(gamepadInput.GenericVector2d());
         robot.GenericFloat(gamepadInput.GenericFloat());
         robot.GenericInt(gamepadInput.GenericInt());
+
+        robot.Update();
     }
 }

@@ -14,7 +14,7 @@ public class AutonomousCarouselRed extends LinearOpMode {
 
 
         if(opModeIsActive()) {
-            autonomousWrapper.RunAutonomous(VuforiaWebcamLocalization.ELocation.REDCAROUSEL, this);
+//            autonomousWrapper.RunAutonomous(VuforiaWebcamLocalization.ELocation.REDCAROUSEL, this);
 
         }
 

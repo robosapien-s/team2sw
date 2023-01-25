@@ -50,13 +50,41 @@ public class QuikMaths {
 
     public static Vector2d a2s(double A){
 
-        double C = 90;
-        double B = 180- (A+90);
-        double c = Math.min(Math.abs(QuikMaths.csc(A%90)),Math.abs(QuikMaths.sec(A%90)));
+        if(A<90 && A>0){
+            double C = 90;
+            double B = 180- (A+C);
+            double c = Math.min(Math.abs(QuikMaths.csc(A%90)),Math.abs(QuikMaths.sec(A%90)));
 
 
-        Vector2d ab = new Vector2d(c*Math.cos(A),c*Math.sin(B));
-        return ab;
+            Vector2d ab = new Vector2d(c*Math.sin(A),c*Math.sin(B));
+            return ab;
+        }else if (A>90){
+            double C = 90;
+            double B = 180- (A+C);
+            double c = Math.min(Math.abs(QuikMaths.csc(A%90)),Math.abs(QuikMaths.sec(A%90)));
+
+
+            Vector2d ab = new Vector2d(c*Math.sin(A),-c*Math.sin(B));
+            return ab;
+        }else if (A<0 && A>-90){
+            double C = 90;
+            double B = 180- (A+C);
+            double c = Math.min(Math.abs(QuikMaths.csc(A%90)),Math.abs(QuikMaths.sec(A%90)));
+
+
+            Vector2d ab = new Vector2d(-c*Math.sin(A),c*Math.sin(B));
+            return ab;
+        }else if(A<-90){
+            double C = 90;
+            double B = 180- (A+C);
+            double c = Math.min(Math.abs(QuikMaths.csc(A%90)),Math.abs(QuikMaths.sec(A%90)));
+
+
+            Vector2d ab = new Vector2d(-c*Math.sin(A),-c*Math.sin(B));
+            return ab;
+        }
+
+        return null;
     }
 
     public static double Atan2(float x, float y){

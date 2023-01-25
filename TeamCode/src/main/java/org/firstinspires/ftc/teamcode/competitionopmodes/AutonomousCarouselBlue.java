@@ -15,7 +15,7 @@ public class AutonomousCarouselBlue extends LinearOpMode {
     public void runOpMode() {
 
         DrivingWrapper driver = new DrivingWrapper(hardwareMap,telemetry);
-        ArmWrapper arm = new ArmWrapper(hardwareMap, telemetry);
+//        ArmWrapper arm = new ArmWrapper(hardwareMap, telemetry);
 
         AutonomousWrapper autonomousWrapper = new AutonomousWrapper(hardwareMap, telemetry,VuforiaWebcamLocalization.ELocation.BLUECAROUSEL,this);
 
@@ -23,7 +23,7 @@ public class AutonomousCarouselBlue extends LinearOpMode {
 
 
         if(opModeIsActive()) {
-            autonomousWrapper.RunAutonomous(VuforiaWebcamLocalization.ELocation.BLUECAROUSEL, this);
+//            autonomousWrapper.RunAutonomous(VuforiaWebcamLocalization.ELocation.BLUECAROUSEL, this);
         }
 
 

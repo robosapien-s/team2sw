@@ -25,11 +25,12 @@ public class BlueMiddle implements IAutonomousRunner {
     int signalInt;
 
 
-    public BlueMiddle(SampleMecanumDrive inDrive, ArmWrapper inArm, LinearOpMode inLinearOpMode, AutonomousWrapper inWrapper) {
+    public BlueMiddle(SampleMecanumDrive inDrive, ArmWrapper inArm, LinearOpMode inLinearOpMode, AutonomousWrapper inWrapper,Telemetry inTelemetry) {
         drive = inDrive;
         armWrapper = inArm;
         linearOpMode = inLinearOpMode;
         wrapper = inWrapper;
+        telemetry = inTelemetry;
     }
 
     @Override
@@ -43,6 +44,8 @@ public class BlueMiddle implements IAutonomousRunner {
         signalInt = wrapper.initDetection.signalInt;
 
         telemetry.addData("Signal: ", signalInt);
+
+        telemetry.update();
 
 
     }
