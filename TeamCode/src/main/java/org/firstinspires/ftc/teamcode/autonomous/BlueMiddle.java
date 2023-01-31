@@ -7,16 +7,13 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.competitionopmodes.AutonomousWrapper;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
+import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.teamcode.wrappers.ArmWrapper;
 
 public class BlueMiddle implements IAutonomousRunner {
 
 
-    Trajectory trajectory1;
-    Trajectory trajectory2;
-    Trajectory trajectory3;
-    Trajectory trajectory4;
-    Trajectory trajectory5;
+    TrajectorySequence trajectory1;
     SampleMecanumDrive drive;
     ArmWrapper armWrapper;
     LinearOpMode linearOpMode;
@@ -47,7 +44,25 @@ public class BlueMiddle implements IAutonomousRunner {
 
         telemetry.update();
 
+        trajectory1 = drive.trajectorySequenceBuilder(new Pose2d(-36, 60, Math.toRadians(-90)))
+                .lineToLinearHeading(new Pose2d(-12,60,Math.toRadians(-90)))
+                .lineToLinearHeading(new Pose2d(-12,24,Math.toRadians(0)))
+                .lineToLinearHeading(new Pose2d(-12,12,Math.toRadians(180)))
+                .lineToLinearHeading(new Pose2d(-60,12,Math.toRadians(180)))
+                .lineToLinearHeading(new Pose2d(-48,12,Math.toRadians(90)))
+                .lineToLinearHeading(new Pose2d(-60,12,Math.toRadians(180)))
+                .lineToLinearHeading(new Pose2d(-24,12,Math.toRadians(-90)))
+                .lineToLinearHeading(new Pose2d(-60,12,Math.toRadians(180)))
+                .lineToLinearHeading(new Pose2d(-24,12,Math.toRadians(90)))
 
+                /*.turn(Math.toRadians(90))
+                .forward(30)
+                .turn(Math.toRadians(90))
+                .forward(30)
+                .turn(Math.toRadians(90))*/
+                .build();
+
+        trajectory1.start();
     }
 
 
