@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.competitionopmodes;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -14,7 +15,7 @@ import org.firstinspires.ftc.teamcode.wrappers.JoystickWrapper;
 
 import java.util.Objects;
 
-
+@Disabled
 @TeleOp(name="RS_TeleOp")
 public class RS_TeleOp extends OpMode {
 

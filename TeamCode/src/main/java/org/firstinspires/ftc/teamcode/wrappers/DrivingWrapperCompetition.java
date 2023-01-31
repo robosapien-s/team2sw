@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
-public class DrivingWrapper69 {
+public class DrivingWrapperCompetition {
     public enum Direction {
         LEFT,
         RIGHT,
@@ -28,7 +28,7 @@ public class DrivingWrapper69 {
     DcMotor motorFrontRight;
     DcMotor motorBackRight;
 
-    public DrivingWrapper69(HardwareMap inHardwareMap, Telemetry inTelemetry) {
+    public DrivingWrapperCompetition(HardwareMap inHardwareMap, Telemetry inTelemetry) {
         hardwareMap = inHardwareMap;// making a reference to HardwareMap in opModes
         telemetry = inTelemetry;// making a reference to Telemetry in opModes
 

@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.competitionopmodes;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -15,7 +16,7 @@ import org.firstinspires.ftc.teamcode.wrappers.DrivingWrapper;
 import org.firstinspires.ftc.teamcode.wrappers.JoystickWrapper;
 import org.firstinspires.ftc.teamcode.wrappers.RobotInputWrapper;
 
-
+@Disabled
 @TeleOp(name="RS_CustomLinearOp")
 public class RS_CustomLinearOp extends LinearOpMode {
 
