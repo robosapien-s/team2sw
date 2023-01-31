@@ -59,16 +59,19 @@ public class ExtensionArmWrapper69 {
         }*/
 
         clawBase.setPower(joystickWrapper.gamepad1GetLeftStickY());
+        if(joystickWrapper.gamepad1GetRightBumperDown()){
 
-        if (joystickWrapper.gamepad1GetDDown()) {
-            slidePos = 5;
-        }else if (joystickWrapper.gamepad1GetDLeft()) {
-            slidePos = 1900;
-        }
-        else if (joystickWrapper.gamepad1GetDUp()) {
-            slidePos = 3000;
-        }else if (joystickWrapper.gamepad1GetDRight()) {
-            slidePos = 4000;
+        }else {
+            if (joystickWrapper.gamepad1GetDDown()) {
+                slidePos = 5;
+            }else if (joystickWrapper.gamepad1GetDLeft()) {
+                slidePos = 1900;
+            }
+            else if (joystickWrapper.gamepad1GetDUp()) {
+                slidePos = 3000;
+            }else if (joystickWrapper.gamepad1GetDRight()) {
+                slidePos = 4000;
+            }
         }
 
         if (slidePos<5) {

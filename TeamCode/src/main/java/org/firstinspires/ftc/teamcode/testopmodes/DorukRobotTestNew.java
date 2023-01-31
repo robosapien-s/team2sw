@@ -25,6 +25,16 @@ public class DorukRobotTestNew extends LinearOpMode {
         waitForStart();
         while (!isStopRequested()){
             extensionArmWrapper.PPArmMove(joystickWrapper);
+            if(joystickWrapper.gamepad1GetLeftStick()){
+                speed = .75;
+            }else {
+                speed = .45;
+            }
+            if(joystickWrapper.gamepad1GetRightStick()){
+                rotspeed = .75;
+            }else {
+                rotspeed = .45;
+            }
             drivingWrapper.Drive(joystickWrapper, speed, rotspeed);
         }
     }
