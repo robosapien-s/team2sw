@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
-public class ExtensionArmWrapper69 {
+public class ExtensionWrapperCompetition {
     HardwareMap hardwareMap;
     Telemetry telemetry;
     //DcMotor bottomMotor;
@@ -30,7 +30,7 @@ public class ExtensionArmWrapper69 {
 
     boolean open = true;
 
-    public ExtensionArmWrapper69(HardwareMap inHardwareMap, Telemetry inTelemetry) {
+    public ExtensionWrapperCompetition(HardwareMap inHardwareMap, Telemetry inTelemetry) {
         hardwareMap = inHardwareMap;
         telemetry = inTelemetry;
 
@@ -47,7 +47,7 @@ public class ExtensionArmWrapper69 {
     public void PPArmMove(JoystickWrapper joystickWrapper) {
 
 
-        slidePos = slideMotor.getTargetPosition() + (int)(joystickWrapper.gamepad1GetRightStickY()*slideEncoderFactor);
+        slidePos = slideMotor.getTargetPosition() + (int)((joystickWrapper.gamepad1GetRightTrigger()-joystickWrapper.gamepad1GetLeftTrigger())*slideEncoderFactor);
 
        /* if (joystickWrapper.gamepad2GetDDown()) {
             clawBase.setPower(-.5);
