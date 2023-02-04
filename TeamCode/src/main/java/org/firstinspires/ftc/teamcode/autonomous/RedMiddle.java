@@ -14,8 +14,8 @@ public class RedMiddle implements IAutonomousRunner {
 
 
     TrajectorySequence trajectory1;
-    Trajectory trajectory2;
-    Trajectory trajectory3;
+    TrajectorySequence trajectory2;
+    TrajectorySequence trajectory3;
     Trajectory trajectory4;
     Trajectory trajectory5;
     SampleMecanumDrive drive;
@@ -24,6 +24,9 @@ public class RedMiddle implements IAutonomousRunner {
     AutonomousWrapper wrapper;
     Telemetry telemetry;
     int signalInt;
+
+    float robotHalfLength;
+    float halfTile;
 
 
     public RedMiddle(SampleMecanumDrive inDrive, ArmWrapper inArm, LinearOpMode inLinearOpMode, AutonomousWrapper inWrapper) {
@@ -44,18 +47,31 @@ public class RedMiddle implements IAutonomousRunner {
         signalInt = wrapper.initDetection.signalInt;
 
         telemetry.addData("Signal: ", signalInt);
-
         trajectory1 = drive.trajectorySequenceBuilder(new Pose2d(-36, -60, Math.toRadians(90)))
-                .lineToLinearHeading(new Pose2d(-12,-60,Math.toRadians(90)))
-                .lineToLinearHeading(new Pose2d(-12,-24,Math.toRadians(0)))
-                .lineToLinearHeading(new Pose2d(-12,-12,Math.toRadians(180)))
-                .lineToLinearHeading(new Pose2d(-60,-12,Math.toRadians(180)))
-                .lineToLinearHeading(new Pose2d(-48,-12,Math.toRadians(-90)))
-                .lineToLinearHeading(new Pose2d(-60,-12,Math.toRadians(180)))
-                .lineToLinearHeading(new Pose2d(-24,-12,Math.toRadians(90)))
-                .lineToLinearHeading(new Pose2d(-60,-12,Math.toRadians(180)))
-                .lineToLinearHeading(new Pose2d(-24,-12,Math.toRadians(-90)))
+                .forward((halfTile*3) - robotHalfLength)
+                .strafeLeft(halfTile*2)
+                .build();
+        trajectory2 = drive.trajectorySequenceBuilder(new Pose2d(-36, -60, Math.toRadians(90)))
+                .forward((halfTile*3) - robotHalfLength)
+                .build();
+        trajectory3 = drive.trajectorySequenceBuilder(new Pose2d(-36, -60, Math.toRadians(90)))
+                .forward((halfTile*3) - robotHalfLength)
+                .strafeLeft(-halfTile*2)
+                .build();
 
+        if(signalInt == 1 ){
+            f
+            trajectory1 = drive.trajectorySequenceBuilder(new Pose2d(-36, -60, Math.toRadians(90)))
+                    .forward((halfTile*3) - robotHalfLength)
+                    .strafeLeft(halfTile*2)
+                    .build();
+        }else if(signalInt == 2){
+
+        }else{
+
+        }
+        trajectory1 = drive.trajectorySequenceBuilder(new Pose2d(-36, -60, Math.toRadians(90)))
+                .forward()
                 /*.turn(Math.toRadians(90))
                 .forward(30)
                 .turn(Math.toRadians(90))
