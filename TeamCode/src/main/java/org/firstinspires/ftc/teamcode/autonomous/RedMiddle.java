@@ -60,26 +60,12 @@ public class RedMiddle implements IAutonomousRunner {
                 .build();
 
         if(signalInt == 1 ){
-            f
-            trajectory1 = drive.trajectorySequenceBuilder(new Pose2d(-36, -60, Math.toRadians(90)))
-                    .forward((halfTile*3) - robotHalfLength)
-                    .strafeLeft(halfTile*2)
-                    .build();
+            trajectory1.start();
         }else if(signalInt == 2){
-
-        }else{
-
+            trajectory2.start();
+        }else {
+            trajectory3.start();
         }
-        trajectory1 = drive.trajectorySequenceBuilder(new Pose2d(-36, -60, Math.toRadians(90)))
-                .forward()
-                /*.turn(Math.toRadians(90))
-                .forward(30)
-                .turn(Math.toRadians(90))
-                .forward(30)
-                .turn(Math.toRadians(90))*/
-                .build();
-
-        trajectory2.start();
 
     }
 
