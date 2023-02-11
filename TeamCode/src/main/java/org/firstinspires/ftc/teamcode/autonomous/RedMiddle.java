@@ -25,8 +25,8 @@ public class RedMiddle implements IAutonomousRunner {
     Telemetry telemetry;
     int signalInt;
 
-    float robotHalfLength;
-    float halfTile;
+    float robotHalfLength = 7;
+    float halfTile = 12;
 
 
     public RedMiddle(SampleMecanumDrive inDrive, ArmWrapper inArm, LinearOpMode inLinearOpMode, AutonomousWrapper inWrapper) {
