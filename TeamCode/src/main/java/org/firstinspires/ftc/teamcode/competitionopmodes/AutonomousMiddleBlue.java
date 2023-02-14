@@ -7,7 +7,7 @@ import org.firstinspires.ftc.teamcode.testopmodes.VuforiaWebcamLocalization;
 import org.firstinspires.ftc.teamcode.wrappers.ArmWrapper;
 import org.firstinspires.ftc.teamcode.wrappers.DrivingWrapper;
 
-@Autonomous(name="Offense Blue", group="Iterative Opmode")
+@Autonomous(name="Blue Middle", group="Iterative Opmode")
 public class AutonomousMiddleBlue extends LinearOpMode {
 
     @Override

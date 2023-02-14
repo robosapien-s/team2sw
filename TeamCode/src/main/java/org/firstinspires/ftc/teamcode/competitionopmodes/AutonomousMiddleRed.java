@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.teamcode.testopmodes.VuforiaWebcamLocalization;
 import org.firstinspires.ftc.teamcode.wrappers.DrivingWrapper;
 
-@Autonomous(name="Offense Red", group="Iterative Opmode")
+@Autonomous(name="Red Middle", group="Iterative Opmode")
 public class AutonomousMiddleRed extends LinearOpMode {
 
     @Override

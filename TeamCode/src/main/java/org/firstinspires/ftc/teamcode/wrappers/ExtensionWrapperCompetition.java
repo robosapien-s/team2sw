@@ -18,7 +18,7 @@ public class ExtensionWrapperCompetition {
     CRServo clawBase;
     DcMotorEx slideMotor;
 
-    int slidePos = 0;
+    public int slidePos = 0;
     int Ratio = 28;
     final int slideEncoderFactor = 10;
 
@@ -59,20 +59,29 @@ public class ExtensionWrapperCompetition {
         }*/
 
         clawBase.setPower(joystickWrapper.gamepad1GetLeftStickY());
-        if(joystickWrapper.gamepad1GetRightBumperDown()){
 
-        }else {
-            if (joystickWrapper.gamepad1GetDDown()) {
-                slidePos = 5;
-            }else if (joystickWrapper.gamepad1GetDLeft()) {
-                slidePos = 1900;
-            }
-            else if (joystickWrapper.gamepad1GetDUp()) {
-                slidePos = 3000;
-            }else if (joystickWrapper.gamepad1GetDRight()) {
-                slidePos = 4000;
-            }
+        if (joystickWrapper.gamepad1GetA()) {
+            slidePos = 70;
+        }else if (joystickWrapper.gamepad1GetX()) {
+            slidePos = 220;
         }
+        else if (joystickWrapper.gamepad1GetY()) {
+            slidePos = 390;
+        }else if (joystickWrapper.gamepad1GetB()) {
+            slidePos = 550;
+        }
+
+        if (joystickWrapper.gamepad1GetDDown()) {
+            slidePos = 5;
+        }else if (joystickWrapper.gamepad1GetDLeft()) {
+            slidePos = 1900;
+        }
+        else if (joystickWrapper.gamepad1GetDUp()) {
+            slidePos = 3000;
+        }else if (joystickWrapper.gamepad1GetDRight()) {
+            slidePos = 4000;
+        }
+
 
         if (slidePos<5) {
             slidePos = 5;

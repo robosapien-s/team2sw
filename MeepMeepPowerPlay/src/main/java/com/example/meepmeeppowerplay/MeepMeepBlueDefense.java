@@ -32,21 +32,23 @@ public class MeepMeepBlueDefense {
                 .followTrajectorySequence(drive ->
 
                         drive.trajectorySequenceBuilder(new Pose2d(36, 60, Math.toRadians(-90)))
-                                .turn(Math.toRadians(45))
-                                .lineToLinearHeading(new Pose2d(60,60,Math.toRadians(-90)))
-                                .lineToLinearHeading(new Pose2d(60,12,Math.toRadians(-90)))
-                                .turn(Math.toRadians(-90))
-                                .lineToLinearHeading(new Pose2d(48,12,Math.toRadians(90)))
-                                .lineToLinearHeading(new Pose2d(60,12,Math.toRadians(0)))
-                                .lineToLinearHeading(new Pose2d(24,12,Math.toRadians(90)))
-                                .lineToLinearHeading(new Pose2d(60,12,Math.toRadians(0)))
-                                .lineToLinearHeading(new Pose2d(24,12,Math.toRadians(-90)))
-
+                                .lineToLinearHeading(new Pose2d(36,24,Math.toRadians(0)))
+                                //drop
+                                .waitSeconds(1)
+                                .lineToLinearHeading(new Pose2d(36,12,Math.toRadians(0)))
+                                .lineToLinearHeading(new Pose2d(58,12,Math.toRadians(0)))
+                                //pickup top
+                                .waitSeconds(1)
+                                
                                 /*.turn(Math.toRadians(90))
                                 .forward(30)
                                 .turn(Math.toRadians(90))
                                 .forward(30)
-                                .turn(Math.toRadians(90))*/
+                                .turn(Math.toRadians(90))
+
+
+                                .lineToLinearHeading(new Pose2d(36,36,Math.toRadians(-90)))
+                                .lineToLinearHeading(new Pose2d(12,36))*/
                                 .build()
                 );
 

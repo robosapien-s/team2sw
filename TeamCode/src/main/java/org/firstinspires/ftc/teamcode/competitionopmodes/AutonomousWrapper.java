@@ -16,6 +16,8 @@ import org.firstinspires.ftc.teamcode.autonomous.RedHomeRunnerV1;
 import org.firstinspires.ftc.teamcode.autonomous.RedMiddle;
 import org.firstinspires.ftc.teamcode.wrappers.ArmWrapper;
 import org.firstinspires.ftc.teamcode.wrappers.DrivingWrapper;
+import org.firstinspires.ftc.teamcode.wrappers.ExtensionArmWrapper;
+import org.firstinspires.ftc.teamcode.wrappers.ExtensionWrapperCompetition;
 import org.firstinspires.ftc.teamcode.wrappers.OpenCvDetection;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.testopmodes.AprilTagAutonomousInitDetectionExample;
@@ -29,7 +31,7 @@ public class AutonomousWrapper {
 
     SampleMecanumDrive roadRunner;
     DrivingWrapper driver;
-    ArmWrapper arm;
+    ExtensionArmWrapper armA;
     double speed = .25; //Unused
     double rotSpeed = .25; //Unused
     HardwareMap hardwareMap;
@@ -61,8 +63,8 @@ public class AutonomousWrapper {
 
 
         driver = new DrivingWrapper(hardwareMap,telemetry);
-//        arm = new ArmWrapper(hardwareMap, telemetry);
-
+        armA = new ExtensionArmWrapper(hardwareMap, telemetry);
+        ArmWrapper arm = null;
 
         initDetection = new AprilTagAutonomousInitDetectionExample(telemetry,hardwareMap,this,opMode);
         OpenCVWrapper = new OpenCvDetection(telemetry, hardwareMap);
@@ -83,7 +85,7 @@ public class AutonomousWrapper {
         }else if(location == VuforiaWebcamLocalization.ELocation.BLUECORNER) {
             runner = new BlueCorner(drive, arm, opMode, this);
         }else if(location == VuforiaWebcamLocalization.ELocation.BLUEMIDDLE) {
-            runner = new BlueMiddle(drive, arm, opMode, this, telemetry);
+            runner = new BlueMiddle(drive, armA, opMode, this, telemetry);
         }else if(location == VuforiaWebcamLocalization.ELocation.REDCAROUSEL) {
             runner = new RedCarouselRunnerV2(drive, arm, opMode, this);
         }else if(location == VuforiaWebcamLocalization.ELocation.REDHOME) {
@@ -91,7 +93,7 @@ public class AutonomousWrapper {
         }else if(location == VuforiaWebcamLocalization.ELocation.REDCORNER) {
             runner = new RedCorner(drive, arm, opMode, this);
         }else if(location == VuforiaWebcamLocalization.ELocation.REDMIDDLE) {
-            runner = new RedMiddle(drive, arm, opMode, this);
+            runner = new RedMiddle(drive, armA, opMode, this, telemetry);
         }
     }
     public void RunAutonomous(VuforiaWebcamLocalization.ELocation location, LinearOpMode opMode) {
