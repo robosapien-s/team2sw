@@ -10,6 +10,7 @@ import org.firstinspires.ftc.teamcode.competitionopmodes.AutonomousWrapper;
 import org.firstinspires.ftc.teamcode.drive.DriveConstants;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
+import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequenceBuilder;
 import org.firstinspires.ftc.teamcode.wrappers.ArmWrapper;
 import org.firstinspires.ftc.teamcode.wrappers.ExtensionArmWrapper;
 import org.firstinspires.ftc.teamcode.wrappers.ExtensionWrapperCompetition;
@@ -34,22 +35,27 @@ public class BlueMiddle implements IAutonomousRunner {
         linearOpMode = inLinearOpMode;
         wrapper = inWrapper;
         telemetry = inTelemetry;
+        telemetry.addData("Angle at zero = ", fudjeFactor(0));
+        telemetry.update();
     }
 
     @Override
     public void run() {
 
-        Pose2d startPose = new Pose2d(36, 60, Math.toRadians(-90));
+
+
+        Pose2d startPose = new Pose2d(36, 63, Math.toRadians(-90));
 
         drive.setPoseEstimate(startPose);
 
         signalInt = wrapper.initDetection.signalInt;
 
         telemetry.addData("Int = ", signalInt);
+        telemetry.addData("Angle at zero = ", fudjeFactor(0));
         telemetry.update();
 
         TrajectorySequence trajectoryBase = drive.trajectorySequenceBuilder(new Pose2d(36, 62, Math.toRadians(-90)))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
+                /*.UNSTABLE_addTemporalMarkerOffset(0, () -> {
                     armWrapper.clawServo.setPosition(.5);
                 })
                 .waitSeconds(1)
@@ -96,10 +102,92 @@ public class BlueMiddle implements IAutonomousRunner {
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {})
                 .lineToLinearHeading(new Pose2d(24,12,Math.toRadians(-90)))
                 .lineToLinearHeading(new Pose2d(48,12,Math.toRadians(0)))
-                .lineToLinearHeading(new Pose2d(60,12,Math.toRadians(0)))
+                .lineToLinearHeading(new Pose2d(60,12,Math.toRadians(0))) n
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {})
                 .lineToLinearHeading(new Pose2d(0,12,Math.toRadians(90)))*/
+                //.build();
+
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
+                    armWrapper.clawServo.setPosition(.5);
+                })
+                .waitSeconds(1)
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
+                    armWrapper.slidePos = 4000;
+                    armWrapper.UpdatePos();
+                })
+                .lineToLinearHeading(new Pose2d(42,24,Math.toRadians(fudjeFactor(0))))//-6.42857142857139)))
+
+
+                /* dood in da hills*/.waitSeconds(1)
+                .lineToLinearHeading(new Pose2d(42,11,Math.toRadians(-6)))//fudjeFactor2(0))))
+
+                .waitSeconds(.2)
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
+                    armWrapper.slidePos = 550;
+                    armWrapper.UpdatePos();
+                })
+
+                .lineToLinearHeading(new Pose2d(62,9,Math.toRadians(-6)))
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
+                    armWrapper.clawServo.setPosition(.5);
+                })
+                .waitSeconds(1)
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
+                    armWrapper.slidePos = 650;
+                    armWrapper.UpdatePos();
+                })
+                //pickup top
+                .waitSeconds(1)
+                .lineToLinearHeading(new Pose2d(50,8,Math.toRadians(-90)))
+                .waitSeconds(1)
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
+                    armWrapper.clawServo.setPosition(.3);
+                })
+
+                .lineToLinearHeading(new Pose2d(49,10,Math.toRadians(-5)))
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
+                    armWrapper.clawServo.setPosition(.5);
+                })
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
+                    armWrapper.slidePos = 400;
+                    armWrapper.UpdatePos();
+                })
+                .waitSeconds(.2)
+
+                //second pickup
+                .lineToLinearHeading(new Pose2d(62,8,Math.toRadians(-6)))
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
+                    armWrapper.clawServo.setPosition(.3);
+                })
+                .waitSeconds(1)
+
+
+                .lineToLinearHeading(new Pose2d(26,16,Math.toRadians(78)))
+                .waitSeconds(1)
+                .lineToLinearHeading(new Pose2d(48,9,Math.toRadians(-6)))
+                .waitSeconds(1)
+                //third pickup
+                .lineToLinearHeading(new Pose2d(62,8,Math.toRadians(-6)))
+
+                .lineToLinearHeading(new Pose2d(24,12,Math.toRadians(-90)))
+                .waitSeconds(10)
+                //drop
+
+                //.lineToLinearHeading(new Pose2d(48,12,Math.toRadians(0)))
+
+                /*.turn(Math.toRadians(90))
+                .forward(30)
+                .turn(Math.toRadians(90))
+                .forward(30)
+                .turn(Math.toRadians(90))
+
+
+                .lineToLinearHeading(new Pose2d(36,36,Math.toRadians(-90)))
+                .lineToLinearHeading(new Pose2d(12,36))*/
                 .build();
+
+
+
         trajectory1 = drive.trajectorySequenceBuilder(new Pose2d(36, 12, Math.toRadians(0)))
                 .lineTo(new Vector2d(60,12))
                 .build();
@@ -108,16 +196,38 @@ public class BlueMiddle implements IAutonomousRunner {
                 .build();
 
         drive.followTrajectorySequence(trajectoryBase);
-        if(signalInt==0){
+        /*if(signalInt==0){
             drive.followTrajectorySequence(trajectory3);
         }else if(signalInt==1){
 
         }else{
             drive.followTrajectorySequence(trajectory1);
-        }
-
+        }*/
 
     }
+
+    double fudjeFactor(double angle){
+        double multiplier = (90.0000000000000/84.0000000000000000000);
+        double newAngle = (angle+90.000000);
+        telemetry.addData("Multiplier: ", multiplier);
+        telemetry.addData("new angle", newAngle);
+        return (newAngle*-multiplier)+90.0000;
+    }
+    double fudjeFactor2(double angle){
+        double multiplier = (90.0000000000000/99.0000000000000000000);
+        double newAngle = (angle+90.000000);
+        telemetry.addData("Multiplier: ", multiplier);
+        telemetry.addData("new angle", newAngle);
+        return (newAngle*multiplier)-90.0000;
+    }
+    double fudjeFactor3(double angle){
+        double multiplier = (90.0000000000000/99.0000000000000000000);
+        double newAngle = (angle+90.000000);
+        telemetry.addData("Multiplier: ", multiplier);
+        telemetry.addData("new angle", newAngle);
+        return (newAngle*multiplier)-90.0000;
+    }
+
 
 
 }

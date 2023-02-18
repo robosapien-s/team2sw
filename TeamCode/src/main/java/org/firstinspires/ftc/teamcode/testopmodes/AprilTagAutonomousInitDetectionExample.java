@@ -39,6 +39,7 @@ public class AprilTagAutonomousInitDetectionExample
 
     AprilTagDetection tagOfInterest = null;
 
+    Boolean useTelemetry = false;
     Telemetry telemetry;
     HardwareMap hardwareMap;
     AutonomousWrapper autonomousWrapper;
@@ -163,7 +164,9 @@ public class AprilTagAutonomousInitDetectionExample
 
             }
 
-            telemetry.update();
+            if(useTelemetry){
+                telemetry.update();
+            }
         }
 
         /*
@@ -176,12 +179,16 @@ public class AprilTagAutonomousInitDetectionExample
         {
             telemetry.addLine("Tag snapshot:\n");
             tagToTelemetry(tagOfInterest);
-            telemetry.update();
+            if(useTelemetry){
+                telemetry.update();
+            }
         }
         else
         {
             telemetry.addLine("No tag snapshot available, it was never sighted during the init loop :(");
-            telemetry.update();
+            if(useTelemetry){
+                telemetry.update();
+            }
         }
 
         /* Actually do something useful */
