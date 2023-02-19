@@ -39,7 +39,7 @@ public class AprilTagAutonomousInitDetectionExample
 
     AprilTagDetection tagOfInterest = null;
 
-    Boolean useTelemetry = false;
+    Boolean useTelemetry = true;
     Telemetry telemetry;
     HardwareMap hardwareMap;
     AutonomousWrapper autonomousWrapper;
