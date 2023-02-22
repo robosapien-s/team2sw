@@ -41,7 +41,7 @@ public class SimpleAutoNoDeadWheels implements IAutonomousRunner {
     float halfTile = 12;
 
 
-    public RedMiddle(SampleMecanumDrive inDrive, ExtensionArmWrapper inArm, LinearOpMode inLinearOpMode, AutonomousWrapper inWrapper, Telemetry inTelemetry, HardwareMap inHardwareMap) {
+    public SimpleAutoNoDeadWheels(SampleMecanumDrive inDrive, ExtensionArmWrapper inArm, LinearOpMode inLinearOpMode, AutonomousWrapper inWrapper, Telemetry inTelemetry, HardwareMap inHardwareMap) {
         drive = inDrive;
         armWrapper = inArm;
         linearOpMode = inLinearOpMode;
@@ -135,7 +135,7 @@ public class SimpleAutoNoDeadWheels implements IAutonomousRunner {
                 .build();
 
         if(signalInt==0){
-            AutonomousDrive(DrivingWrapperCompetition.Direction.FORWARD,1,.2);
+
             //drive.followTrajectorySequence(trajectory3);
         }else if(signalInt==1){
             drive.followTrajectorySequence(trajectory2);

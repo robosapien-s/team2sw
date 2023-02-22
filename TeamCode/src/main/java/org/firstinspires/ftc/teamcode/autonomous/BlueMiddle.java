@@ -142,6 +142,7 @@ public class BlueMiddle implements IAutonomousRunner {
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {armWrapper.slidePos = 220;armWrapper.UpdatePos();})
                 .lineToLinearHeading(finalPosition)
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {armWrapper.slidePos = 0;armWrapper.UpdatePos();})
+                .waitSeconds(10)
 
                 .build();
         drive.followTrajectorySequence(trajectoryBase);
