@@ -55,6 +55,8 @@ public class SimpleAutoNoDeadWheels implements IAutonomousRunner {
     @Override
     public void run() {
 
+        telemetry.addData("Auto: ", "Simple non deadwheel");
+
         Pose2d startPose = new Pose2d(36, 62, Math.toRadians(-90));
 
         drive.setPoseEstimate(startPose);
@@ -134,13 +136,21 @@ public class SimpleAutoNoDeadWheels implements IAutonomousRunner {
                 .lineToLinearHeading(new Pose2d(12,36,Math.toRadians(-90)))
                 .build();
 
-        if(signalInt==0){
+        telemetry.addData("Auto: ", "Simple non deadwheel");
+        telemetry.update();
 
+        if(signalInt==0){
+            drivingWrapper.AutonomousDrive(DrivingWrapperCompetition.Direction.FORWARD,1,.2);
+            drivingWrapper.AutonomousDrive(DrivingWrapperCompetition.Direction.RIGHT,.5,.2);
             //drive.followTrajectorySequence(trajectory3);
         }else if(signalInt==1){
-            drive.followTrajectorySequence(trajectory2);
+            drivingWrapper.AutonomousDrive(DrivingWrapperCompetition.Direction.FORWARD,1,.2);
+            drivingWrapper.AutonomousDrive(DrivingWrapperCompetition.Direction.RIGHT,.5,.2);
+            //drive.followTrajectorySequence(trajectory2);
         }else{
-            drive.followTrajectorySequence(trajectory1);
+            drivingWrapper.AutonomousDrive(DrivingWrapperCompetition.Direction.FORWARD,1,.2);
+            drivingWrapper.AutonomousDrive(DrivingWrapperCompetition.Direction.RIGHT,.5,.2);
+            //drive.followTrajectorySequence(trajectory1);
         }
 
 

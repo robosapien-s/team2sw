@@ -74,10 +74,10 @@ public class ExtensionWrapperCompetition {
         if (joystickWrapper.gamepad1GetDDown()) {
             slidePos = 5;
         }else if (joystickWrapper.gamepad1GetDLeft()) {
-            slidePos = 1900;
+            slidePos = 1670;
         }
         else if (joystickWrapper.gamepad1GetDUp()) {
-            slidePos = 3000;
+            slidePos = 2900;
         }else if (joystickWrapper.gamepad1GetDRight()) {
             slidePos = 4000;
         }

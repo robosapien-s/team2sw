@@ -60,7 +60,7 @@ public class BlueMiddle implements IAutonomousRunner {
         }else if(signalInt==1){
             finalPosition = new Pose2d(41,22,Math.toRadians(21));
         }else{
-            finalPosition = new Pose2d(65,31,Math.toRadians(21));
+            finalPosition = new Pose2d(65,30,Math.toRadians(21));
         }
 
         TrajectorySequence trajectoryBase = drive.trajectorySequenceBuilder(new Pose2d(36, 62, Math.toRadians(-90)))
@@ -78,7 +78,7 @@ public class BlueMiddle implements IAutonomousRunner {
                 .waitSeconds(.6)//.waitSeconds(.8)
                 //Move to position first drop
                 .lineToLinearHeading(new Pose2d(19,61,Math.toRadians(-90)))//-6.42857142857139)))
-                .lineToLinearHeading(new Pose2d(14,28,Math.toRadians(-156.428571)))//fudjeFactor(140))))
+                .lineToLinearHeading(new Pose2d(14,28,Math.toRadians(-150)))//-156.428571)))//fudjeFactor(140))))
                 .waitSeconds(.5)
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                     armWrapper.clawServo.setPosition(.3);
@@ -131,13 +131,13 @@ public class BlueMiddle implements IAutonomousRunner {
                 .lineToLinearHeading(new Pose2d(68,29,Math.toRadians(21)))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {armWrapper.clawServo.setPosition(.5);})
                 .waitSeconds(.4)
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> {armWrapper.slidePos = 3000;armWrapper.UpdatePos();})
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> {armWrapper.slidePos = 2700;armWrapper.UpdatePos();})
 
                 //third drop
                 .lineToLinearHeading(new Pose2d(35,24,Math.toRadians(125)))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {armWrapper.clawServo.setPosition(.3);})
-                .waitSeconds(.4)
-                .lineToLinearHeading(new Pose2d(48,27,Math.toRadians(-6)))
+                .waitSeconds(.8)
+                .lineToLinearHeading(new Pose2d(48,27,Math.toRadians(21)))
                 .waitSeconds(.4)
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {armWrapper.slidePos = 220;armWrapper.UpdatePos();})
                 .lineToLinearHeading(finalPosition)
