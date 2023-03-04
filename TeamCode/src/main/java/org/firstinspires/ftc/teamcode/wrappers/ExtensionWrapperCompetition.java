@@ -22,6 +22,8 @@ public class ExtensionWrapperCompetition {
     int Ratio = 28;
     final int slideEncoderFactor = 10;
 
+    boolean limit = true;
+
 
     double servoPos = 0.5;
     double currentRotation;
@@ -48,6 +50,13 @@ public class ExtensionWrapperCompetition {
 
 
         slidePos = slideMotor.getTargetPosition() + (int)((joystickWrapper.gamepad1GetRightTrigger()-joystickWrapper.gamepad1GetLeftTrigger())*slideEncoderFactor);
+        if (joystickWrapper.gamepad1GetRightBumperDown()){
+            if(limit){
+                limit=false;
+            }else {
+                limit=true;
+            }
+        }
 
        /* if (joystickWrapper.gamepad2GetDDown()) {
             clawBase.setPower(-.5);
@@ -83,16 +92,17 @@ public class ExtensionWrapperCompetition {
         }
 
 
-        if (slidePos<5) {
+        if (slidePos<5 && limit) {
             slidePos = 5;
         }
-        if (slidePos>4000) {
+        if (slidePos>4000 && limit) {
             slidePos = 4000;
         }
         telemetry.addData("CurrentPosition:slide", slideMotor.getCurrentPosition());
         telemetry.addData("CurrentPosition:servo", clawServo.getPosition());
         telemetry.addData("TargetPosition", slidePos);
         telemetry.addData("ClawBase", clawBase.getPower());
+        telemetry.addData("Limit?", limit);
         telemetry.update();
 
         slideMotor.setPower(1);

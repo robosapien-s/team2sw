@@ -1,19 +1,13 @@
 package org.firstinspires.ftc.teamcode.autonomous;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
-import com.acmerobotics.roadrunner.geometry.Vector2d;
-import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.competitionopmodes.AutonomousWrapper;
-import org.firstinspires.ftc.teamcode.drive.DriveConstants;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
-import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequenceBuilder;
-import org.firstinspires.ftc.teamcode.wrappers.ArmWrapper;
 import org.firstinspires.ftc.teamcode.wrappers.ExtensionArmWrapper;
-import org.firstinspires.ftc.teamcode.wrappers.ExtensionWrapperCompetition;
 
 public class BlueMiddle implements IAutonomousRunner {
 
@@ -37,6 +31,8 @@ public class BlueMiddle implements IAutonomousRunner {
         telemetry = inTelemetry;
         telemetry.addData("Angle at zero = ", fudjeFactor(0));
         telemetry.update();
+
+
     }
 
     @Override
@@ -50,9 +46,6 @@ public class BlueMiddle implements IAutonomousRunner {
 
         signalInt = wrapper.initDetection.signalInt;
 
-        telemetry.addData("Int = ", signalInt);
-        telemetry.addData("Angle at zero = ", fudjeFactor(0));
-        telemetry.update();
 
         Pose2d finalPosition;
         if(signalInt==0){
@@ -60,7 +53,7 @@ public class BlueMiddle implements IAutonomousRunner {
         }else if(signalInt==1){
             finalPosition = new Pose2d(41,22,Math.toRadians(21));
         }else{
-            finalPosition = new Pose2d(65,30,Math.toRadians(21));
+            finalPosition = new Pose2d(64,30,Math.toRadians(21));
         }
 
         TrajectorySequence trajectoryBase = drive.trajectorySequenceBuilder(new Pose2d(36, 62, Math.toRadians(-90)))
@@ -98,7 +91,7 @@ public class BlueMiddle implements IAutonomousRunner {
                 .waitSeconds(.6)//.waitSeconds(.8)
 
                 //move forward to first pick up
-                .lineToLinearHeading(new Pose2d(67,29,Math.toRadians(21)))
+                .lineToLinearHeading(new Pose2d(67,27,Math.toRadians(21)))//29,Math.toRadians(21)))
                 //Grab
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                     armWrapper.clawServo.setPosition(.5);
@@ -128,10 +121,11 @@ public class BlueMiddle implements IAutonomousRunner {
 
 
                 //second pickup
-                .lineToLinearHeading(new Pose2d(68,29,Math.toRadians(21)))
+                .lineToLinearHeading(new Pose2d(68,27,Math.toRadians(21)))//29,Math.toRadians(21)))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {armWrapper.clawServo.setPosition(.5);})
-                .waitSeconds(.4)
+                .waitSeconds(.2)
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {armWrapper.slidePos = 2700;armWrapper.UpdatePos();})
+                .waitSeconds(.4)
 
                 //third drop
                 .lineToLinearHeading(new Pose2d(35,24,Math.toRadians(125)))
@@ -172,6 +166,15 @@ public class BlueMiddle implements IAutonomousRunner {
         return (newAngle*multiplier)-90.0000;
     }
 
+    @Override
+    public void initializeServo(){
+
+        telemetry.addData("ay","yi");
+
+        telemetry.update();
+
+        armWrapper.clawServo.setPosition(.3);
+    }
 
 
 }

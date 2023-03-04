@@ -64,6 +64,9 @@ public class AutonomousWrapper {
 
         driver = new DrivingWrapper(hardwareMap,telemetry);
         armA = new ExtensionArmWrapper(hardwareMap, telemetry);
+
+        armA.clawServo.setPosition(.5);
+
         ArmWrapper arm = null;
 
         initDetection = new AprilTagAutonomousInitDetectionExample(telemetry,hardwareMap,this,opMode);
