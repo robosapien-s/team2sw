@@ -31,9 +31,9 @@ public class ConeDetectionWrapper {
 
     public void coneDetectionLoop() {
         while (!Thread.currentThread().isInterrupted()) {
-            Mat input = drivingWrapper.getWorkingImage();
+            //Mat input = drivingWrapper.getWorkingImage();    //doesn't work
 
-            Imgproc.cvtColor(input, workingImage, Imgproc.COLOR_RGB2HSV);
+           // Imgproc.cvtColor(input, workingImage, Imgproc.COLOR_RGB2HSV);
 
             Mat mask = new Mat();
             Core.inRange(workingImage, lowerBound, upperBound, mask);
@@ -42,11 +42,9 @@ public class ConeDetectionWrapper {
             // ...
 
             // Drive the robot
-            drivingWrapper.Drive(joystickWrapper, DRIVE_POWER, ROTATE_POWER);
+           // drivingWrapper.Drive(joystickWrapper, DRIVE_POWER, ROTATE_POWER); //doesn;t work
         }
     }
 
-    public void stop() {
-        drivingWrapper.stop();
-    }
+
 }
