@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
-public class DrivingWrapperPara {
+public class DrivingWrapperPara_Snappy {
 
     public enum Direction {
         LEFT,
@@ -29,7 +29,7 @@ public class DrivingWrapperPara {
     DcMotor motorFrontRight;
     DcMotor motorBackRight;
 
-    public DrivingWrapperPara(HardwareMap inHardwareMap, Telemetry inTelemetry) {
+    public DrivingWrapperPara_Snappy(HardwareMap inHardwareMap, Telemetry inTelemetry) {
         hardwareMap = inHardwareMap;// making a reference to HardwareMap in opModes
         telemetry = inTelemetry;// making a reference to Telemetry in opModes
 
@@ -68,7 +68,7 @@ public class DrivingWrapperPara {
         return backRightPower;
     }
 
-    double N = 10;
+    double N = 5;
     double joyOldY = 0;
     double joyOldX = 0;
     double joyOldRX = 0;
@@ -81,8 +81,8 @@ public class DrivingWrapperPara {
         double deltaX = (joystickWrapper.gamepad1GetLeftStickX()*1.1) - joyOldX;
         joyOldX = joystickWrapper.gamepad1GetLeftStickX()*1.1;
 
-        double deltaRX = (joystickWrapper.gamepad1GetRightStickX() * rotSpeed) - joyOldRX;
-        joyOldRX= joystickWrapper.gamepad1GetRightStickX() * rotSpeed;
+        double deltaRX = (joystickWrapper.gamepad1GetRightStickX()) - joyOldRX;
+        joyOldRX= joystickWrapper.gamepad1GetRightStickX();
 
         double y = 0;
         double x = 0;

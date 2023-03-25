@@ -79,7 +79,6 @@ public class ExtensionWrapperCompetition {
         }else if (joystickWrapper.gamepad1GetB()) {
             slidePos = 550;
         }
-
         if (joystickWrapper.gamepad1GetDDown()) {
             slidePos = 5;
         }else if (joystickWrapper.gamepad1GetDLeft()) {
