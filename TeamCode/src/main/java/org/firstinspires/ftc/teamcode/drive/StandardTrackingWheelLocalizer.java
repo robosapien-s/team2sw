@@ -27,8 +27,8 @@ import java.util.List;
  */
 @Config
 public class StandardTrackingWheelLocalizer extends ThreeTrackingWheelLocalizer {
-    private static final double X_MULTIPLIER = 1.008086177990511;//1.00320362;
-    private static final double Y_MULTIPLIER = -1.005697033827734;//1.015075907376354;
+    private static final double X_MULTIPLIER = 1.01288460115;//1.00320362;
+    private static final double Y_MULTIPLIER = 1.0140733456;//1.015075907376354;
 
     public static double TICKS_PER_REV = 8192;
     public static double WHEEL_RADIUS = .69; // in
@@ -39,8 +39,8 @@ public class StandardTrackingWheelLocalizer extends ThreeTrackingWheelLocalizer 
 //            6.469556602033475
 //            6.4598411656251145
 
-    public static double LATERAL_DISTANCE = 12.8;//6.469556602033475; // in; distance between the left and right wheels
-    public static double FORWARD_OFFSET = -6; // in; offset of the lateral wheel
+    public static double LATERAL_DISTANCE = 12.3;//6.469556602033475; // in; distance between the left and right wheels
+    public static double FORWARD_OFFSET = 2; // in; offset of the lateral wheel
 
     private Encoder leftEncoder, rightEncoder, frontEncoder;
 
@@ -51,10 +51,10 @@ public class StandardTrackingWheelLocalizer extends ThreeTrackingWheelLocalizer 
                 new Pose2d(FORWARD_OFFSET, 0, Math.toRadians(90)) // front
         ));
 
-        leftEncoder = new Encoder(hardwareMap.get(DcMotorEx.class, "leftEncoder"));
-        rightEncoder = new Encoder(hardwareMap.get(DcMotorEx.class, "rightEncoder"));
+        leftEncoder = new Encoder(hardwareMap.get(DcMotorEx.class, "motorFrontRight"));
+        rightEncoder = new Encoder(hardwareMap.get(DcMotorEx.class, "motorFrontLeft"));
         //Change
-        frontEncoder = new Encoder(hardwareMap.get(DcMotorEx.class, "middleEncoder"));
+        frontEncoder = new Encoder(hardwareMap.get(DcMotorEx.class, "motorBackLeft"));
         //92.648
 
         // TODO: reverse any encoders using Encoder.setDirection(Encoder.Direction.REVERSE)
