@@ -68,9 +68,9 @@ public class SimpleAutoNoDeadWheels implements IAutonomousRunner {
         telemetry.update();
 
         trajectory1 = drive.trajectorySequenceBuilder(new Pose2d(36, 62, Math.toRadians(-90)))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    armWrapper.clawServo.setPosition(.5);
-                })
+//                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
+//                    armWrapper.clawServo.setPosition(.5);
+//                })
                 .waitSeconds(1)
                 /*.turn(Math.toRadians(45))
                 .lineToLinearHeading(new Pose2d(60,60,Math.toRadians(-90)))
@@ -91,9 +91,9 @@ public class SimpleAutoNoDeadWheels implements IAutonomousRunner {
                 .lineToLinearHeading(new Pose2d(60,36,Math.toRadians(-90)))
                 .build();
         trajectory2 = drive.trajectorySequenceBuilder(new Pose2d(36, 60, Math.toRadians(-90)))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    armWrapper.clawServo.setPosition(.5);
-                })
+//                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
+//                    armWrapper.clawServo.setPosition(.5);
+//                })
                 .waitSeconds(1)
                 /*.turn(Math.toRadians(45))
                 .lineToLinearHeading(new Pose2d(60,60,Math.toRadians(-90)))
