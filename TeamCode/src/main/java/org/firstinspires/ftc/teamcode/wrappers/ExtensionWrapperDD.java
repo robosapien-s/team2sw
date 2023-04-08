@@ -18,7 +18,7 @@ public class ExtensionWrapperDD {
     Servo rightServo; //0
     DcMotorEx slideMotorRight; //0
     DcMotorEx slideMotorLeft; //1
-
+    double leftSlideFactor = 0.98;
     public int slidePos = 0;
     int Ratio = 28;
     final int slideEncoderFactor = 10;
@@ -51,6 +51,7 @@ public class ExtensionWrapperDD {
         slideMotorRight.setTargetPosition(0);
     }
     double N = 10;
+    int slowRange = 300;
     int slideOldPos = 0;
     public void PPArmMove(JoystickWrapper joystickWrapper) {
 
@@ -112,28 +113,56 @@ public class ExtensionWrapperDD {
         }
         telemetry.addData("CurrentPosition:slide", slideMotorRight.getCurrentPosition());
         telemetry.addData("TargetPosition:slide", slideMotorRight.getTargetPosition());
-        //telemetry.addData("CurrentPosition:rightServo", rightServo.getPosition());
-        //telemetry.addData("CurrentPosition:leftServo", leftServo.getPosition());
+        telemetry.addData("CurrentPosition:rightServo", rightServo.getPosition());
+        telemetry.addData("CurrentPosition:leftServo", leftServo.getPosition());
         telemetry.addData("TargetPosition", slidePos);
         telemetry.addData("Limit?", limit);
         telemetry.update();
 
-        slideMotorRight.setPower(1);
-        slideMotorLeft.setPower(1);
+        if (slideMotorRight.getTargetPosition() == 4000) {
+            if (slideMotorRight.getCurrentPosition()> 4000-slowRange) {
+                slideMotorRight.setPower(.25);
+                slideMotorLeft.setPower(.25);
+            } else {
+                slideMotorRight.setPower(1);
+                slideMotorLeft.setPower(1);
+            }
+        } else if (slideMotorRight.getTargetPosition() == 2900) {
+            if (slideMotorRight.getCurrentPosition()>2900-slowRange && slideMotorRight.getCurrentPosition() < 2900+slowRange) {
+                slideMotorRight.setPower(.25);
+                slideMotorLeft.setPower(.25);
+            } else {
+                slideMotorRight.setPower(1);
+                slideMotorLeft.setPower(1);
+            }
+        } else if (slideMotorRight.getTargetPosition() == 1670) {
+            if (slideMotorRight.getCurrentPosition()> 1670-slowRange && slideMotorRight.getCurrentPosition() < 1670+slowRange) {
+                slideMotorRight.setPower(.25);
+                slideMotorLeft.setPower(.25);
+            } else {
+                slideMotorRight.setPower(1);
+                slideMotorLeft.setPower(1);
+            }
+        } else {
+            slideMotorRight.setPower(1);
+            slideMotorLeft.setPower(1);
+        }
+        //slideMotorRight.setPower(1); //COMMENT THIS OUT IF WE ADD THE LOOPS PRIOR
+        //slideMotorLeft.setPower(1);
         slideMotorRight.setTargetPosition(slidePos);
-        slideMotorLeft.setTargetPosition(slidePos);
+        slideMotorLeft.setTargetPosition((int) ((slidePos)*leftSlideFactor));
         slideMotorRight.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
         slideMotorLeft.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
         //topMotor.setPower(-joystickWrapper.gamepad2GetLeftStickY());
 
         if(joystickWrapper.gamepad1GetLeftBumperDown()) {
             if (open) {
-                rightServo.setPosition(0.00);
-                leftServo.setPosition(1.00);
+                rightServo.setPosition(.80);
+                leftServo.setPosition(.20);
                 open = false;
             } else {
-                rightServo.setPosition(.10);
-                leftServo.setPosition(0.90);
+                rightServo.setPosition(.9);
+                leftServo.setPosition(0.1);
                 open = true;
             }
         }
