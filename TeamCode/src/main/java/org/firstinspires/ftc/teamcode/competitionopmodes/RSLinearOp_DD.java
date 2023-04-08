@@ -12,7 +12,7 @@ import org.firstinspires.ftc.teamcode.wrappers.JoystickWrapper;
 public class RSLinearOp_DD extends LinearOpMode {
     JoystickWrapper joystickWrapper;
     ExtensionWrapperDD extensionArmWrapper;
-    //DrivingWrapperPara drivingWrapper;
+    DrivingWrapperPara drivingWrapper;
 
     double speed = .65;
     double rotspeed = .75;
@@ -22,7 +22,7 @@ public class RSLinearOp_DD extends LinearOpMode {
     public void runOpMode() {
         joystickWrapper = new JoystickWrapper(gamepad1, gamepad2);
         extensionArmWrapper = new ExtensionWrapperDD(hardwareMap, telemetry);
-        //drivingWrapper = new DrivingWrapperPara(hardwareMap, telemetry);
+        drivingWrapper = new DrivingWrapperPara(hardwareMap, telemetry);
         waitForStart();
         while (!isStopRequested()){
             extensionArmWrapper.PPArmMove(joystickWrapper);
@@ -36,7 +36,7 @@ public class RSLinearOp_DD extends LinearOpMode {
             }else {
                 rotspeed = .75;
             }
-            //drivingWrapper.Drive(joystickWrapper, speed, rotspeed);
+            drivingWrapper.Drive(joystickWrapper, speed, rotspeed);
         }
     }
 }
