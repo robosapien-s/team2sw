@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.wrappers;
 
+import androidx.annotation.NonNull;
+
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -73,7 +75,7 @@ public class DrivingWrapperPara {
     double joyOldX = 0;
     double joyOldRX = 0;
 
-    public void Drive(JoystickWrapper joystickWrapper, double speed, double rotSpeed) {
+    public void Drive(@NonNull JoystickWrapper joystickWrapper, double speed, double rotSpeed) {
         double deltaY = -joystickWrapper.gamepad1GetLeftStickY() - joyOldY;
 
         joyOldY = -joystickWrapper.gamepad1GetLeftStickY();
