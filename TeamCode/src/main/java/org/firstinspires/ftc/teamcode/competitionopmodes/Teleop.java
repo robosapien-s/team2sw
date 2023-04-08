@@ -24,9 +24,9 @@ public class Teleop extends OpMode {
     private int leftEncoderTicks, rightEncoderTicks, frontEncoderTicks;
 
     public void init() {
-        leftEncoder = new Encoder(hardwareMap.get(DcMotorEx.class, "motorFrontRight"));
-        rightEncoder = new Encoder(hardwareMap.get(DcMotorEx.class, "motorFrontLeft"));
-        frontEncoder = new Encoder(hardwareMap.get(DcMotorEx.class, "motorBackLeft"));
+        leftEncoder = new Encoder(hardwareMap.get(DcMotorEx.class, "leftEncoder"));
+        rightEncoder = new Encoder(hardwareMap.get(DcMotorEx.class, "rightEncoder"));
+        frontEncoder = new Encoder(hardwareMap.get(DcMotorEx.class, "middleEncoder"));
         leftEncoderTicks = leftEncoder.getCurrentPosition();
         rightEncoderTicks = rightEncoder.getCurrentPosition();
         frontEncoderTicks = frontEncoder.getCurrentPosition();
