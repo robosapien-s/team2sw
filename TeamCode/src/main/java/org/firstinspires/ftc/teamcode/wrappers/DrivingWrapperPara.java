@@ -70,7 +70,7 @@ public class DrivingWrapperPara {
         return backRightPower;
     }
 
-    double N = 10;
+    double N = 4;
     double joyOldY = 0;
     double joyOldX = 0;
     double joyOldRX = 0;
@@ -117,19 +117,19 @@ public class DrivingWrapperPara {
 
         for (int count = 0; count < N; count++) {
             if (deltaY != 0) {
-                y = joyOldY + ((count/N) * deltaY);
+                y = joyOldY - ((count/N) * deltaY);
             } else {
                 y = joyOldY;
             }
 
             if (deltaX != 0) {
-                x = joyOldX + ((count/N) * deltaX);
+                x = joyOldX - ((count/N) * deltaX);
             } else {
                 x = joyOldX;
             }
 
             if (deltaRX != 0) {
-                rx = joyOldRX + ((count/N) * deltaRX);
+                rx = joyOldRX - ((count/N) * deltaRX);
             } else {
                 rx = joyOldRX;
             }
