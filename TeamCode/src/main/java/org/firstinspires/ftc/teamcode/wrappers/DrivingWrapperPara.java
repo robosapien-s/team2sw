@@ -70,7 +70,7 @@ public class DrivingWrapperPara {
         return backRightPower;
     }
 
-    double N = 10;
+    double N = 4;
     double joyOldY = 0;
     double joyOldX = 0;
     double joyOldRX = 0;
@@ -117,19 +117,19 @@ public class DrivingWrapperPara {
 
         for (int count = 0; count < N; count++) {
             if (deltaY != 0) {
-                y = joyOldY + ((count/N) * deltaY);
+                y = joyOldY - ((count/N) * deltaY);
             } else {
                 y = joyOldY;
             }
 
             if (deltaX != 0) {
-                x = joyOldX + ((count/N) * deltaX);
+                x = joyOldX - ((count/N) * deltaX);
             } else {
                 x = joyOldX;
             }
 
             if (deltaRX != 0) {
-                rx = joyOldRX + ((count/N) * deltaRX);
+                rx = joyOldRX - ((count/N) * deltaRX);
             } else {
                 rx = joyOldRX;
             }
@@ -142,6 +142,21 @@ public class DrivingWrapperPara {
 
         }
 
+        if (deltaX != 0) {
+            for (int count = 0; count < N; count++) {
+                x = joyOldX + ((count/N) * deltaX);
+            }
+        } else {
+            x = joyOldX;
+        }
+
+        if (deltaRX != 0) {
+            for (int count = 0; count < N; count++) {
+                rx = joyOldRX + ((count/N) * deltaRX);
+            }
+        } else {
+            rx = joyOldRX;
+        }
 
         telemetry.addData("joystickY", joystickWrapper.gamepad1GetLeftStickY());
         telemetry.addData("y",y);
@@ -156,7 +171,12 @@ public class DrivingWrapperPara {
 
 
 
+        double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1); // Defining the denominator variable
 
+        motorFrontLeft.setPower(FrontLeftPower(denominator, y, x, rx/speed) * speed); //setting the power for the motors
+        motorBackLeft.setPower(BackLeftPower(denominator, y, x, rx/speed) * speed);
+        motorFrontRight.setPower(FrontRightPower(denominator, y, x, rx/speed) * speed);
+        motorBackRight.setPower(BackRightPower(denominator, y, x, rx/speed) * speed);
     }
     public double calculateDenominator(double x, double y, double rx) {
         return Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);

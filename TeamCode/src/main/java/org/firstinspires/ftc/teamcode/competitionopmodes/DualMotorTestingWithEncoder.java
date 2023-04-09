@@ -15,11 +15,8 @@ public class DualMotorTestingWithEncoder extends LinearOpMode {
     DcMotor motor2;
     DcMotor motor3;
     JoystickWrapper joystickWrapper;
-    Boolean open = false;
+    Boolean open;
     Servo clawServo;
-
-    public int slidePos = 0;
-    final int slideEncoderFactor = 10;
 
     @Override
     public void runOpMode() {
@@ -27,13 +24,12 @@ public class DualMotorTestingWithEncoder extends LinearOpMode {
         clawServo = hardwareMap.get(Servo.class, "clawServo");
 
         motor1 = hardwareMap.dcMotor.get("motorBackRight"); //setting up the motors with hardwaremaps
-        motor1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
 
         joystickWrapper = new JoystickWrapper(gamepad1,gamepad2);
 
         while (!isStopRequested()){
-            slidePos = motor1.getTargetPosition() + (int)((joystickWrapper.gamepad1GetRightTrigger()-joystickWrapper.gamepad1GetLeftTrigger())*slideEncoderFactor);
-
+            motor1.setPower(gamepad1.left_stick_y*.1);
             if(joystickWrapper.gamepad1GetLeftBumperDown()) {
 
                 if (open) {
@@ -44,9 +40,7 @@ public class DualMotorTestingWithEncoder extends LinearOpMode {
                     open = true;
                 }
             }
-            motor1.setTargetPosition(slidePos);
 
-            motor1.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
 
 
         }
