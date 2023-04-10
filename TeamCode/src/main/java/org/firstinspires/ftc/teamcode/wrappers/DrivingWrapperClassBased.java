@@ -37,7 +37,7 @@ public class DrivingWrapperClassBased {
         telemetry = inTelemetry;// making a reference to Telemetry in opModes
 
         //Motor 0
-        motorFrontLeft = hardwareMap.dcMotor.get("motorFrontLeft"); //setting up the motors with hardwaremaps
+        motorFrontLeft = hardwareMap.dcMotor.get("motorFrontLeft"); //setting up the motors with hardware maps
         //Motor 2
         motorBackLeft = hardwareMap.dcMotor.get("motorBackLeft");
         //Motor 1
@@ -46,7 +46,7 @@ public class DrivingWrapperClassBased {
         motorBackRight = hardwareMap.dcMotor.get("motorBackRight");
 
 
-        motorFrontRight.setDirection(DcMotorSimple.Direction.REVERSE); //setting the right side motors to reverse so they go the right directiond
+        motorFrontRight.setDirection(DcMotorSimple.Direction.REVERSE); //setting the right side motors to reverse so they go the right direction
         motorBackRight.setDirection(DcMotorSimple.Direction.REVERSE);
     }
 
