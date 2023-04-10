@@ -99,7 +99,7 @@ public class ExtensionWrapperDD {
             slidePos = 1670;
         }
         else if (joystickWrapper.gamepad1GetDUp()) {
-            slidePos = 2900;
+            slidePos = 2800;
         }else if (joystickWrapper.gamepad1GetDRight()) {
             slidePos = 4000;
         }
