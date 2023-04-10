@@ -47,6 +47,9 @@ public class QuikMaths {
     public static double cot(double a){
         return 1/Math.tan(a);
     }
+    public static double lerp(double v0, double v1, double t) {
+        return (1 - t) * v0 + t * v1;
+    }
 
     public static Vector2d a2s(double A){
 

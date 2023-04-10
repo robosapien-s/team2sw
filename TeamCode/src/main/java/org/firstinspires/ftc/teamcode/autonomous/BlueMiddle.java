@@ -8,6 +8,7 @@ import org.firstinspires.ftc.teamcode.competitionopmodes.AutonomousWrapper;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.teamcode.wrappers.ExtensionArmWrapper;
+import org.firstinspires.ftc.teamcode.wrappers.ExtensionWrapperDD;
 
 public class BlueMiddle implements IAutonomousRunner {
 
@@ -16,14 +17,14 @@ public class BlueMiddle implements IAutonomousRunner {
     TrajectorySequence trajectory3;
 
     SampleMecanumDrive drive;
-    ExtensionArmWrapper armWrapper;
+    ExtensionWrapperDD armWrapper;
     LinearOpMode linearOpMode;
     AutonomousWrapper wrapper;
     Telemetry telemetry;
     int signalInt;
 
 
-    public BlueMiddle(SampleMecanumDrive inDrive, ExtensionArmWrapper inArm, LinearOpMode inLinearOpMode, AutonomousWrapper inWrapper, Telemetry inTelemetry) {
+    public BlueMiddle(SampleMecanumDrive inDrive, ExtensionWrapperDD inArm, LinearOpMode inLinearOpMode, AutonomousWrapper inWrapper, Telemetry inTelemetry) {
         drive = inDrive;
         armWrapper = inArm;
         linearOpMode = inLinearOpMode;
@@ -60,7 +61,8 @@ public class BlueMiddle implements IAutonomousRunner {
 
                 // Initial Grab
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    armWrapper.clawServo.setPosition(.5);
+                    armWrapper.rightServo.setPosition(.80);
+                    armWrapper.leftServo.setPosition(.20);
                 })
                 .waitSeconds(.8)//.waitSeconds(1)
                 //Slide Up
@@ -74,7 +76,9 @@ public class BlueMiddle implements IAutonomousRunner {
                 .lineToLinearHeading(new Pose2d(14,28,Math.toRadians(-150)))//-156.428571)))//fudjeFactor(140))))
                 .waitSeconds(.5)
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    armWrapper.clawServo.setPosition(.3);
+                    armWrapper.rightServo.setPosition(.9);
+                    armWrapper.leftServo.setPosition(0.1);
+
                 })
 
                 .waitSeconds(.4)//.waitSeconds(.6)
@@ -94,7 +98,8 @@ public class BlueMiddle implements IAutonomousRunner {
                 .lineToLinearHeading(new Pose2d(67,27,Math.toRadians(21)))//29,Math.toRadians(21)))
                 //Grab
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    armWrapper.clawServo.setPosition(.5);
+                    armWrapper.rightServo.setPosition(.80);
+                    armWrapper.leftServo.setPosition(.20);
                 })
                 .waitSeconds(.4)//.waitSeconds(.6)
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
@@ -110,7 +115,9 @@ public class BlueMiddle implements IAutonomousRunner {
                     armWrapper.UpdatePos();
                 })
                 .waitSeconds(.2)//.waitSeconds(.4)
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> {armWrapper.clawServo.setPosition(.3);})
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
+//                    armWrapper.clawServo.setPosition(.3);
+                })
                 .waitSeconds(.4)//.waitSeconds(.6)
                 .UNSTABLE_addTemporalMarkerOffset(1, () -> {armWrapper.slidePos = 390;armWrapper.UpdatePos();})
                 .waitSeconds(.6)//.waitSeconds(.8)
@@ -122,14 +129,18 @@ public class BlueMiddle implements IAutonomousRunner {
 
                 //second pickup
                 .lineToLinearHeading(new Pose2d(68,27,Math.toRadians(21)))//29,Math.toRadians(21)))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> {armWrapper.clawServo.setPosition(.5);})
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
+                    //armWrapper.clawServo.setPosition(.5);
+                     })
                 .waitSeconds(.2)
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {armWrapper.slidePos = 2700;armWrapper.UpdatePos();})
                 .waitSeconds(.4)
 
                 //third drop
                 .lineToLinearHeading(new Pose2d(35,24,Math.toRadians(125)))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> {armWrapper.clawServo.setPosition(.3);})
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
+//                    armWrapper.clawServo.setPosition(.3);
+                })
                 .waitSeconds(.8)
                 .lineToLinearHeading(new Pose2d(48,27,Math.toRadians(21)))
                 .waitSeconds(.4)
@@ -173,7 +184,7 @@ public class BlueMiddle implements IAutonomousRunner {
 
         telemetry.update();
 
-        armWrapper.clawServo.setPosition(.3);
+//        armWrapper.clawServo.setPosition(.3);
     }
 
 

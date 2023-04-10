@@ -32,46 +32,45 @@ public class MeepMeepBlueDefense {
                 .followTrajectorySequence(drive ->
 
                         drive.trajectorySequenceBuilder(new Pose2d(36, 60, Math.toRadians(-90)))
-                                .lineToLinearHeading(new Pose2d(36,24,Math.toRadians(0)))
-                                //drop
-                                .waitSeconds(1)
+                                .lineToLinearHeading(new Pose2d(36,48,Math.toRadians(180)))
+
+                                .lineToLinearHeading(new Pose2d(36,0,Math.toRadians(180)))
+
+                                //drop 1
+
                                 .lineToLinearHeading(new Pose2d(36,12,Math.toRadians(0)))
-
-
-                                .lineToLinearHeading(new Pose2d(58,12,Math.toRadians(0)))
-                                //pickup top
-                                .waitSeconds(1)
-                                .lineToLinearHeading(new Pose2d(48,12,Math.toRadians(-90)))
-
-                                //drop
-
-                                .lineToLinearHeading(new Pose2d(49,12,Math.toRadians(0)))
-                                .lineToLinearHeading(new Pose2d(58,12,Math.toRadians(0)))
-
-
+                                // open and go to height
+                                .lineToLinearHeading(new Pose2d(60,12,Math.toRadians(0)))
+                                //grab then adjust height
                                 .lineToLinearHeading(new Pose2d(24,12,Math.toRadians(-90)))
-                                .lineToLinearHeading(new Pose2d(48,12,Math.toRadians(0)))
 
-                                .lineToLinearHeading(new Pose2d(58,12,Math.toRadians(0)))
+                                //drop 2
+                                .lineToLinearHeading(new Pose2d(36,12,Math.toRadians(0)))
+                                // open and go to height
+                                .lineToLinearHeading(new Pose2d(60,12,Math.toRadians(0)))
+                                //grab then adjust height
+                                .lineToLinearHeading(new Pose2d(24,12,Math.toRadians(-90)))
 
+                                //drop 3
+                                .lineToLinearHeading(new Pose2d(36,12,Math.toRadians(0)))
+                                // open and go to height
+                                .lineToLinearHeading(new Pose2d(60,12,Math.toRadians(0)))
+                                //grab then adjust height
+                                .lineToLinearHeading(new Pose2d(24,12,Math.toRadians(-90)))
 
-                                .waitSeconds(1)
+                                //drop 4
+                                .lineToLinearHeading(new Pose2d(36,12,Math.toRadians(0)))
+                                // open and go to height
+                                .lineToLinearHeading(new Pose2d(60,12,Math.toRadians(0)))
+                                //grab then adjust height
+                                .lineToLinearHeading(new Pose2d(24,12,Math.toRadians(-90)))
 
-                                .lineToLinearHeading(new Pose2d(24,12,Math.toRadians(90)))
-
-                                //drop
-
-                                //.lineToLinearHeading(new Pose2d(48,12,Math.toRadians(0)))
-
-                                /*.turn(Math.toRadians(90))
-                                .forward(30)
-                                .turn(Math.toRadians(90))
-                                .forward(30)
-                                .turn(Math.toRadians(90))
-
-
-                                .lineToLinearHeading(new Pose2d(36,36,Math.toRadians(-90)))
-                                .lineToLinearHeading(new Pose2d(12,36))*/
+                                //drop 5
+                                .lineToLinearHeading(new Pose2d(36,12,Math.toRadians(0)))
+                                // open and go to height
+                                .lineToLinearHeading(new Pose2d(60,12,Math.toRadians(0)))
+                                //grab then adjust height
+                                .lineToLinearHeading(new Pose2d(24,12,Math.toRadians(-90)))
                                 .build()
                 );
 

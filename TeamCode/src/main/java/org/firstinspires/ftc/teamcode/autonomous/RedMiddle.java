@@ -8,9 +8,8 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.competitionopmodes.AutonomousWrapper;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
-import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequenceBuilder;
-import org.firstinspires.ftc.teamcode.wrappers.ArmWrapper;
 import org.firstinspires.ftc.teamcode.wrappers.ExtensionArmWrapper;
+import org.firstinspires.ftc.teamcode.wrappers.ExtensionWrapperDD;
 
 public class RedMiddle implements IAutonomousRunner {
 
@@ -21,7 +20,7 @@ public class RedMiddle implements IAutonomousRunner {
     Trajectory trajectory4;
     Trajectory trajectory5;
     SampleMecanumDrive drive;
-    ExtensionArmWrapper armWrapper;
+    ExtensionWrapperDD armWrapper;
     LinearOpMode linearOpMode;
     AutonomousWrapper wrapper;
     Telemetry telemetry;
@@ -31,7 +30,7 @@ public class RedMiddle implements IAutonomousRunner {
     float halfTile = 12;
 
 
-    public RedMiddle(SampleMecanumDrive inDrive, ExtensionArmWrapper inArm, LinearOpMode inLinearOpMode, AutonomousWrapper inWrapper, Telemetry inTelemetry) {
+    public RedMiddle(SampleMecanumDrive inDrive, ExtensionWrapperDD inArm, LinearOpMode inLinearOpMode, AutonomousWrapper inWrapper, Telemetry inTelemetry) {
         drive = inDrive;
         armWrapper = inArm;
         linearOpMode = inLinearOpMode;
@@ -54,7 +53,7 @@ public class RedMiddle implements IAutonomousRunner {
 
         trajectory1 = drive.trajectorySequenceBuilder(new Pose2d(36, 62, Math.toRadians(-90)))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    armWrapper.clawServo.setPosition(.5);
+//                    armWrapper.clawServo.setPosition(.5);
                 })
                 .waitSeconds(1)
                 /*.turn(Math.toRadians(45))
@@ -77,7 +76,7 @@ public class RedMiddle implements IAutonomousRunner {
                 .build();
         trajectory2 = drive.trajectorySequenceBuilder(new Pose2d(36, 60, Math.toRadians(-90)))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    armWrapper.clawServo.setPosition(.5);
+//                    armWrapper.clawServo.setPosition(.5);
                 })
                 .waitSeconds(1)
                 /*.turn(Math.toRadians(45))
@@ -99,7 +98,7 @@ public class RedMiddle implements IAutonomousRunner {
                 .build();
         trajectory3 = drive.trajectorySequenceBuilder(new Pose2d(36, 60, Math.toRadians(-90)))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    armWrapper.clawServo.setPosition(.5);
+//                    armWrapper.clawServo.setPosition(.5);
                 })
                 .waitSeconds(1)
                 /*.turn(Math.toRadians(45))

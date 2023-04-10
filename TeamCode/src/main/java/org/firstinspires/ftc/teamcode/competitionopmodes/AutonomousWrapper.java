@@ -18,6 +18,7 @@ import org.firstinspires.ftc.teamcode.wrappers.ArmWrapper;
 import org.firstinspires.ftc.teamcode.wrappers.DrivingWrapper;
 import org.firstinspires.ftc.teamcode.wrappers.ExtensionArmWrapper;
 import org.firstinspires.ftc.teamcode.wrappers.ExtensionWrapperCompetition;
+import org.firstinspires.ftc.teamcode.wrappers.ExtensionWrapperDD;
 import org.firstinspires.ftc.teamcode.wrappers.OpenCvDetection;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.testopmodes.AprilTagAutonomousInitDetectionExample;
@@ -31,7 +32,7 @@ public class AutonomousWrapper {
 
     SampleMecanumDrive roadRunner;
     DrivingWrapper driver;
-    ExtensionArmWrapper armA;
+    ExtensionWrapperDD armA;
     double speed = .25; //Unused
     double rotSpeed = .25; //Unused
     HardwareMap hardwareMap;
@@ -63,9 +64,11 @@ public class AutonomousWrapper {
 
 
         driver = new DrivingWrapper(hardwareMap,telemetry);
-        armA = new ExtensionArmWrapper(hardwareMap, telemetry);
+        armA = new ExtensionWrapperDD(hardwareMap, telemetry);
 
-        armA.clawServo.setPosition(.5);
+        armA.rightServo.setPosition(.9);
+        armA.leftServo.setPosition(0.1);
+
 
         ArmWrapper arm = null;
 
