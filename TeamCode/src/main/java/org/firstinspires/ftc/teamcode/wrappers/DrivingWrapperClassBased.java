@@ -103,10 +103,10 @@ public class DrivingWrapperClassBased {
 
         double denominator = Math.max(Math.abs(in.getY()) + Math.abs(in.getX()) + Math.abs(in.getHeading()), 1); // Defining the denominator variable
 
-        motorFrontLeft.setPower(FrontLeftPower(denominator, in.getY(), in.getX(), rx/speed) * speed); //setting the power for the motors
-        motorBackLeft.setPower(BackLeftPower(denominator, in.getY(), in.getX(), rx/speed) * speed);
-        motorFrontRight.setPower(FrontRightPower(denominator, in.getY(), in.getX(), rx/speed) * speed);
-        motorBackRight.setPower(BackRightPower(denominator, in.getY(), in.getX(), rx/speed) * speed);
+        motorFrontLeft.setPower(FrontLeftPower(denominator, in.getY(), in.getX(), in.getHeading()/speed) * speed); //setting the power for the motors
+        motorBackLeft.setPower(BackLeftPower(denominator, in.getY(), in.getX(), in.getHeading()/speed) * speed);
+        motorFrontRight.setPower(FrontRightPower(denominator, in.getY(), in.getX(), in.getHeading()/speed) * speed);
+        motorBackRight.setPower(BackRightPower(denominator, in.getY(), in.getX(), in.getHeading()/speed) * speed);
     }
     public double calculateDenominator(double x, double y, double rx) {
         return Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);
