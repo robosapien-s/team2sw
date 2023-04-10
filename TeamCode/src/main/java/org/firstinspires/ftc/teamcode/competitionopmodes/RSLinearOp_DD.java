@@ -9,7 +9,8 @@ import org.firstinspires.ftc.teamcode.wrappers.ExtensionWrapperDD;
 import org.firstinspires.ftc.teamcode.wrappers.JoystickWrapper;
 
 @TeleOp
-public class RSLinearOp_DD extends LinearOpMode {
+public class
+RSLinearOp_DD extends LinearOpMode {
     JoystickWrapper joystickWrapper;
     ExtensionWrapperDD extensionArmWrapper;
     DrivingWrapperPara drivingWrapper;
