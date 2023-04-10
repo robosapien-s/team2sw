@@ -16,6 +16,10 @@ public class OzerDrivingTranslator implements IDrivingTranslator{
     double newPowerY = 0;
     double newPowerRX = 0;
 
+    double x;
+    double y;
+    double rx;
+
     int countX = 1;
     int countY = 1;
     int countRX = 1;

@@ -14,8 +14,8 @@ public class ExtensionWrapperDD {
     Telemetry telemetry;
     //DcMotor bottomMotor;
     //DcMotor topMotor;
-    Servo leftServo; //1
-    Servo rightServo; //0
+    public Servo leftServo; //1
+    public Servo rightServo; //0
     DcMotorEx slideMotorRight; //0
     DcMotorEx slideMotorLeft; //1
     double leftSlideFactor = 0.98;
@@ -166,6 +166,16 @@ public class ExtensionWrapperDD {
                 open = true;
             }
         }
+    }
+
+    public void UpdatePos() {
+        slideMotorRight.setPower(1);
+        slideMotorLeft.setPower(1);
+        slideMotorRight.setTargetPosition(slidePos);
+        slideMotorLeft.setTargetPosition(slidePos);
+
+        slideMotorRight.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+        slideMotorLeft.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
     }
 
     /*public double GetCurrentRotation(){

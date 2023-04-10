@@ -165,6 +165,8 @@ public class DrivingWrapperClassBased {
             rx = 0;
         }
 
+
+
         double denominator = calculateDenominator(x, y, rx);
         motorFrontLeft.setPower(FrontLeftPower(denominator, y, x, rx)*speed); //setting the power for the motors
         motorBackLeft.setPower(BackLeftPower(denominator, y, x, rx)*speed);

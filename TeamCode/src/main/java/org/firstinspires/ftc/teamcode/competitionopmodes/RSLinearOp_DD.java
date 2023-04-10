@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.competitionopmodes;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import org.firstinspires.ftc.teamcode.wrappers.DrivingWrapperClassBased;
 import org.firstinspires.ftc.teamcode.wrappers.DrivingWrapperPara;
 import org.firstinspires.ftc.teamcode.wrappers.ExtensionWrapperCompetition;
 import org.firstinspires.ftc.teamcode.wrappers.ExtensionWrapperDD;
@@ -13,7 +14,7 @@ public class
 RSLinearOp_DD extends LinearOpMode {
     JoystickWrapper joystickWrapper;
     ExtensionWrapperDD extensionArmWrapper;
-    DrivingWrapperPara drivingWrapper;
+    DrivingWrapperClassBased drivingWrapper;
 
     double speed = .65;
     double rotspeed = .75;
@@ -23,7 +24,7 @@ RSLinearOp_DD extends LinearOpMode {
     public void runOpMode() {
         joystickWrapper = new JoystickWrapper(gamepad1, gamepad2);
         extensionArmWrapper = new ExtensionWrapperDD(hardwareMap, telemetry);
-        drivingWrapper = new DrivingWrapperPara(hardwareMap, telemetry);
+        drivingWrapper = new DrivingWrapperClassBased(hardwareMap, telemetry);
         waitForStart();
         while (!isStopRequested()){
             extensionArmWrapper.PPArmMove(joystickWrapper);
