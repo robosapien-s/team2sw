@@ -76,30 +76,7 @@ public class DrivingWrapperClassBased {
         double x = joystickWrapper.gamepad1GetLeftStickX() * 1.1; // Counteract imperfect strafing | Defining the x variable
         double rx = -joystickWrapper.gamepad1GetRightStickX() * rotSpeed; // Defining the rx (right x) variable
 
-        if (joystickWrapper.gamepad1GetRightBumperRaw()){
-            telemetry.addData("Move", "Back Right");
-            y=-1;
-            x=.3;
-        }
-        if (joystickWrapper.gamepad1GetLeftBumperRaw()){
-            telemetry.addData("Move", "Back Left");
-            y=-1;
-            x=-.3;
-        }
-        if (joystickWrapper.gamepad1GetRightTriggerPressed()){
-            telemetry.addData("Move", "Forward Right");
-            y=1;
-            x=.3;
-        }
-        if (joystickWrapper.gamepad1GetLeftTriggerPressed()){
-            telemetry.addData("Move", "Forward Left");
-            y=1;
-            x=-.3;
-        }
-
-
         Pose2d in = driveTranslator.update(new Pose2d(x,y,rx));
-
 
         double denominator = Math.max(Math.abs(in.getY()) + Math.abs(in.getX()) + Math.abs(in.getHeading()), 1); // Defining the denominator variable
 

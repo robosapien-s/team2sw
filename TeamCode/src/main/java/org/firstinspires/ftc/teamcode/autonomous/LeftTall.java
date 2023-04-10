@@ -74,81 +74,48 @@ public class LeftTall implements IAutonomousRunner {
         telemetry.addData("Auto: ", "Simple non deadwheel");
         telemetry.update();
 
-        trajectory1 = drive.trajectorySequenceBuilder(new Pose2d(36, 62, Math.toRadians(-90)))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    armWrapper.rightServo.setPosition(.80);
-                    armWrapper.leftServo.setPosition(.20);
+        trajectory1 = drive.trajectorySequenceBuilder(new Pose2d(36, 60, Math.toRadians(-90)))
+                .lineToLinearHeading(new Pose2d(36,48,Math.toRadians(180)))
 
-                })
-                .waitSeconds(1)
-                /*.turn(Math.toRadians(45))
-                .lineToLinearHeading(new Pose2d(60,60,Math.toRadians(-90)))
-                .lineToLinearHeading(new Pose2d(60,12,Math.toRadians(-90)))
-                .turn(Math.toRadians(-90))
-                .lineToLinearHeading(new Pose2d(48,12,Math.toRadians(90)))
+                .lineToLinearHeading(new Pose2d(36,0,Math.toRadians(180)))
+
+                //drop 1
+
+                .lineToLinearHeading(new Pose2d(36,12,Math.toRadians(0)))
+                // open and go to height
                 .lineToLinearHeading(new Pose2d(60,12,Math.toRadians(0)))
-                .lineToLinearHeading(new Pose2d(24,12,Math.toRadians(90)))
-                .lineToLinearHeading(new Pose2d(60,12,Math.toRadians(0)))
+                //grab then adjust height
                 .lineToLinearHeading(new Pose2d(24,12,Math.toRadians(-90)))
 
-                .turn(Math.toRadians(90))
-                .forward(30)
-                .turn(Math.toRadians(90))
-                .forward(30)
-                .turn(Math.toRadians(90))*/
-                .lineToLinearHeading(new Pose2d(36,36,Math.toRadians(-90)))
-                .lineToLinearHeading(new Pose2d(60,36,Math.toRadians(-90)))
-                .build();
-        trajectory2 = drive.trajectorySequenceBuilder(new Pose2d(36, 60, Math.toRadians(-90)))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    armWrapper.rightServo.setPosition(.80);
-                    armWrapper.leftServo.setPosition(.20);
-
-                })
-                .waitSeconds(1)
-                /*.turn(Math.toRadians(45))
-                .lineToLinearHeading(new Pose2d(60,60,Math.toRadians(-90)))
-                .lineToLinearHeading(new Pose2d(60,12,Math.toRadians(-90)))
-                .turn(Math.toRadians(-90))
-                .lineToLinearHeading(new Pose2d(48,12,Math.toRadians(90)))
+                //drop 2
+                .lineToLinearHeading(new Pose2d(36,12,Math.toRadians(0)))
+                // open and go to height
                 .lineToLinearHeading(new Pose2d(60,12,Math.toRadians(0)))
-                .lineToLinearHeading(new Pose2d(24,12,Math.toRadians(90)))
-                .lineToLinearHeading(new Pose2d(60,12,Math.toRadians(0)))
+                //grab then adjust height
                 .lineToLinearHeading(new Pose2d(24,12,Math.toRadians(-90)))
 
-                /*.turn(Math.toRadians(90))
-                .forward(30)
-                .turn(Math.toRadians(90))
-                .forward(30)
-                .turn(Math.toRadians(90))*/
-                .lineToLinearHeading(new Pose2d(36,36,Math.toRadians(-90)))
-                .build();
-        trajectory3 = drive.trajectorySequenceBuilder(new Pose2d(36, 60, Math.toRadians(-90)))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    armWrapper.rightServo.setPosition(.80);
-                    armWrapper.leftServo.setPosition(.20);
-
-
-                })
-                .waitSeconds(1)
-                /*.turn(Math.toRadians(45))
-                .lineToLinearHeading(new Pose2d(60,60,Math.toRadians(-90)))
-                .lineToLinearHeading(new Pose2d(60,12,Math.toRadians(-90)))
-                .turn(Math.toRadians(-90))
-                .lineToLinearHeading(new Pose2d(48,12,Math.toRadians(90)))
+                //drop 3
+                .lineToLinearHeading(new Pose2d(36,12,Math.toRadians(0)))
+                // open and go to height
                 .lineToLinearHeading(new Pose2d(60,12,Math.toRadians(0)))
-                .lineToLinearHeading(new Pose2d(24,12,Math.toRadians(90)))
-                .lineToLinearHeading(new Pose2d(60,12,Math.toRadians(0)))
+                //grab then adjust height
                 .lineToLinearHeading(new Pose2d(24,12,Math.toRadians(-90)))
 
-                /*.turn(Math.toRadians(90))
-                .forward(30)
-                .turn(Math.toRadians(90))
-                .forward(30)
-                .turn(Math.toRadians(90))*/
-                .lineToLinearHeading(new Pose2d(36,36,Math.toRadians(-90)))
-                .lineToLinearHeading(new Pose2d(12,36,Math.toRadians(-90)))
+                //drop 4
+                .lineToLinearHeading(new Pose2d(36,12,Math.toRadians(0)))
+                // open and go to height
+                .lineToLinearHeading(new Pose2d(60,12,Math.toRadians(0)))
+                //grab then adjust height
+                .lineToLinearHeading(new Pose2d(24,12,Math.toRadians(-90)))
+
+                //drop 5
+                .lineToLinearHeading(new Pose2d(36,12,Math.toRadians(0)))
+                // open and go to height
+                .lineToLinearHeading(new Pose2d(60,12,Math.toRadians(0)))
+                //grab then adjust height
+                .lineToLinearHeading(new Pose2d(24,12,Math.toRadians(-90)))
                 .build();
+
 
         if(signalInt==0){
             goForward(.4);
