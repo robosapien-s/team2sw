@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.wrappers;
 
+import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -27,6 +28,9 @@ public class DrivingWrapperClassBased {
     DcMotor motorBackLeft;
     DcMotor motorFrontRight;
     DcMotor motorBackRight;
+
+    IDrivingTranslator driveTranslator = new PassThroughDrivingTranslator();
+
 
     public DrivingWrapperClassBased(HardwareMap inHardwareMap, Telemetry inTelemetry) {
         hardwareMap = inHardwareMap;// making a reference to HardwareMap in opModes
@@ -93,15 +97,16 @@ public class DrivingWrapperClassBased {
             x=-.3;
         }
 
-        
+
+        Pose2d in = driveTranslator.update(new Pose2d(x,y,rx));
 
 
-        double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1); // Defining the denominator variable
+        double denominator = Math.max(Math.abs(in.getY()) + Math.abs(in.getX()) + Math.abs(in.getHeading()), 1); // Defining the denominator variable
 
-        motorFrontLeft.setPower(FrontLeftPower(denominator, y, x, rx/speed) * speed); //setting the power for the motors
-        motorBackLeft.setPower(BackLeftPower(denominator, y, x, rx/speed) * speed);
-        motorFrontRight.setPower(FrontRightPower(denominator, y, x, rx/speed) * speed);
-        motorBackRight.setPower(BackRightPower(denominator, y, x, rx/speed) * speed);
+        motorFrontLeft.setPower(FrontLeftPower(denominator, in.getY(), in.getX(), rx/speed) * speed); //setting the power for the motors
+        motorBackLeft.setPower(BackLeftPower(denominator, in.getY(), in.getX(), rx/speed) * speed);
+        motorFrontRight.setPower(FrontRightPower(denominator, in.getY(), in.getX(), rx/speed) * speed);
+        motorBackRight.setPower(BackRightPower(denominator, in.getY(), in.getX(), rx/speed) * speed);
     }
     public double calculateDenominator(double x, double y, double rx) {
         return Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);
