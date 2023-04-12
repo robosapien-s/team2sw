@@ -7,7 +7,7 @@ import org.firstinspires.ftc.teamcode.wrappers.DrivingWrapper;
 
 import org.firstinspires.ftc.teamcode.testopmodes.VuforiaWebcamLocalization;
 
-@Autonomous(name="Carousel Blue", group="Iterative Opmode")
+@Autonomous(name="Left Middle", group="Autonomous")
 public class AutonomousCarouselBlue extends LinearOpMode {
 
 
@@ -23,7 +23,7 @@ public class AutonomousCarouselBlue extends LinearOpMode {
 
 
         if(opModeIsActive()) {
-//            autonomousWrapper.RunAutonomous(VuforiaWebcamLocalization.ELocation.BLUECAROUSEL, this);
+            autonomousWrapper.RunAutonomous(VuforiaWebcamLocalization.ELocation.BLUECAROUSEL, this);
         }
 
 

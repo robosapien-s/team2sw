@@ -8,7 +8,7 @@ import org.firstinspires.ftc.teamcode.wrappers.DrivingWrapperPara;
 import org.firstinspires.ftc.teamcode.wrappers.ExtensionWrapperCompetition;
 import org.firstinspires.ftc.teamcode.wrappers.JoystickWrapper;
 
-@TeleOp
+@TeleOp(group = "TeleOp")
 public class RSLinearOp_Para extends LinearOpMode {
     JoystickWrapper joystickWrapper;
     ExtensionWrapperCompetition extensionArmWrapper;

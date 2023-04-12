@@ -17,7 +17,7 @@ import org.firstinspires.ftc.teamcode.wrappers.JoystickWrapper;
 import org.firstinspires.ftc.teamcode.wrappers.RobotInputWrapper;
 
 @Disabled
-@TeleOp(name="RS_CustomLinearOp")
+@TeleOp(name="RS_CustomLinearOp",group = "TeleOp")
 public class RS_CustomLinearOp extends LinearOpMode {
 
 

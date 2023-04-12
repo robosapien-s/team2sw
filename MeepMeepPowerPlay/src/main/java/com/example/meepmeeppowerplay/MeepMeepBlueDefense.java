@@ -5,7 +5,8 @@ import com.noahbres.meepmeep.MeepMeep;
 import com.noahbres.meepmeep.roadrunner.DefaultBotBuilder;
 import com.noahbres.meepmeep.roadrunner.entity.RoadRunnerBotEntity;
 
-public class MeepMeepBlueDefense {
+public class
+MeepMeepBlueDefense {
     public static void main(String[] args) {
 
 
@@ -42,35 +43,35 @@ public class MeepMeepBlueDefense {
                                 // open and go to height
                                 .lineToLinearHeading(new Pose2d(60,12,Math.toRadians(0)))
                                 //grab then adjust height
-                                .lineToLinearHeading(new Pose2d(24,12,Math.toRadians(-90)))
+                                .lineToLinearHeading(new Pose2d(24,12,Math.toRadians(90)))
 
                                 //drop 2
                                 .lineToLinearHeading(new Pose2d(36,12,Math.toRadians(0)))
                                 // open and go to height
                                 .lineToLinearHeading(new Pose2d(60,12,Math.toRadians(0)))
                                 //grab then adjust height
-                                .lineToLinearHeading(new Pose2d(24,12,Math.toRadians(-90)))
+                                .lineToLinearHeading(new Pose2d(24,12,Math.toRadians(90)))
 
                                 //drop 3
                                 .lineToLinearHeading(new Pose2d(36,12,Math.toRadians(0)))
                                 // open and go to height
                                 .lineToLinearHeading(new Pose2d(60,12,Math.toRadians(0)))
                                 //grab then adjust height
-                                .lineToLinearHeading(new Pose2d(24,12,Math.toRadians(-90)))
+                                .lineToLinearHeading(new Pose2d(24,12,Math.toRadians(90)))
 
                                 //drop 4
                                 .lineToLinearHeading(new Pose2d(36,12,Math.toRadians(0)))
                                 // open and go to height
                                 .lineToLinearHeading(new Pose2d(60,12,Math.toRadians(0)))
                                 //grab then adjust height
-                                .lineToLinearHeading(new Pose2d(24,12,Math.toRadians(-90)))
+                                .lineToLinearHeading(new Pose2d(24,12,Math.toRadians(90)))
 
                                 //drop 5
                                 .lineToLinearHeading(new Pose2d(36,12,Math.toRadians(0)))
                                 // open and go to height
                                 .lineToLinearHeading(new Pose2d(60,12,Math.toRadians(0)))
                                 //grab then adjust height
-                                .lineToLinearHeading(new Pose2d(24,12,Math.toRadians(-90)))
+                                .lineToLinearHeading(new Pose2d(24,12,Math.toRadians(90)))
                                 .build()
                 );
 

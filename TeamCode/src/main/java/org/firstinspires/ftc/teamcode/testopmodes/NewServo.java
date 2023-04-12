@@ -1,11 +1,12 @@
 package org.firstinspires.ftc.teamcode.testopmodes;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.wrappers.JoystickWrapper;
-
+@Disabled
 @TeleOp
 public class NewServo extends LinearOpMode {
     JoystickWrapper joystickWrapper;

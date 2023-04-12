@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.testopmodes;
 //dfjskla;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -7,6 +8,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import org.firstinspires.ftc.teamcode.wrappers.JoystickWrapper;
 import org.firstinspires.ftc.teamcode.wrappers.ExtensionArmWrapper;
 @TeleOp
+@Disabled
 public class BriansRobotTest extends LinearOpMode {
     JoystickWrapper joystickWrapper;
     ExtensionArmWrapper extensionArmWrapper;

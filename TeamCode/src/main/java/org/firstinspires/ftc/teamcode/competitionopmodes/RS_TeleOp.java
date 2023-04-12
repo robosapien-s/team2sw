@@ -16,7 +16,7 @@ import org.firstinspires.ftc.teamcode.wrappers.JoystickWrapper;
 import java.util.Objects;
 
 @Disabled
-@TeleOp(name="RS_TeleOp")
+@TeleOp(name="RS_TeleOp",group = "TeleOp")
 public class RS_TeleOp extends OpMode {
 
 

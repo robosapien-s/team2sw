@@ -7,7 +7,7 @@ import org.firstinspires.ftc.teamcode.testopmodes.VuforiaWebcamLocalization;
 import org.firstinspires.ftc.teamcode.wrappers.ArmWrapper;
 import org.firstinspires.ftc.teamcode.wrappers.DrivingWrapper;
 
-@Autonomous(name="Home Blue", group="Iterative Opmode")
+@Autonomous(name="Right Tall", group="Autonomous")
 public class AutonomousHomeBlue extends LinearOpMode {
 
     @Override

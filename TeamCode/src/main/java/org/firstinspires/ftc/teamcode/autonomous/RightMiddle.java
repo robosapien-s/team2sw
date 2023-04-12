@@ -13,7 +13,7 @@ import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.teamcode.wrappers.DrivingWrapperCompetition;
 import org.firstinspires.ftc.teamcode.wrappers.ExtensionWrapperDD;
 
-public class LeftTall implements IAutonomousRunner {
+public class RightMiddle implements IAutonomousRunner {
 
 
     TrajectorySequence trajectory1;
@@ -39,7 +39,7 @@ public class LeftTall implements IAutonomousRunner {
     float halfTile = 12;
 
 
-    public LeftTall(SampleMecanumDrive inDrive, ExtensionWrapperDD inArm, LinearOpMode inLinearOpMode, AutonomousWrapper inWrapper, Telemetry inTelemetry, HardwareMap inHardwareMap) {
+    public RightMiddle(SampleMecanumDrive inDrive, ExtensionWrapperDD inArm, LinearOpMode inLinearOpMode, AutonomousWrapper inWrapper, Telemetry inTelemetry, HardwareMap inHardwareMap) {
         drive = inDrive;
         armWrapper = inArm;
         linearOpMode = inLinearOpMode;
@@ -74,73 +74,51 @@ public class LeftTall implements IAutonomousRunner {
         telemetry.addData("Auto: ", "Simple non deadwheel");
         telemetry.update();
 
-        trajectory1 = drive.trajectorySequenceBuilder(new Pose2d(36, -60, Math.toRadians(-90)))
-                //Open claw for start
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.rightServo.setPosition(.80); armWrapper.leftServo.setPosition(.20); })
-
-                .waitSeconds(.8)
-
-                //Move up to top 
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.slidePos = 4000;armWrapper.UpdatePos();})
-
-                .lineToLinearHeading(new Pose2d(36,-48,Math.toRadians(180)))
-                .lineToLinearHeading(new Pose2d(36,-0,Math.toRadians(180)))
-
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.rightServo.setPosition(.9); armWrapper.leftServo.setPosition(0.1); })
-
-                .lineToLinearHeading(new Pose2d(36,-12,Math.toRadians(0)))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.slidePos = 400;armWrapper.UpdatePos();})
-                .lineToLinearHeading(new Pose2d(60,-12,Math.toRadians(0)))
+        trajectory1 = drive.trajectorySequenceBuilder(new Pose2d(36, 60, Math.toRadians(-90)))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                     armWrapper.rightServo.setPosition(.80);
                     armWrapper.leftServo.setPosition(.20);
                 })
-                .lineToLinearHeading(new Pose2d(24,-12,Math.toRadians(-90)))
+
+                .lineToLinearHeading(new Pose2d(36,48,Math.toRadians(180)))
+
+                .lineToLinearHeading(new Pose2d(36,0,Math.toRadians(180)))
+
+                //drop 1
+
+                .lineToLinearHeading(new Pose2d(36,12,Math.toRadians(0)))
+                // open and go to height
+                .lineToLinearHeading(new Pose2d(60,12,Math.toRadians(0)))
+                //grab then adjust height
+                .lineToLinearHeading(new Pose2d(24,12,Math.toRadians(90)))
 
                 //drop 2
-                .lineToLinearHeading(new Pose2d(36,-12,Math.toRadians(0)))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.slidePos = 400;armWrapper.UpdatePos();})
-                .lineToLinearHeading(new Pose2d(60,-12,Math.toRadians(0)))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.slidePos = 400;armWrapper.UpdatePos();})
-                .lineToLinearHeading(new Pose2d(24,-12,Math.toRadians(-90)))
+                .lineToLinearHeading(new Pose2d(36,12,Math.toRadians(0)))
+                // open and go to height
+                .lineToLinearHeading(new Pose2d(60,12,Math.toRadians(0)))
+                //grab then adjust height
+                .lineToLinearHeading(new Pose2d(24,12,Math.toRadians(90)))
 
                 //drop 3
-                .lineToLinearHeading(new Pose2d(36,-12,Math.toRadians(0)))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.slidePos = 400;armWrapper.UpdatePos();})
-                .lineToLinearHeading(new Pose2d(60,-12,Math.toRadians(0)))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    armWrapper.rightServo.setPosition(.80);
-                    armWrapper.leftServo.setPosition(.20);
-                })
-                .waitSeconds(.5)
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.slidePos = 400;armWrapper.UpdatePos();})
-                .lineToLinearHeading(new Pose2d(24,-12,Math.toRadians(-90)))
+                .lineToLinearHeading(new Pose2d(36,12,Math.toRadians(0)))
+                // open and go to height
+                .lineToLinearHeading(new Pose2d(60,12,Math.toRadians(0)))
+                //grab then adjust height
+                .lineToLinearHeading(new Pose2d(24,12,Math.toRadians(90)))
 
                 //drop 4
-                .lineToLinearHeading(new Pose2d(36,-12,Math.toRadians(0)))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.slidePos = 400;armWrapper.UpdatePos();})
-                .lineToLinearHeading(new Pose2d(60,-12,Math.toRadians(0)))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    armWrapper.rightServo.setPosition(.80);
-                    armWrapper.leftServo.setPosition(.20);
-                })
-                .waitSeconds(.5)
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.slidePos = 400;armWrapper.UpdatePos();})
-                .lineToLinearHeading(new Pose2d(24,-12,Math.toRadians(-90)))
+                .lineToLinearHeading(new Pose2d(36,12,Math.toRadians(0)))
+                // open and go to height
+                .lineToLinearHeading(new Pose2d(60,12,Math.toRadians(0)))
+                //grab then adjust height
+                .lineToLinearHeading(new Pose2d(24,12,Math.toRadians(90)))
 
                 //drop 5
-                .lineToLinearHeading(new Pose2d(36,-12,Math.toRadians(0)))
-
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.slidePos = 400;armWrapper.UpdatePos();})
-                .lineToLinearHeading(new Pose2d(60,-12,Math.toRadians(0)))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    armWrapper.rightServo.setPosition(.80);
-                    armWrapper.leftServo.setPosition(.20);
-                })
-                .waitSeconds(.5)
-                //
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.slidePos = 400;armWrapper.UpdatePos(); })
-                .lineToLinearHeading(new Pose2d(24,-12,Math.toRadians(-90)))
+                .lineToLinearHeading(new Pose2d(36,12,Math.toRadians(0)))
+                // open and go to height
+                .lineToLinearHeading(new Pose2d(60,12,Math.toRadians(0)))
+                //grab then adjust height
+                .lineToLinearHeading(new Pose2d(24,12,Math.toRadians(90)))
                 .build();
 
 

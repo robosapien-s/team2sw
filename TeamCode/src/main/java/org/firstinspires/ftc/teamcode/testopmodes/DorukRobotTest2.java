@@ -1,12 +1,13 @@
 package org.firstinspires.ftc.teamcode.testopmodes;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.wrappers.DrivingWrapper2;
 import org.firstinspires.ftc.teamcode.wrappers.ExtensionArmWrapper;
 import org.firstinspires.ftc.teamcode.wrappers.JoystickWrapper;
-
+@Disabled
 @TeleOp
 public class DorukRobotTest2 extends LinearOpMode {
     JoystickWrapper joystickWrapper;

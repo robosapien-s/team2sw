@@ -10,10 +10,14 @@ import org.firstinspires.ftc.teamcode.autonomous.BlueCorner;
 import org.firstinspires.ftc.teamcode.autonomous.BlueHomeRunner;
 import org.firstinspires.ftc.teamcode.autonomous.BlueMiddle;
 import org.firstinspires.ftc.teamcode.autonomous.IAutonomousRunner;
+import org.firstinspires.ftc.teamcode.autonomous.LeftMiddle;
+import org.firstinspires.ftc.teamcode.autonomous.LeftTall;
 import org.firstinspires.ftc.teamcode.autonomous.RedCarouselRunnerV2;
 import org.firstinspires.ftc.teamcode.autonomous.RedCorner;
 import org.firstinspires.ftc.teamcode.autonomous.RedHomeRunnerV1;
 import org.firstinspires.ftc.teamcode.autonomous.RedMiddle;
+import org.firstinspires.ftc.teamcode.autonomous.RightMiddle;
+import org.firstinspires.ftc.teamcode.autonomous.RightTall;
 import org.firstinspires.ftc.teamcode.wrappers.ArmWrapper;
 import org.firstinspires.ftc.teamcode.wrappers.DrivingWrapper;
 import org.firstinspires.ftc.teamcode.wrappers.ExtensionArmWrapper;
@@ -85,21 +89,21 @@ public class AutonomousWrapper {
 
         telemetry.addData("barcode", OpenCVWrapper.barcodeInt);
         if(location == VuforiaWebcamLocalization.ELocation.BLUECAROUSEL){
-            runner = new BlueCarouselRunnerV2(drive, arm, opMode, this);
+            runner = new LeftMiddle(drive, armA, opMode, this, telemetry,hardwareMap);
         }else if(location == VuforiaWebcamLocalization.ELocation.BLUEHOME) {
-            runner = new BlueHomeRunner(drive, arm, opMode, this);
+            runner = new RightTall(drive, armA, opMode, this, telemetry,hardwareMap);
         }else if(location == VuforiaWebcamLocalization.ELocation.BLUECORNER) {
             runner = new BlueCorner(drive, armA, opMode, this,telemetry,hardwareMap);//Actually just parking Autonomous (Non deadwheel)
         }else if(location == VuforiaWebcamLocalization.ELocation.BLUEMIDDLE) {
             runner = new BlueMiddle(drive, armA, opMode, this, telemetry);
         }else if(location == VuforiaWebcamLocalization.ELocation.REDCAROUSEL) {
-            runner = new RedCarouselRunnerV2(drive, arm, opMode, this);
+            runner = new LeftTall(drive, armA, opMode, this, telemetry,hardwareMap);
         }else if(location == VuforiaWebcamLocalization.ELocation.REDHOME) {
             runner = new RedHomeRunnerV1(drive, arm, opMode, this);
         }else if(location == VuforiaWebcamLocalization.ELocation.REDCORNER) {
             runner = new RedCorner(drive, arm, opMode, this);
         }else if(location == VuforiaWebcamLocalization.ELocation.REDMIDDLE) {
-            runner = new RedMiddle(drive, armA, opMode, this, telemetry);
+            runner = new RightMiddle(drive, armA, opMode, this, telemetry,hardwareMap);
         }
     }
     public void RunAutonomous(VuforiaWebcamLocalization.ELocation location, LinearOpMode opMode) {

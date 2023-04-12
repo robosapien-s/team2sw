@@ -3,7 +3,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.teamcode.testopmodes.VuforiaWebcamLocalization;
 
-@Autonomous(name="Carousel Red", group="Iterative Opmode")
+@Autonomous(name="Left Tall", group="Autonomous")
 public class AutonomousCarouselRed extends LinearOpMode {
 
     @Override

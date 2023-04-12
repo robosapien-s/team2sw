@@ -1,12 +1,13 @@
 package org.firstinspires.ftc.teamcode.competitionopmodes;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.wrappers.DrivingWrapperCompetition;
 import org.firstinspires.ftc.teamcode.wrappers.ExtensionWrapperCompetition;
 import org.firstinspires.ftc.teamcode.wrappers.JoystickWrapper;
-
+@Disabled
 @TeleOp
 public class DualMotorTesting extends LinearOpMode {
 

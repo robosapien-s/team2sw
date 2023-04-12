@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.testopmodes;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -15,7 +16,7 @@ import org.firstinspires.ftc.teamcode.wrappers.JoystickWrapper;
 
 and also this ¯\_(ツ)_/¯
  */
-
+@Disabled
 @TeleOp
 public class Kabir_Practice extends OpMode{
 

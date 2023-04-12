@@ -1,10 +1,11 @@
 package org.firstinspires.ftc.teamcode.competitionopmodes;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 import org.firstinspires.ftc.teamcode.wrappers.ArmWrapper;
-
+@Disabled
 @Autonomous
 public class Checkup extends OpMode {
     @Override

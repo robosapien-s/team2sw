@@ -1,12 +1,13 @@
 package org.firstinspires.ftc.teamcode.competitionopmodes;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.testopmodes.VuforiaWebcamLocalization;
 import org.firstinspires.ftc.teamcode.wrappers.DrivingWrapper;
-
-@Autonomous(name="Red Middle", group="Iterative Opmode")
+@Disabled
+@Autonomous(name="Right Middle", group="Autonomous")
 public class AutonomousMiddleRed extends LinearOpMode {
 
     @Override
