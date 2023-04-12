@@ -80,66 +80,73 @@ public class LeftTall implements IAutonomousRunner {
 
                 .waitSeconds(.8)
 
-                //Move up to top 
+                //Move up arm to top junction
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.slidePos = 4000;armWrapper.UpdatePos();})
 
                 .lineToLinearHeading(new Pose2d(36,-48,Math.toRadians(180)))
                 .lineToLinearHeading(new Pose2d(36,-0,Math.toRadians(180)))
 
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.rightServo.setPosition(.9); armWrapper.leftServo.setPosition(0.1); })
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.rightServo.setPosition(.9); armWrapper.leftServo.setPosition(0.1); })//Drop cone
 
                 .lineToLinearHeading(new Pose2d(36,-12,Math.toRadians(0)))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.slidePos = 400;armWrapper.UpdatePos();})
-                .lineToLinearHeading(new Pose2d(60,-12,Math.toRadians(0)))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    armWrapper.rightServo.setPosition(.80);
-                    armWrapper.leftServo.setPosition(.20);
-                })
-                .lineToLinearHeading(new Pose2d(24,-12,Math.toRadians(-90)))
 
-                //drop 2
-                .lineToLinearHeading(new Pose2d(36,-12,Math.toRadians(0)))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.slidePos = 400;armWrapper.UpdatePos();})
-                .lineToLinearHeading(new Pose2d(60,-12,Math.toRadians(0)))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.slidePos = 400;armWrapper.UpdatePos();})
-                .lineToLinearHeading(new Pose2d(24,-12,Math.toRadians(-90)))
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.slidePos = 400;armWrapper.UpdatePos();})//Move arm down to 5 cones height
 
-                //drop 3
-                .lineToLinearHeading(new Pose2d(36,-12,Math.toRadians(0)))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.slidePos = 400;armWrapper.UpdatePos();})
                 .lineToLinearHeading(new Pose2d(60,-12,Math.toRadians(0)))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    armWrapper.rightServo.setPosition(.80);
-                    armWrapper.leftServo.setPosition(.20);
-                })
+
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.rightServo.setPosition(.80); armWrapper.leftServo.setPosition(.20); })//Grab cone
                 .waitSeconds(.5)
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.slidePos = 400;armWrapper.UpdatePos();})
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.slidePos = 400;armWrapper.UpdatePos();})//Take cone over stack
                 .lineToLinearHeading(new Pose2d(24,-12,Math.toRadians(-90)))
 
-                //drop 4
-                .lineToLinearHeading(new Pose2d(36,-12,Math.toRadians(0)))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.slidePos = 400;armWrapper.UpdatePos();})
+
+
+                .lineToLinearHeading(new Pose2d(36,-12,Math.toRadians(0)))//drop 1
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.slidePos = 400;armWrapper.UpdatePos();})//Move arm down to 5 cones height
                 .lineToLinearHeading(new Pose2d(60,-12,Math.toRadians(0)))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    armWrapper.rightServo.setPosition(.80);
-                    armWrapper.leftServo.setPosition(.20);
-                })
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.rightServo.setPosition(.80); armWrapper.leftServo.setPosition(.20); })//Grap Cone
                 .waitSeconds(.5)
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.slidePos = 400;armWrapper.UpdatePos();})
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.slidePos = 4000;armWrapper.UpdatePos(); })//Move cone over stack
                 .lineToLinearHeading(new Pose2d(24,-12,Math.toRadians(-90)))
 
-                //drop 5
-                .lineToLinearHeading(new Pose2d(36,-12,Math.toRadians(0)))
 
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.slidePos = 400;armWrapper.UpdatePos();})
+
+                .lineToLinearHeading(new Pose2d(36,-12,Math.toRadians(0)))//drop 2
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.slidePos = 400;armWrapper.UpdatePos();})//Move arm down to 5 cones height
                 .lineToLinearHeading(new Pose2d(60,-12,Math.toRadians(0)))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    armWrapper.rightServo.setPosition(.80);
-                    armWrapper.leftServo.setPosition(.20);
-                })
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.rightServo.setPosition(.80); armWrapper.leftServo.setPosition(.20); })//Grap Cone
                 .waitSeconds(.5)
-                //
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.slidePos = 400;armWrapper.UpdatePos(); })
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.slidePos = 4000;armWrapper.UpdatePos(); })//Move cone over stack
+                .lineToLinearHeading(new Pose2d(24,-12,Math.toRadians(-90)))
+
+
+
+                .lineToLinearHeading(new Pose2d(36,-12,Math.toRadians(0)))//drop 3
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.slidePos = 400;armWrapper.UpdatePos();})//Move arm down to 5 cones height
+                .lineToLinearHeading(new Pose2d(60,-12,Math.toRadians(0)))
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.rightServo.setPosition(.80); armWrapper.leftServo.setPosition(.20); })//Grap Cone
+                .waitSeconds(.5)
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.slidePos = 4000;armWrapper.UpdatePos(); })//Move cone over stack
+                .lineToLinearHeading(new Pose2d(24,-12,Math.toRadians(-90)))
+
+
+
+                .lineToLinearHeading(new Pose2d(36,-12,Math.toRadians(0)))//drop 4
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.slidePos = 400;armWrapper.UpdatePos();})//Move arm down to 5 cones height
+                .lineToLinearHeading(new Pose2d(60,-12,Math.toRadians(0)))
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.rightServo.setPosition(.80); armWrapper.leftServo.setPosition(.20); })//Grap Cone
+                .waitSeconds(.5)
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.slidePos = 4000;armWrapper.UpdatePos(); })//Move cone over stack
+                .lineToLinearHeading(new Pose2d(24,-12,Math.toRadians(-90)))
+
+
+                
+                .lineToLinearHeading(new Pose2d(36,-12,Math.toRadians(0)))//drop 5
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.slidePos = 400;armWrapper.UpdatePos();})//Move arm down to 5 cones height
+                .lineToLinearHeading(new Pose2d(60,-12,Math.toRadians(0)))
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.rightServo.setPosition(.80); armWrapper.leftServo.setPosition(.20); })//Grap Cone
+                .waitSeconds(.5)
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.slidePos = 4000;armWrapper.UpdatePos(); })//Move cone over stack
                 .lineToLinearHeading(new Pose2d(24,-12,Math.toRadians(-90)))
                 .build();
 
