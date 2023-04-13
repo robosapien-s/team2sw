@@ -16,14 +16,18 @@ public class ExtensionWrapperDD {
     //DcMotor topMotor;
     public Servo leftServo; //1
     public Servo rightServo; //0
-    DcMotorEx slideMotorRight; //0
-    DcMotorEx slideMotorLeft; //1
+
+    public Servo guideServo; //0 expansion
+    DcMotorEx slideMotorRight; //0 expansion
+    DcMotorEx slideMotorLeft; //1 expansion
     double leftSlideFactor = 0.98;
     public int slidePos = 0;
     int Ratio = 28;
     final int slideEncoderFactor = 10;
 
     boolean limit = true;
+
+    boolean guideOut = true;
 
 
     double servoPos = 0.5;
@@ -41,8 +45,9 @@ public class ExtensionWrapperDD {
         //topMotor  = hardwareMap.get(DcMotor.class, "topMotor");
         leftServo = hardwareMap.get(Servo.class, "leftServo");
         rightServo = hardwareMap.get(Servo.class, "rightServo");
-        slideMotorLeft  = hardwareMap.get(DcMotorEx.class, "slideMotorLeft");
-        slideMotorRight  = hardwareMap.get(DcMotorEx.class, "slideMotorRight");
+        guideServo = hardwareMap.get(Servo.class, "guideServo");
+        slideMotorLeft = hardwareMap.get(DcMotorEx.class, "slideMotorLeft");
+        slideMotorRight = hardwareMap.get(DcMotorEx.class, "slideMotorRight");
         slideMotorLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         slideMotorLeft.setDirection(DcMotorSimple.Direction.REVERSE);
         slideMotorLeft.setTargetPosition(0);
@@ -85,23 +90,31 @@ public class ExtensionWrapperDD {
 
         if (joystickWrapper.gamepad1GetA()) {
             slidePos = 70;
+            guideServo.setPosition(0);
         }else if (joystickWrapper.gamepad1GetX()) {
             slidePos = 220;
+            guideServo.setPosition(0);
         }
         else if (joystickWrapper.gamepad1GetY()) {
             slidePos = 390;
+            guideServo.setPosition(0);
         }else if (joystickWrapper.gamepad1GetB()) {
             slidePos = 550;
+            guideServo.setPosition(0);
         }
         if (joystickWrapper.gamepad1GetDDown()) {
             slidePos = 5;
+            guideServo.setPosition(0);
         }else if (joystickWrapper.gamepad1GetDLeft()) {
             slidePos = 1670;
+            guideServo.setPosition(0);
         }
         else if (joystickWrapper.gamepad1GetDUp()) {
             slidePos = 2800;
+            guideServo.setPosition(.65);
         }else if (joystickWrapper.gamepad1GetDRight()) {
             slidePos = 4000;
+            guideServo.setPosition(.65);
         }
 
 
@@ -111,13 +124,14 @@ public class ExtensionWrapperDD {
         if (slidePos>4000 && limit) {
             slidePos = 4000;
         }
-        telemetry.addData("CurrentPosition:slide", slideMotorRight.getCurrentPosition());
-        telemetry.addData("TargetPosition:slide", slideMotorRight.getTargetPosition());
-        telemetry.addData("CurrentPosition:rightServo", rightServo.getPosition());
-        telemetry.addData("CurrentPosition:leftServo", leftServo.getPosition());
-        telemetry.addData("TargetPosition", slidePos);
-        telemetry.addData("Limit?", limit);
-        telemetry.update();
+
+//        telemetry.addData("CurrentPosition:slide", slideMotorRight.getCurrentPosition());
+//        telemetry.addData("TargetPosition:slide", slideMotorRight.getTargetPosition());
+//        telemetry.addData("CurrentPosition:rightServo", rightServo.getPosition());
+//        telemetry.addData("CurrentPosition:leftServo", leftServo.getPosition());
+//        telemetry.addData("TargetPosition", slidePos);
+//        telemetry.addData("Limit?", limit);
+//        telemetry.update();
 
         if (slideMotorRight.getTargetPosition() == 4000) {
             if (slideMotorRight.getCurrentPosition()> 4000-slowRange) {
@@ -166,6 +180,17 @@ public class ExtensionWrapperDD {
                 open = true;
             }
         }
+        if(joystickWrapper.gamepad1GetRightBumperDown()) {
+            if (guideOut) {
+                guideServo.setPosition(0);
+                guideOut = false;
+            } else {
+                guideServo.setPosition(.65);
+                guideOut = true;
+            }
+        }
+        telemetry.addData("guideServo:",guideServo.getPosition());
+        telemetry.update();
     }
 
     public void UpdatePos() {

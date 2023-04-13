@@ -2,79 +2,91 @@ package org.firstinspires.ftc.teamcode.wrappers;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+
 public class OzerDrivingTranslator implements IDrivingTranslator{
-    int N=4;
-    double oldX = 0;
-    double oldY = 0;
-    double oldRX = 0;
+    double N = 10;
+    double targetX = 0;
+    double countX = N;
+    double new_targetX = 0;
+    double deltaX = 0;
+    double startingX = 0;
+    double linear_deltaX = 0;
+    double motor_outX = 0;
+    double targetY = 0;
+    double countY = N;
+    double new_targetY = 0;
+    double deltaY = 0;
+    double startingY = 0;
+    double linear_deltaY = 0;
+    double motor_outY = 0;
+    double targetRX = 0;
+    double countRX = N;
+    double new_targetRX = 0;
+    double deltaRX = 0;
+    double startingRX = 0;
+    double linear_deltaRX = 0;
+    double motor_outRX = 0;
 
-    double curPowerX = 0;
-    double curPowerY = 0;
-    double curPowerRX = 0;
-
-    double newPowerX = 0;
-    double newPowerY = 0;
-    double newPowerRX = 0;
-
-    double x;
-    double y;
-    double rx;
-
-    int countX = 1;
-    int countY = 1;
-    int countRX = 1;
     @Override
-    public Pose2d update(Pose2d pose2d) {
-        double deltaX = oldX - x;
-        oldX = x;
+    public Pose2d update(Pose2d pose2d, Telemetry telemetry) {
+        new_targetX = pose2d.getX();
+        deltaX = new_targetX - targetX;
 
-        double deltaY = oldY - y;
-        oldY = y;
+        new_targetY = pose2d.getY();
+        deltaY = new_targetY - targetY;
 
-        double deltaRX = oldRX - rx;
-        oldRX = rx;
-
-        //the above section should be repeated everytime the function is called
+        new_targetRX = pose2d.getHeading();
+        deltaRX = new_targetRX - targetRX;
 
         if (deltaX != 0) {
-            countX = 1;
-            newPowerX = curPowerX - (countX/N) * deltaX;
-            curPowerX = newPowerX;
+            countX = 2;
+            startingX = targetX;
+            targetX = new_targetX;
+            linear_deltaX = deltaX;
+        }
+
+
+        if (countX < N) {
             countX++;
-        } else {
-            if (countX > N) {
-                countX = N;
-            }
-            newPowerX = curPowerX - (countX/N) * deltaX;
-            countX++;
+            motor_outX = startingX + countX / N * linear_deltaX;
+        }
+        else {
+            motor_outX = new_targetX;
         }
 
         if (deltaY != 0) {
-            countY = 1;
-            newPowerY = curPowerY - (countY/N) * deltaY;
-            curPowerY = newPowerY;
+            countY = 2;
+            startingY = targetY;
+            targetY = new_targetY;
+            linear_deltaY = deltaY;
+        }
+
+
+        if (countY < N) {
             countY++;
-        } else {
-            if (countY > N) {
-                countY = N;
-            }
-            newPowerY = curPowerY - (countY/N) * deltaY;
-            countY++;
+            motor_outY = startingY + countY / N * linear_deltaY;
+        }
+        else {
+            motor_outY = new_targetY;
         }
 
         if (deltaRX != 0) {
-            countRX = 1;
-            newPowerRX = curPowerRX - (countRX/N) * deltaRX;
-            curPowerRX = newPowerRX;
-            countRX++;
-        } else {
-            if (countRX > N) {
-                countRX = N;
-            }
-            newPowerRX = curPowerRX - (countRX/N) * deltaRX;
-            countRX++;
+            countRX = 2;
+            startingRX = targetRX;
+            targetRX = new_targetRX;
+            linear_deltaRX = deltaRX;
         }
 
-        return new Pose2d(newPowerX,newPowerY,newPowerRX);
+
+        if (countRX < N) {
+            countRX++;
+            motor_outRX = startingRX + countRX / N * linear_deltaRX;
+        }
+        else {
+            motor_outRX = new_targetRX;
+        }
+
+        return new Pose2d(motor_outX,motor_outY,motor_outRX);
     }
 }

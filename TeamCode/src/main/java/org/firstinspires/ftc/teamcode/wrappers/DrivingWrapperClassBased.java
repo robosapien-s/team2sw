@@ -29,7 +29,7 @@ public class DrivingWrapperClassBased {
     DcMotor motorFrontRight;
     DcMotor motorBackRight;
 
-    IDrivingTranslator driveTranslator = new PassThroughDrivingTranslator();
+    IDrivingTranslator driveTranslator = new OzerDrivingTranslator();
 
 
     public DrivingWrapperClassBased(HardwareMap inHardwareMap, Telemetry inTelemetry) {
@@ -48,6 +48,13 @@ public class DrivingWrapperClassBased {
 
         motorFrontRight.setDirection(DcMotorSimple.Direction.REVERSE); //setting the right side motors to reverse so they go the right direction
         motorBackRight.setDirection(DcMotorSimple.Direction.REVERSE);
+
+        motorFrontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        motorBackLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        motorFrontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        motorBackRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+
     }
 
 // static classes to return the amount of power for each motor
@@ -76,7 +83,7 @@ public class DrivingWrapperClassBased {
         double x = joystickWrapper.gamepad1GetLeftStickX() * 1.1; // Counteract imperfect strafing | Defining the x variable
         double rx = joystickWrapper.gamepad1GetRightStickX() * rotSpeed; // Defining the rx (right x) variable
 
-        Pose2d in = driveTranslator.update(new Pose2d(x,y,rx));
+        Pose2d in = driveTranslator.update(new Pose2d(x,y,rx), telemetry);
 
         double denominator = Math.max(Math.abs(in.getY()) + Math.abs(in.getX()) + Math.abs(in.getHeading()), 1); // Defining the denominator variable
 
@@ -84,6 +91,8 @@ public class DrivingWrapperClassBased {
         motorBackLeft.setPower(BackLeftPower(denominator, in.getY(), in.getX(), in.getHeading()/speed) * speed);
         motorFrontRight.setPower(FrontRightPower(denominator, in.getY(), in.getX(), in.getHeading()/speed) * speed);
         motorBackRight.setPower(BackRightPower(denominator, in.getY(), in.getX(), in.getHeading()/speed) * speed);
+
+
     }
     public double calculateDenominator(double x, double y, double rx) {
         return Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);
