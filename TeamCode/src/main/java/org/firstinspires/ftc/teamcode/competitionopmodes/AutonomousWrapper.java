@@ -106,7 +106,7 @@ public class AutonomousWrapper {
             runner = new RightMiddle(drive, armA, opMode, this, telemetry,hardwareMap);
         }
     }
-    public void RunAutonomous(VuforiaWebcamLocalization.ELocation location, LinearOpMode opMode) {
+    public void RunAutonomous() {
 
 
 //        telemetry.addData("Location" ,location.toString());

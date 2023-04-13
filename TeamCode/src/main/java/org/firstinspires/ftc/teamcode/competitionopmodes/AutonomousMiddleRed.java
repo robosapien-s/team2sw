@@ -23,7 +23,7 @@ public class AutonomousMiddleRed extends LinearOpMode {
 
 
         if(opModeIsActive()) {
-            autonomousWrapper.RunAutonomous(VuforiaWebcamLocalization.ELocation.REDMIDDLE, this);
+            autonomousWrapper.RunAutonomous();
         }
 
 

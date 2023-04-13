@@ -23,7 +23,7 @@ public class AutonomousCornerBlue extends LinearOpMode {
 
 
         if(opModeIsActive()) {
-            autonomousWrapper.RunAutonomous(VuforiaWebcamLocalization.ELocation.BLUECORNER, this);
+            autonomousWrapper.RunAutonomous();
         }
 
 

@@ -24,7 +24,7 @@ public class AutonomousMiddleBlue extends LinearOpMode {
 
 
         if(opModeIsActive()) {
-            autonomousWrapper.RunAutonomous(VuforiaWebcamLocalization.ELocation.BLUEMIDDLE, this);
+            autonomousWrapper.RunAutonomous();
         }
 
 
