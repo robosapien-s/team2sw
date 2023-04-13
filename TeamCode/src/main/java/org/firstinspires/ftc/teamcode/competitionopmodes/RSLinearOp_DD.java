@@ -16,7 +16,7 @@ RSLinearOp_DD extends LinearOpMode {
     ExtensionWrapperDD extensionArmWrapper;
     DrivingWrapperClassBased drivingWrapper;
 
-    double speed = .65;
+    double speed = .75;
     double rotspeed = .75;
 
     boolean open = true;
@@ -31,7 +31,7 @@ RSLinearOp_DD extends LinearOpMode {
             if(joystickWrapper.gamepad1GetLeftStick()){
                 speed = 1;
             }else {
-                speed = .65;
+                speed = .75;
             }
             if(joystickWrapper.gamepad1GetRightStick()){
                 rotspeed = 1;
