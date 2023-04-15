@@ -73,6 +73,8 @@ public class LeftTall implements IAutonomousRunner {
 
 
         trajectory1 = drive.trajectorySequenceBuilder(new Pose2d(36, -60, Math.toRadians(-90)))
+
+
                 //Open claw for start
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.rightServo.setPosition(.80); armWrapper.leftServo.setPosition(.20); })
 

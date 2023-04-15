@@ -34,7 +34,7 @@ MeepMeepBlueDefense {
                 .followTrajectorySequence(drive ->
 
                         drive.trajectorySequenceBuilder(new Pose2d(-36, -60, Math.toRadians(90)))
-                                .splineTo(new Vector2d(-48,-33),Math.toRadians(180))
+                                .splineTo(new Vector2d(-40,-30),Math.toRadians(135))
                                 .build()
                 );
 

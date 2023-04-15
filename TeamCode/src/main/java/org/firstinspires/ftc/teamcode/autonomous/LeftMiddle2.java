@@ -78,8 +78,21 @@ public class LeftMiddle2 implements IAutonomousRunner {
 
 
         trajectoryBase = drive.trajectorySequenceBuilder(startPose)
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
+                    armWrapper.rightServo.setPosition(.9);
+                    armWrapper.leftServo.setPosition(.1);
+                })
 
-                .splineTo(new Vector2d(-48,-33),Math.toRadians(180))
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
+                    armWrapper.slidePos = 2800;armWrapper.UpdatePos();
+                })
+                .splineTo(new Vector2d(-43,-25),Math.toRadians(135))
+
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
+                    armWrapper.rightServo.setPosition(.8);
+                    armWrapper.leftServo.setPosition(.2);
+                })
+
 
 //                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
 //                    armWrapper.rightServo.setPosition(.9);
@@ -310,13 +323,13 @@ public class LeftMiddle2 implements IAutonomousRunner {
         drive.followTrajectorySequence(trajectoryBase);
 
 
-        if(signalInt==0){
-            drive.followTrajectorySequence(trajectory3);
-        }else if(signalInt==1){
-            drive.followTrajectorySequence(trajectory2);
-        }else{
-            drive.followTrajectorySequence(trajectory1);
-        }
+//        if(signalInt==0){
+//            drive.followTrajectorySequence(trajectory3);
+//        }else if(signalInt==1){
+//            drive.followTrajectorySequence(trajectory2);
+//        }else{
+//            drive.followTrajectorySequence(trajectory1);
+//        }
         linearOpMode.sleep(10000);
 
 

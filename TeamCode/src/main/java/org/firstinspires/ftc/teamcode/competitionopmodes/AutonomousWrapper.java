@@ -11,6 +11,7 @@ import org.firstinspires.ftc.teamcode.autonomous.BlueHomeRunner;
 import org.firstinspires.ftc.teamcode.autonomous.BlueMiddle;
 import org.firstinspires.ftc.teamcode.autonomous.IAutonomousRunner;
 import org.firstinspires.ftc.teamcode.autonomous.LeftMiddle;
+import org.firstinspires.ftc.teamcode.autonomous.LeftMiddle2;
 import org.firstinspires.ftc.teamcode.autonomous.LeftTall;
 import org.firstinspires.ftc.teamcode.autonomous.RedCarouselRunnerV2;
 import org.firstinspires.ftc.teamcode.autonomous.RedCorner;
@@ -95,7 +96,7 @@ public class AutonomousWrapper {
         }else if(location == VuforiaWebcamLocalization.ELocation.BLUECORNER) {
             runner = new BlueCorner(drive, armA, opMode, this,telemetry,hardwareMap);//Actually just parking Autonomous (Non deadwheel)
         }else if(location == VuforiaWebcamLocalization.ELocation.BLUEMIDDLE) {
-            runner = new LeftMiddle2(drive, armA, opMode, this, telemetry);
+            runner = new LeftMiddle2(drive, armA, opMode, this, telemetry,hardwareMap);
         }else if(location == VuforiaWebcamLocalization.ELocation.REDCAROUSEL) {
             runner = new LeftTall(drive, armA, opMode, this, telemetry,hardwareMap);
         }else if(location == VuforiaWebcamLocalization.ELocation.REDHOME) {
