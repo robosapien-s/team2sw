@@ -95,7 +95,7 @@ public class AutonomousWrapper {
         }else if(location == VuforiaWebcamLocalization.ELocation.BLUECORNER) {
             runner = new BlueCorner(drive, armA, opMode, this,telemetry,hardwareMap);//Actually just parking Autonomous (Non deadwheel)
         }else if(location == VuforiaWebcamLocalization.ELocation.BLUEMIDDLE) {
-            runner = new BlueMiddle(drive, armA, opMode, this, telemetry);
+            runner = new LeftMiddle2(drive, armA, opMode, this, telemetry);
         }else if(location == VuforiaWebcamLocalization.ELocation.REDCAROUSEL) {
             runner = new LeftTall(drive, armA, opMode, this, telemetry,hardwareMap);
         }else if(location == VuforiaWebcamLocalization.ELocation.REDHOME) {
