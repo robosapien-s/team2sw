@@ -71,8 +71,6 @@ public class LeftTall implements IAutonomousRunner {
         telemetry.addData("Int = ", signalInt);
         telemetry.update();
 
-        telemetry.addData("Auto: ", "Simple non deadwheel");
-        telemetry.update();
 
         trajectory1 = drive.trajectorySequenceBuilder(new Pose2d(36, -60, Math.toRadians(-90)))
                 //Open claw for start
@@ -140,7 +138,7 @@ public class LeftTall implements IAutonomousRunner {
                 .lineToLinearHeading(new Pose2d(24,-12,Math.toRadians(-90)))
 
 
-                
+
                 .lineToLinearHeading(new Pose2d(36,-12,Math.toRadians(0)))//drop 5
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.slidePos = 400;armWrapper.UpdatePos();})//Move arm down to 5 cones height
                 .lineToLinearHeading(new Pose2d(60,-12,Math.toRadians(0)))

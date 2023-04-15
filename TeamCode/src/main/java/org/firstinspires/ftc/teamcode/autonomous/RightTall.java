@@ -71,8 +71,6 @@ public class RightTall implements IAutonomousRunner {
         telemetry.addData("Int = ", signalInt);
         telemetry.update();
 
-        telemetry.addData("Auto: ", "Simple non deadwheel");
-        telemetry.update();
 
         trajectory1 = drive.trajectorySequenceBuilder(new Pose2d(36, 60, Math.toRadians(-90)))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {

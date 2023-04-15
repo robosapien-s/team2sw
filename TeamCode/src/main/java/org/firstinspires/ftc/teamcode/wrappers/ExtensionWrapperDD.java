@@ -165,6 +165,7 @@ public class ExtensionWrapperDD {
         //slideMotorLeft.setPower(1);
         slideMotorRight.setTargetPosition(slidePos);
         slideMotorLeft.setTargetPosition((int) ((slidePos)*leftSlideFactor));
+
         slideMotorRight.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
         slideMotorLeft.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
         //topMotor.setPower(-joystickWrapper.gamepad2GetLeftStickY());
@@ -189,13 +190,13 @@ public class ExtensionWrapperDD {
                 guideOut = true;
             }
         }
-        telemetry.addData("guideServo:",guideServo.getPosition());
-        telemetry.update();
+
     }
 
     public void UpdatePos() {
         slideMotorRight.setPower(1);
         slideMotorLeft.setPower(1);
+
         slideMotorRight.setTargetPosition(slidePos);
         slideMotorLeft.setTargetPosition(slidePos);
 
