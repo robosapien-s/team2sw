@@ -5,7 +5,7 @@ import com.acmerobotics.roadrunner.geometry.Pose2d;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public class OzerDrivingTranslator implements IDrivingTranslator{
-    double N = 10;
+    double N = 4;
     double targetX = 0;
     double countX = N;
     double new_targetX = 0;
@@ -27,7 +27,6 @@ public class OzerDrivingTranslator implements IDrivingTranslator{
     double startingRX = 0;
     double linear_deltaRX = 0;
     double motor_outRX = 0;
-
     @Override
     public Pose2d update(Pose2d pose2d, Telemetry telemetry) {
         new_targetX = pose2d.getX();

@@ -21,9 +21,9 @@ public class ExtensionWrapperDD {
     DcMotorEx slideMotorRight; //0 expansion
     DcMotorEx slideMotorLeft; //1 expansion
     double leftSlideFactor = 0.98;
-    public int slidePos = 0;
+    public Integer slidePos = 0;
     int Ratio = 28;
-    final int slideEncoderFactor = 10;
+    final int slideEncoderFactor = 20;
 
     boolean limit = true;
 
@@ -60,22 +60,8 @@ public class ExtensionWrapperDD {
     int slideOldPos = 0;
     public void PPArmMove(JoystickWrapper joystickWrapper) {
 
-        int deltaSlide = slideMotorRight.getTargetPosition() + (int)((joystickWrapper.gamepad1GetRightTrigger()-joystickWrapper.gamepad1GetLeftTrigger())*slideEncoderFactor) - slidePos;
-        slideOldPos = slideMotorRight.getTargetPosition() + (int)((joystickWrapper.gamepad1GetRightTrigger()-joystickWrapper.gamepad1GetLeftTrigger())*slideEncoderFactor);
-        if (deltaSlide != 0) {
-            for (int count = 0; count < N; count++) {
-                slidePos = (int) (slideOldPos + ((count/N) * deltaSlide));
-            }
-        } else {
-            slidePos=slideOldPos;
-        }
-        if (joystickWrapper.gamepad1GetRightBumperDown()){
-            if(limit){
-                limit=false;
-            }else {
-                limit=true;
-            }
-        }
+        slidePos = (int) (slideMotorRight.getTargetPosition() + (joystickWrapper.gamepad1GetRightTrigger()-joystickWrapper.gamepad1GetLeftTrigger()) * slideEncoderFactor);
+
 
        /* if (joystickWrapper.gamepad2GetDDown()) {
             clawBase.setPower(-.5);
@@ -118,10 +104,10 @@ public class ExtensionWrapperDD {
         }
 
 
-        if (slidePos<5 && limit) {
+        if (slidePos<5) {
             slidePos = 5;
         }
-        if (slidePos>4000 && limit) {
+        if (slidePos>4000) {
             slidePos = 4000;
         }
 
@@ -130,7 +116,7 @@ public class ExtensionWrapperDD {
 //        telemetry.addData("CurrentPosition:rightServo", rightServo.getPosition());
 //        telemetry.addData("CurrentPosition:leftServo", leftServo.getPosition());
 //        telemetry.addData("TargetPosition", slidePos);
-//        telemetry.addData("Limit?", limit);
+//        telemetr``y.addData("Limit?", limit);
 //        telemetry.update();
 
         if (slideMotorRight.getTargetPosition() == 4000) {
@@ -163,13 +149,16 @@ public class ExtensionWrapperDD {
         }
         //slideMotorRight.setPower(1); //COMMENT THIS OUT IF WE ADD THE LOOPS PRIOR
         //slideMotorLeft.setPower(1);
-        slideMotorRight.setTargetPosition(slidePos);
-        slideMotorLeft.setTargetPosition((int) ((slidePos)*leftSlideFactor));
 
-        slideMotorRight.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
-        slideMotorLeft.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+        if (slidePos != null) {
+            slideMotorRight.setTargetPosition(slidePos);
+            slideMotorLeft.setTargetPosition((int) ((slidePos)*leftSlideFactor));
+            slideMotorRight.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+            slideMotorLeft.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+        }
         //topMotor.setPower(-joystickWrapper.gamepad2GetLeftStickY());
-
+        telemetry.addData("Current Encoder", slideMotorRight.getCurrentPosition());
+        telemetry.update();
         if(joystickWrapper.gamepad1GetLeftBumperDown()) {
             if (open) {
                 rightServo.setPosition(.80);

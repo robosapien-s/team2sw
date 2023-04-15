@@ -1,7 +1,11 @@
 package org.firstinspires.ftc.teamcode.autonomous;
 
+import androidx.annotation.NonNull;
+
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
+import com.acmerobotics.roadrunner.trajectory.constraints.TrajectoryAccelerationConstraint;
+import com.acmerobotics.roadrunner.trajectory.constraints.TrajectoryVelocityConstraint;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -73,6 +77,17 @@ public class RightTall implements IAutonomousRunner {
 
 
         trajectory1 = drive.trajectorySequenceBuilder(new Pose2d(36, 60, Math.toRadians(-90)))
+                .setConstraints(new TrajectoryVelocityConstraint() {
+                    @Override
+                    public double get(double v, @NonNull Pose2d pose2d, @NonNull Pose2d pose2d1, @NonNull Pose2d pose2d2) {
+                        return 50;
+                    }
+                }, new TrajectoryAccelerationConstraint() {
+                    @Override
+                    public double get(double v, @NonNull Pose2d pose2d, @NonNull Pose2d pose2d1, @NonNull Pose2d pose2d2) {
+                        return 50;
+                    }
+                })
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                     armWrapper.rightServo.setPosition(.80);
                     armWrapper.leftServo.setPosition(.20);
@@ -172,6 +187,7 @@ public class RightTall implements IAutonomousRunner {
                     armWrapper.UpdatePos();
                 })
                 .lineToLinearHeading(new Pose2d(24,12,Math.toRadians(-90)))
+                .resetConstraints()
                 .build();
 
 
