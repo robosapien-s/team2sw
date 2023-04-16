@@ -64,17 +64,10 @@ public class LeftMiddle implements IAutonomousRunner {
         //Motor 3
         motorBackRight = hardwareMap.dcMotor.get("motorBackRight");
 
-    }
-
-    @Override
-    public void run() {
         drive.setPoseEstimate(startPose);
 
 
-        signalInt = wrapper.initDetection.signalInt;
 
-        telemetry.addData("Int = ", signalInt);
-        telemetry.update();
 
 
         trajectoryBase = drive.trajectorySequenceBuilder(startPose)
@@ -84,7 +77,7 @@ public class LeftMiddle implements IAutonomousRunner {
                     armWrapper.leftServo.setPosition(.1);
                 })
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    armWrapper.slidePos = 2800;armWrapper.UpdatePos();
+                    armWrapper.slidePos = 2850;armWrapper.UpdatePos();
                 })
 
 
@@ -119,13 +112,13 @@ public class LeftMiddle implements IAutonomousRunner {
                 })
 
                 .waitSeconds(.4)
-                .lineToLinearHeading(new Pose2d(-65.5,-14.5,Math.toRadians(178)))
+                .lineToLinearHeading(new Pose2d(-66.5,-14.5,Math.toRadians(178)))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                     armWrapper.rightServo.setPosition(.9);
                     armWrapper.leftServo.setPosition(.1);
                 })
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    armWrapper.slidePos = 2800;armWrapper.UpdatePos();
+                    armWrapper.slidePos = 2850;armWrapper.UpdatePos();
                 })
 
                 .UNSTABLE_addTemporalMarkerOffset(.4, () -> {
@@ -144,11 +137,11 @@ public class LeftMiddle implements IAutonomousRunner {
                 .lineToLinearHeading(new Pose2d(-30,-14,Math.toRadians(170)))
 
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    armWrapper.slidePos = 500;armWrapper.UpdatePos();
+                    armWrapper.slidePos = 450;armWrapper.UpdatePos();
                     armWrapper.guideServo.setPosition(0);
                 })
 
-                .lineToLinearHeading(new Pose2d(-64,-11.5,Math.toRadians(177)))
+                .lineToLinearHeading(new Pose2d(-65,-11.5,Math.toRadians(177)))
 
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                     armWrapper.rightServo.setPosition(.9);
@@ -156,7 +149,7 @@ public class LeftMiddle implements IAutonomousRunner {
                 })
                 .waitSeconds(.4)
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    armWrapper.slidePos = 2800;armWrapper.UpdatePos();
+                    armWrapper.slidePos = 2850;armWrapper.UpdatePos();
                 })
 
                 .UNSTABLE_addTemporalMarkerOffset(.4, () -> {
@@ -181,7 +174,7 @@ public class LeftMiddle implements IAutonomousRunner {
                     armWrapper.guideServo.setPosition(0);
                 })
 
-                .lineToLinearHeading(new Pose2d(-64,-9.5,Math.toRadians(168)))
+                .lineToLinearHeading(new Pose2d(-65,-9.5,Math.toRadians(168)))
 
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                     armWrapper.rightServo.setPosition(.9);
@@ -189,7 +182,7 @@ public class LeftMiddle implements IAutonomousRunner {
                 })
                 .waitSeconds(.4)
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    armWrapper.slidePos = 2800;armWrapper.UpdatePos();
+                    armWrapper.slidePos = 2850;armWrapper.UpdatePos();
                 })
 
                 .UNSTABLE_addTemporalMarkerOffset(.4, () -> {
@@ -303,7 +296,16 @@ public class LeftMiddle implements IAutonomousRunner {
                 })
                 .resetConstraints()
                 .build();
+    }
 
+    @Override
+    public void run() {
+
+
+        signalInt = wrapper.initDetection.signalInt;
+
+        telemetry.addData("Int = ", signalInt);
+        telemetry.update();
 
         drive.followTrajectorySequence(trajectoryBase);
 

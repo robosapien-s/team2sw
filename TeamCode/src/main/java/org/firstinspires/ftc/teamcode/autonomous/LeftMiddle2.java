@@ -11,6 +11,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.apache.commons.math3.stat.descriptive.moment.VectorialCovariance;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.competitionopmodes.AutonomousWrapper;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
@@ -86,7 +87,8 @@ public class LeftMiddle2 implements IAutonomousRunner {
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                     armWrapper.slidePos = 2800;armWrapper.UpdatePos();
                 })
-                .splineTo(new Vector2d(-43,-25),Math.toRadians(135))
+                .splineTo(new Vector2d(-36,-40),Math.toRadians(90))
+                .splineTo(new Vector2d(-48,33),Math.toRadians(180))
 
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                     armWrapper.rightServo.setPosition(.8);
