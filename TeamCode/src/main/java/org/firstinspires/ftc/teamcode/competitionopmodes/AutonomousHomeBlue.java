@@ -23,7 +23,7 @@ public class AutonomousHomeBlue extends LinearOpMode {
 
 
         if(opModeIsActive()) {
-//            autonomousWrapper.RunAutonomous(VuforiaWebcamLocalization.ELocation.BLUEHOME, this);
+            autonomousWrapper.RunAutonomous();
         }
 
 

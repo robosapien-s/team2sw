@@ -71,15 +71,7 @@ public class LeftMiddle implements IAutonomousRunner {
 
 
         trajectoryBase = drive.trajectorySequenceBuilder(startPose)
-
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    armWrapper.rightServo.setPosition(.9);
-                    armWrapper.leftServo.setPosition(.1);
-                })
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    armWrapper.slidePos = 2850;armWrapper.UpdatePos();
-                })
-
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.slidePos = 2850;armWrapper.UpdatePos(); })
 
                 .lineToLinearHeading(new Pose2d(-36, 0,Math.toRadians(90)), new TrajectoryVelocityConstraint() {
                     @Override
@@ -93,112 +85,67 @@ public class LeftMiddle implements IAutonomousRunner {
                     }
                 })
 
-
                 .lineToLinearHeading(new Pose2d(-27,-22,Math.toRadians(-45)))
 
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    armWrapper.rightServo.setPosition(.8);
-                    armWrapper.leftServo.setPosition(.2);
-                })
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.rightServo.setPosition(.8); armWrapper.leftServo.setPosition(.2); })
 
-                .waitSeconds(.4)
+                .waitSeconds(.35)
 
-                .lineToLinearHeading(new Pose2d(-40,-14,Math.toRadians(180)))
+                .lineToLinearHeading(new Pose2d(-40,-14,Math.toRadians(0)))
 
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.slidePos = 600;armWrapper.UpdatePos(); armWrapper.guideServo.setPosition(0); })
 
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    armWrapper.slidePos = 600;armWrapper.UpdatePos();
-                    armWrapper.guideServo.setPosition(0);
-                })
+                .waitSeconds(.35)
+                .lineToLinearHeading(new Pose2d(-66.5,-14.5,Math.toRadians(2)))
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.rightServo.setPosition(.9); armWrapper.leftServo.setPosition(.1); })
 
-                .waitSeconds(.4)
-                .lineToLinearHeading(new Pose2d(-66.5,-14.5,Math.toRadians(178)))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    armWrapper.rightServo.setPosition(.9);
-                    armWrapper.leftServo.setPosition(.1);
-                })
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    armWrapper.slidePos = 2850;armWrapper.UpdatePos();
-                })
+                .waitSeconds(.35)
 
-                .UNSTABLE_addTemporalMarkerOffset(.4, () -> {
-                    armWrapper.guideServo.setPosition(.65);
-                })
-
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.slidePos = 2850;armWrapper.UpdatePos(); })
+                .UNSTABLE_addTemporalMarkerOffset(.4, () -> { armWrapper.guideServo.setPosition(.65); })
                 .lineToLinearHeading(new Pose2d(-23,-21,Math.toRadians(-90)))
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.rightServo.setPosition(.8); armWrapper.leftServo.setPosition(.2); })
 
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    armWrapper.rightServo.setPosition(.8);
-                    armWrapper.leftServo.setPosition(.2);
-                })
+                .waitSeconds(.35)
 
-                .waitSeconds(.4)
+                .lineToLinearHeading(new Pose2d(-30,-14,Math.toRadians(10)))
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.slidePos = 450;armWrapper.UpdatePos(); armWrapper.guideServo.setPosition(0); })
+                .lineToLinearHeading(new Pose2d(-65,-11.5,Math.toRadians(3)))
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.rightServo.setPosition(.9); armWrapper.leftServo.setPosition(.1); })
 
-                .lineToLinearHeading(new Pose2d(-30,-14,Math.toRadians(170)))
+                .waitSeconds(.35)
 
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    armWrapper.slidePos = 450;armWrapper.UpdatePos();
-                    armWrapper.guideServo.setPosition(0);
-                })
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.slidePos = 2850;armWrapper.UpdatePos(); })
+                .UNSTABLE_addTemporalMarkerOffset(.4, () -> { armWrapper.guideServo.setPosition(.65); })
 
-                .lineToLinearHeading(new Pose2d(-65,-11.5,Math.toRadians(177)))
+                .waitSeconds(.35)
 
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    armWrapper.rightServo.setPosition(.9);
-                    armWrapper.leftServo.setPosition(.1);
-                })
-                .waitSeconds(.4)
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    armWrapper.slidePos = 2850;armWrapper.UpdatePos();
-                })
-
-                .UNSTABLE_addTemporalMarkerOffset(.4, () -> {
-                    armWrapper.guideServo.setPosition(.65);
-                })
-                .waitSeconds(.4)
                 .lineToLinearHeading(new Pose2d(-24,-22,Math.toRadians(-94)))
 
-                .waitSeconds(.4)
+                .waitSeconds(.35)
 
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    armWrapper.rightServo.setPosition(.8);
-                    armWrapper.leftServo.setPosition(.2);
-                })
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.rightServo.setPosition(.8); armWrapper.leftServo.setPosition(.2); })
 
-                .waitSeconds(.4)
+                .waitSeconds(.35)
 
-                .lineToLinearHeading(new Pose2d(-30,-14,Math.toRadians(168)))
+                .lineToLinearHeading(new Pose2d(-30,-14,Math.toRadians(12)))
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.slidePos = 305;armWrapper.UpdatePos(); armWrapper.guideServo.setPosition(0); })
+                .lineToLinearHeading(new Pose2d(-65,-9.5,Math.toRadians(12)))
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.rightServo.setPosition(.9); armWrapper.leftServo.setPosition(.1); })
 
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    armWrapper.slidePos = 305;armWrapper.UpdatePos();
-                    armWrapper.guideServo.setPosition(0);
-                })
+                .waitSeconds(.35)
 
-                .lineToLinearHeading(new Pose2d(-65,-9.5,Math.toRadians(168)))
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.slidePos = 2850;armWrapper.UpdatePos(); })
+                .UNSTABLE_addTemporalMarkerOffset(.4, () -> { armWrapper.guideServo.setPosition(.65); })
 
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    armWrapper.rightServo.setPosition(.9);
-                    armWrapper.leftServo.setPosition(.1);
-                })
-                .waitSeconds(.4)
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    armWrapper.slidePos = 2850;armWrapper.UpdatePos();
-                })
+                .waitSeconds(.35)
 
-                .UNSTABLE_addTemporalMarkerOffset(.4, () -> {
-                    armWrapper.guideServo.setPosition(.65);
-                })
-                .waitSeconds(.4)
                 .lineToLinearHeading(new Pose2d(-23.5,-21,Math.toRadians(-94)))
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.rightServo.setPosition(.8); armWrapper.leftServo.setPosition(.2); })
 
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    armWrapper.rightServo.setPosition(.8);
-                    armWrapper.leftServo.setPosition(.2);
-                })
+                .waitSeconds(.35)
 
-                .waitSeconds(.4)
-
-                .lineToLinearHeading(new Pose2d(-23.5,-15,Math.toRadians(168)))
+                .lineToLinearHeading(new Pose2d(-23.5,-15,Math.toRadians(12)))
 
                 //drop 1
 
@@ -249,12 +196,12 @@ public class LeftMiddle implements IAutonomousRunner {
                         return 50;
                     }
                 })
-                .lineToLinearHeading(new Pose2d(-61.5,-9.5,Math.toRadians(168)))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    armWrapper.slidePos = 0;armWrapper.UpdatePos();
-                    armWrapper.guideServo.setPosition(0);
-                })
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.slidePos = 0;armWrapper.UpdatePos(); armWrapper.guideServo.setPosition(0); })
+                .lineToLinearHeading(new Pose2d(-61.5,-9.5,Math.toRadians(12)))
                 .resetConstraints()
+
+                .waitSeconds(2)
+
                 .build();
 
         trajectory2 = drive.trajectorySequenceBuilder(parkStartPose)
@@ -269,12 +216,12 @@ public class LeftMiddle implements IAutonomousRunner {
                         return 50;
                     }
                 })
-                .lineToLinearHeading(new Pose2d(-39.5,-11,Math.toRadians(168)))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    armWrapper.slidePos = 0;armWrapper.UpdatePos();
-                    armWrapper.guideServo.setPosition(0);
-                })
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.slidePos = 0;armWrapper.UpdatePos(); armWrapper.guideServo.setPosition(0); })
+                .lineToLinearHeading(new Pose2d(-39.5,-11,Math.toRadians(12)))
                 .resetConstraints()
+
+                .waitSeconds(2)
+
                 .build();
 
         trajectory3 = drive.trajectorySequenceBuilder(parkStartPose)
@@ -289,26 +236,21 @@ public class LeftMiddle implements IAutonomousRunner {
                         return 50;
                     }
                 })
-                .lineToLinearHeading(new Pose2d(-17.5,-15,Math.toRadians(168)))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    armWrapper.slidePos = 0;armWrapper.UpdatePos();
-                    armWrapper.guideServo.setPosition(0);
-                })
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.slidePos = 0;armWrapper.UpdatePos(); armWrapper.guideServo.setPosition(0); })
+                .lineToLinearHeading(new Pose2d(-17.5,-15,Math.toRadians(12)))
                 .resetConstraints()
+
+                .waitSeconds(2)
+
                 .build();
     }
 
     @Override
     public void run() {
-
-
         signalInt = wrapper.initDetection.signalInt;
-
         telemetry.addData("Int = ", signalInt);
         telemetry.update();
-
         drive.followTrajectorySequence(trajectoryBase);
-
 
         if(signalInt==0){
             drive.followTrajectorySequence(trajectory3);
@@ -317,9 +259,8 @@ public class LeftMiddle implements IAutonomousRunner {
         }else{
             drive.followTrajectorySequence(trajectory1);
         }
+
         linearOpMode.sleep(10000);
-
-
     }
 
     void goForward(double speed){
@@ -335,9 +276,4 @@ public class LeftMiddle implements IAutonomousRunner {
         motorFrontRight.setPower(-speed);
         motorBackRight.setPower(speed);
     }
-
-
-
-
-
 }

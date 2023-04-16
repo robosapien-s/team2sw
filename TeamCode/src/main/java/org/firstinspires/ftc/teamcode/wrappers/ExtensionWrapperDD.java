@@ -76,31 +76,47 @@ public class ExtensionWrapperDD {
 
         if (joystickWrapper.gamepad1GetA()) {
             slidePos = 70;
-            guideServo.setPosition(0);
+            if (guideServo.getPosition() > 0.06) {
+                guideServo.setPosition(0.05);
+            }
         }else if (joystickWrapper.gamepad1GetX()) {
             slidePos = 220;
-            guideServo.setPosition(0);
+            if (guideServo.getPosition() > 0.06) {
+                guideServo.setPosition(0.05);
+            }
         }
         else if (joystickWrapper.gamepad1GetY()) {
             slidePos = 390;
-            guideServo.setPosition(0);
+            if (guideServo.getPosition() > 0.06) {
+                guideServo.setPosition(0.05);
+            }
         }else if (joystickWrapper.gamepad1GetB()) {
             slidePos = 550;
-            guideServo.setPosition(0);
+            if (guideServo.getPosition() > 0.06) {
+                guideServo.setPosition(0.05);
+            }
         }
         if (joystickWrapper.gamepad1GetDDown()) {
             slidePos = 5;
-            guideServo.setPosition(0);
+            if (guideServo.getPosition() > 0.06) {
+                guideServo.setPosition(0.05);
+            }
         }else if (joystickWrapper.gamepad1GetDLeft()) {
             slidePos = 1670;
-            guideServo.setPosition(0);
+            if (guideServo.getPosition() > 0.06) {
+                guideServo.setPosition(0.05);
+            }
         }
         else if (joystickWrapper.gamepad1GetDUp()) {
             slidePos = 2800;
-            guideServo.setPosition(.65);
+            if (guideServo.getPosition() < 0.65) {
+                guideServo.setPosition(.7);
+            }
         }else if (joystickWrapper.gamepad1GetDRight()) {
             slidePos = 4000;
-            guideServo.setPosition(.65);
+            if (guideServo.getPosition() < 0.65) {
+                guideServo.setPosition(.7);
+            }
         }
 
 
