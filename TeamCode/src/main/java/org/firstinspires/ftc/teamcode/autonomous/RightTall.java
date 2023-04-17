@@ -71,7 +71,7 @@ public class RightTall implements IAutonomousRunner {
 
         trajectoryBase = drive.trajectorySequenceBuilder(startPose)
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.slidePos = 4000;armWrapper.UpdatePos(); })
-                .UNSTABLE_addTemporalMarkerOffset(.4, () -> { armWrapper.guideServo.setPosition(.7); })
+                .UNSTABLE_addTemporalMarkerOffset(.4, () -> { armWrapper.guideServo.setPosition(.05); })
                 .setConstraints(new TrajectoryVelocityConstraint() {
                     @Override
                     public double get(double v, @NonNull Pose2d pose2d, @NonNull Pose2d pose2d1, @NonNull Pose2d pose2d2) {
@@ -83,78 +83,93 @@ public class RightTall implements IAutonomousRunner {
                         return 45;
                     }
                 })
-                .lineToLinearHeading(new Pose2d(37, -1, Math.toRadians(80)))
+                .lineToLinearHeading(new Pose2d(37, -1, Math.toRadians(80))) //first drive
+                .lineToLinearHeading(new Pose2d(38,-4,Math.toRadians(80)))
 
-
-                .lineToLinearHeading(new Pose2d(26,-8,Math.toRadians(135)))
-
+                .lineToLinearHeading(new Pose2d(27,-8,Math.toRadians(125))) //position of first drop
+                .waitSeconds(.35)
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.rightServo.setPosition(.8); armWrapper.leftServo.setPosition(.2); })
-
-
-                .waitSeconds(.35)
-
-                .UNSTABLE_addTemporalMarkerOffset(0.3, () -> { armWrapper.slidePos = 600;armWrapper.UpdatePos();  })
-                .UNSTABLE_addTemporalMarkerOffset(.6,()->{armWrapper.guideServo.setPosition(0.05);})
-                .lineToLinearHeading(new Pose2d(40,-14,Math.toRadians(0)))
-
-
-
-                .waitSeconds(.35)
-                .lineToLinearHeading(new Pose2d(65.5,-15,Math.toRadians(2)))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.rightServo.setPosition(.9); armWrapper.leftServo.setPosition(.1); })
+                //drop 1 open
 
                 .waitSeconds(.35)
 
-                .UNSTABLE_addTemporalMarkerOffset(0.3, () -> { armWrapper.slidePos = 4000;armWrapper.UpdatePos(); })
-                .UNSTABLE_addTemporalMarkerOffset(.6, () -> { armWrapper.guideServo.setPosition(.7); })
+                .UNSTABLE_addTemporalMarkerOffset(0.3, () -> { armWrapper.slidePos = 600;armWrapper.UpdatePos();  }) //slide down for first pickup
+                .UNSTABLE_addTemporalMarkerOffset(.6,()->{armWrapper.guideServo.setPosition(0.05);}) //guide servo up for first pickup
+                .lineToLinearHeading(new Pose2d(40,-14,Math.toRadians(0))) //backup to align to first pickup
 
 
-                .lineToLinearHeading(new Pose2d(39,-3,Math.toRadians(135)))
+
+                //.waitSeconds(.35) //do we need this? testing
+                .lineToLinearHeading(new Pose2d(67,-16,Math.toRadians(2))) //first pickup location
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.rightServo.setPosition(.9); armWrapper.leftServo.setPosition(.1); }) //closing of servo at first pickup
+
+                .waitSeconds(.35)
+
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.slidePos = 4000;armWrapper.UpdatePos(); }) //arm up for second drop
+                .UNSTABLE_addTemporalMarkerOffset(.35, () -> { armWrapper.guideServo.setPosition(.7); })//guide down for second drop
+
+
+                .lineToLinearHeading(new Pose2d(26,-5,Math.toRadians(135))) //location for second drop
                 .waitSeconds(.4)
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.rightServo.setPosition(.8); armWrapper.leftServo.setPosition(.2); }) //servo open for second drop
+
+                .waitSeconds(.35)
+                .UNSTABLE_addTemporalMarkerOffset(0.3, () -> { armWrapper.slidePos = 450;armWrapper.UpdatePos(); }) //arm going down for second pickup
+                .UNSTABLE_addTemporalMarkerOffset(.6, () -> { armWrapper.guideServo.setPosition(0); }) //guide going up for second pickup
+                .lineToLinearHeading(new Pose2d(40,-12,Math.toRadians(10))) //aligning for second pickup
+
+
+                .lineToLinearHeading(new Pose2d(65,-15,Math.toRadians(3))) //position of second pickup
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.rightServo.setPosition(.9); armWrapper.leftServo.setPosition(.1); })//closing for second pickup
+
+                .waitSeconds(.35)
+
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.slidePos = 4000;armWrapper.UpdatePos(); })//raising arm for third drop
+                .UNSTABLE_addTemporalMarkerOffset(.4, () -> { armWrapper.guideServo.setPosition(.7); })//lowering guide for third drop
+
+                .waitSeconds(.35)
+
+                .lineToLinearHeading(new Pose2d(26,-5,Math.toRadians(135))) //location of third drop
+
+                .waitSeconds(.35)
+
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.rightServo.setPosition(.8); armWrapper.leftServo.setPosition(.2); }) //third drop open servo
+
+                .waitSeconds(.35)
+
+                .UNSTABLE_addTemporalMarkerOffset(0.3, () -> { armWrapper.slidePos = 305;armWrapper.UpdatePos();}) //arm down for third pickup
+                .UNSTABLE_addTemporalMarkerOffset(0.6, () -> {armWrapper.guideServo.setPosition(0);}) //guide up for third pickup
+                .lineToLinearHeading(new Pose2d(40,-12,Math.toRadians(12))) //alligning for third pickup
+                .lineToLinearHeading(new Pose2d(65,-16,Math.toRadians(0))) //third pickup location
+                .waitSeconds(.35)
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.rightServo.setPosition(.9); armWrapper.leftServo.setPosition(.1); }) //close servo for third pickup
+
+                .waitSeconds(.35)
+
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.slidePos = 4000;armWrapper.UpdatePos(); }) //raise arm for fourth drop
+                .UNSTABLE_addTemporalMarkerOffset(.4, () -> { armWrapper.guideServo.setPosition(.7); })//drop guide for fourth drop
+
+                .waitSeconds(.35)
+
+                .lineToLinearHeading(new Pose2d(26,-5,Math.toRadians(135)))//position of fourth drop
+                .waitSeconds(.35)
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.rightServo.setPosition(.8); armWrapper.leftServo.setPosition(.2); })
-
                 .waitSeconds(.35)
 
-                .lineToLinearHeading(new Pose2d(40,-9,Math.toRadians(10)))
-                .UNSTABLE_addTemporalMarkerOffset(0.3, () -> { armWrapper.slidePos = 450;armWrapper.UpdatePos(); })
-                .UNSTABLE_addTemporalMarkerOffset(.6, () -> { armWrapper.guideServo.setPosition(0); })
+                .UNSTABLE_addTemporalMarkerOffset(0.3, () -> { armWrapper.slidePos = 305;armWrapper.UpdatePos();}) //arm down for fourth pickup
+                .UNSTABLE_addTemporalMarkerOffset(0.6, () -> {armWrapper.guideServo.setPosition(0);}) //guide up for fourth pickup
+                .lineToLinearHeading(new Pose2d(40,-13,Math.toRadians(12)))//alignment for fourth pickup
+                .lineToLinearHeading(new Pose2d(65,-18,Math.toRadians(0))) //fourth pickup location
+                .waitSeconds(.35)
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.rightServo.setPosition(.9); armWrapper.leftServo.setPosition(.1); }) //close servo for fourth pickup
 
-                .lineToLinearHeading(new Pose2d(65,-15,Math.toRadians(3)))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.rightServo.setPosition(.9); armWrapper.leftServo.setPosition(.1); })
-
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.slidePos = 4000;armWrapper.UpdatePos(); }) //raise arm for fifth drop
+                .UNSTABLE_addTemporalMarkerOffset(.4, () -> { armWrapper.guideServo.setPosition(.7); })//drop guide for fifth drop
                 .waitSeconds(.35)
 
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.slidePos = 4000;armWrapper.UpdatePos(); })
-                .UNSTABLE_addTemporalMarkerOffset(.4, () -> { armWrapper.guideServo.setPosition(.7); })
-
+                .lineToLinearHeading(new Pose2d(26,-7,Math.toRadians(135)))//position of fifth drop
                 .waitSeconds(.35)
-
-                .lineToLinearHeading(new Pose2d(40,-9,Math.toRadians(135)))
-
-                .waitSeconds(.35)
-
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.rightServo.setPosition(.8); armWrapper.leftServo.setPosition(.2); })
-
-                .waitSeconds(.35)
-
-                .lineToLinearHeading(new Pose2d(30,-9,Math.toRadians(12)))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.slidePos = 305;armWrapper.UpdatePos(); armWrapper.guideServo.setPosition(0); })
-                .lineToLinearHeading(new Pose2d(65,-9.5,Math.toRadians(12)))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.rightServo.setPosition(.9); armWrapper.leftServo.setPosition(.1); })
-
-                .waitSeconds(.35)
-
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.slidePos = 4000;armWrapper.UpdatePos(); })
-                .UNSTABLE_addTemporalMarkerOffset(.4, () -> { armWrapper.guideServo.setPosition(.7); })
-
-                .waitSeconds(.35)
-
-                .lineToLinearHeading(new Pose2d(40,-12,Math.toRadians(135)))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.rightServo.setPosition(.8); armWrapper.leftServo.setPosition(.2); })
-
-                .waitSeconds(.35)
-
-                .lineToLinearHeading(new Pose2d(23.5,-15,Math.toRadians(12)))
 
                 //drop 1
 
