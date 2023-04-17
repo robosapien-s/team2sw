@@ -72,8 +72,7 @@ public class LeftMiddle implements IAutonomousRunner {
 
         trajectoryBase = drive.trajectorySequenceBuilder(startPose)
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.slidePos = 2850;armWrapper.UpdatePos(); })
-
-                .lineToLinearHeading(new Pose2d(-36, 0,Math.toRadians(90)), new TrajectoryVelocityConstraint() {
+                .setConstraints(new TrajectoryVelocityConstraint() {
                     @Override
                     public double get(double v, @NonNull Pose2d pose2d, @NonNull Pose2d pose2d1, @NonNull Pose2d pose2d2) {
                         return 50;
@@ -83,69 +82,52 @@ public class LeftMiddle implements IAutonomousRunner {
                     public double get(double v, @NonNull Pose2d pose2d, @NonNull Pose2d pose2d1, @NonNull Pose2d pose2d2) {
                         return 40;
                     }
-                })
+                }) //setting fast speed
+                .lineToLinearHeading(new Pose2d(-36, 0, Math.toRadians(90)))//first drive at increased speed
 
-                .lineToLinearHeading(new Pose2d(-27,-22,Math.toRadians(-45)))
+                .lineToLinearHeading(new Pose2d(-27,-22,Math.toRadians(-45))) //moving to the first drop
 
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.rightServo.setPosition(.8); armWrapper.leftServo.setPosition(.2); })
-
-                .waitSeconds(.35)
-
-                .lineToLinearHeading(new Pose2d(-40,-14,Math.toRadians(0)))
-
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.slidePos = 600;armWrapper.UpdatePos(); armWrapper.guideServo.setPosition(0); })
-
-                .waitSeconds(.35)
-                .lineToLinearHeading(new Pose2d(-66.5,-14.5,Math.toRadians(2)))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.rightServo.setPosition(.9); armWrapper.leftServo.setPosition(.1); })
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.rightServo.setPosition(.8); armWrapper.leftServo.setPosition(.2); }) //opening servo for first drop
 
                 .waitSeconds(.35)
 
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.slidePos = 2850;armWrapper.UpdatePos(); })
-                .UNSTABLE_addTemporalMarkerOffset(.4, () -> { armWrapper.guideServo.setPosition(.65); })
-                .lineToLinearHeading(new Pose2d(-23,-21,Math.toRadians(-90)))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.rightServo.setPosition(.8); armWrapper.leftServo.setPosition(.2); })
+                .lineToLinearHeading(new Pose2d(-40,-14,Math.toRadians(180))) //aligning for first pickup
+
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.slidePos = 600;armWrapper.UpdatePos(); armWrapper.guideServo.setPosition(0.05);}) //moving arm down and guide up for first pickup
+
+                .waitSeconds(.35)
+                .lineToLinearHeading(new Pose2d(-68,-14.5,Math.toRadians(182))) //location for pickup
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.rightServo.setPosition(.9); armWrapper.leftServo.setPosition(.1); }) //closing claw for pickup
 
                 .waitSeconds(.35)
 
-                .lineToLinearHeading(new Pose2d(-30,-14,Math.toRadians(10)))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.slidePos = 450;armWrapper.UpdatePos(); armWrapper.guideServo.setPosition(0); })
-                .lineToLinearHeading(new Pose2d(-65,-11.5,Math.toRadians(3)))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.rightServo.setPosition(.9); armWrapper.leftServo.setPosition(.1); })
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.slidePos = 2850;armWrapper.UpdatePos(); }) //moving arm up for second drop
+                .UNSTABLE_addTemporalMarkerOffset(.4, () -> { armWrapper.guideServo.setPosition(.7); })// moving guide out for second drop
+                .lineToLinearHeading(new Pose2d(-25,-22,Math.toRadians(-60))) //location of second drop
+                .waitSeconds(.35)
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.rightServo.setPosition(.8); armWrapper.leftServo.setPosition(.2); }) //opening claw for second drop
+
+                .waitSeconds(.35)
+                .UNSTABLE_addTemporalMarkerOffset(0.2, () -> { armWrapper.slidePos = 450;armWrapper.UpdatePos();}) //moving arm back down on a delay
+                .UNSTABLE_addTemporalMarkerOffset(0.4, () -> {armWrapper.guideServo.setPosition(0.05);})
+                .lineToLinearHeading(new Pose2d(-30,-17,Math.toRadians(190))) //aligning for second pickup
+                .lineToLinearHeading(new Pose2d(-68,-11.5,Math.toRadians(183)))// location for second pickup
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.rightServo.setPosition(.9); armWrapper.leftServo.setPosition(.1); }) //closing servo for second pickup
+                .waitSeconds(.35)
+
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.slidePos = 2850;armWrapper.UpdatePos(); }) //arm going up for third drop
+                .UNSTABLE_addTemporalMarkerOffset(.4, () -> { armWrapper.guideServo.setPosition(.7); }) //guide going down for third drop
+
+
+                .lineToLinearHeading(new Pose2d(-24,-23,Math.toRadians(-94))) //location of third drop
+
+                .waitSeconds(.35)
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.rightServo.setPosition(.8); armWrapper.leftServo.setPosition(.2); })//claw opening for third drop
 
                 .waitSeconds(.35)
 
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.slidePos = 2850;armWrapper.UpdatePos(); })
-                .UNSTABLE_addTemporalMarkerOffset(.4, () -> { armWrapper.guideServo.setPosition(.65); })
 
-                .waitSeconds(.35)
 
-                .lineToLinearHeading(new Pose2d(-24,-22,Math.toRadians(-94)))
-
-                .waitSeconds(.35)
-
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.rightServo.setPosition(.8); armWrapper.leftServo.setPosition(.2); })
-
-                .waitSeconds(.35)
-
-                .lineToLinearHeading(new Pose2d(-30,-14,Math.toRadians(12)))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.slidePos = 305;armWrapper.UpdatePos(); armWrapper.guideServo.setPosition(0); })
-                .lineToLinearHeading(new Pose2d(-65,-9.5,Math.toRadians(12)))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.rightServo.setPosition(.9); armWrapper.leftServo.setPosition(.1); })
-
-                .waitSeconds(.35)
-
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.slidePos = 2850;armWrapper.UpdatePos(); })
-                .UNSTABLE_addTemporalMarkerOffset(.4, () -> { armWrapper.guideServo.setPosition(.65); })
-
-                .waitSeconds(.35)
-
-                .lineToLinearHeading(new Pose2d(-23.5,-21,Math.toRadians(-94)))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.rightServo.setPosition(.8); armWrapper.leftServo.setPosition(.2); })
-
-                .waitSeconds(.35)
-
-                .lineToLinearHeading(new Pose2d(-23.5,-15,Math.toRadians(12)))
 
                 //drop 1
 
@@ -196,8 +178,11 @@ public class LeftMiddle implements IAutonomousRunner {
                         return 50;
                     }
                 })
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.slidePos = 0;armWrapper.UpdatePos(); armWrapper.guideServo.setPosition(0); })
-                .lineToLinearHeading(new Pose2d(-61.5,-9.5,Math.toRadians(12)))
+                //.UNSTABLE_addTemporalMarkerOffset(0, () -> {armWrapper.slidePos = 3000; armWrapper.UpdatePos();}) //moving arm up to avoid hitting pole on turn
+                //may need above line for this trajectory, but it is not tested
+                .UNSTABLE_addTemporalMarkerOffset(0.2, () -> { armWrapper.slidePos = 0;armWrapper.UpdatePos();})
+                .UNSTABLE_addTemporalMarkerOffset(0.4, () -> {armWrapper.guideServo.setPosition(0.05);})
+                .lineToLinearHeading(new Pose2d(-61.5,-9.5,Math.toRadians(-12)))
                 .resetConstraints()
 
                 .waitSeconds(2)
@@ -216,8 +201,11 @@ public class LeftMiddle implements IAutonomousRunner {
                         return 50;
                     }
                 })
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.slidePos = 0;armWrapper.UpdatePos(); armWrapper.guideServo.setPosition(0); })
-                .lineToLinearHeading(new Pose2d(-39.5,-11,Math.toRadians(12)))
+                //.UNSTABLE_addTemporalMarkerOffset(0, () -> {armWrapper.slidePos = 3000; armWrapper.UpdatePos();}) //moving arm up to avoid hitting pole on turn
+                //may need above line for this trajectory, but it is not tested
+                .UNSTABLE_addTemporalMarkerOffset(0.2, () -> { armWrapper.slidePos = 0;armWrapper.UpdatePos();})
+                .UNSTABLE_addTemporalMarkerOffset(0.4, () -> {armWrapper.guideServo.setPosition(0.05);})
+                .lineToLinearHeading(new Pose2d(-39.5,-11,Math.toRadians(-12)))
                 .resetConstraints()
 
                 .waitSeconds(2)
@@ -236,8 +224,10 @@ public class LeftMiddle implements IAutonomousRunner {
                         return 50;
                     }
                 })
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.slidePos = 0;armWrapper.UpdatePos(); armWrapper.guideServo.setPosition(0); })
-                .lineToLinearHeading(new Pose2d(-17.5,-15,Math.toRadians(12)))
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> {armWrapper.slidePos = 3000; armWrapper.UpdatePos();}) //moving arm up to avoid hitting pole on turn
+                .UNSTABLE_addTemporalMarkerOffset(0.2, () -> { armWrapper.slidePos = 0;armWrapper.UpdatePos();})
+                .UNSTABLE_addTemporalMarkerOffset(0.4, () -> {armWrapper.guideServo.setPosition(0.05);})
+                .lineToLinearHeading(new Pose2d(-17,-15,Math.toRadians(168)))
                 .resetConstraints()
 
                 .waitSeconds(2)

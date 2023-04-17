@@ -7,6 +7,7 @@ import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.acmerobotics.roadrunner.trajectory.constraints.TrajectoryAccelerationConstraint;
 import com.acmerobotics.roadrunner.trajectory.constraints.TrajectoryVelocityConstraint;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -18,7 +19,7 @@ import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.teamcode.wrappers.DrivingWrapperCompetition;
 import org.firstinspires.ftc.teamcode.wrappers.ExtensionWrapperDD;
-
+@Disabled
 public class LeftMiddle2 implements IAutonomousRunner {
 
     TrajectorySequence trajectoryBase;
@@ -276,7 +277,7 @@ public class LeftMiddle2 implements IAutonomousRunner {
                 .lineToLinearHeading(new Pose2d(-61.5,-9.5,Math.toRadians(168)))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                     armWrapper.slidePos = 0;armWrapper.UpdatePos();
-                    armWrapper.guideServo.setPosition(0);
+                    armWrapper.guideServo.setPosition(0.05);
                 })
                 .resetConstraints()
                 .build();
@@ -296,7 +297,7 @@ public class LeftMiddle2 implements IAutonomousRunner {
                 .lineToLinearHeading(new Pose2d(-39.5,-11,Math.toRadians(168)))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                     armWrapper.slidePos = 0;armWrapper.UpdatePos();
-                    armWrapper.guideServo.setPosition(0);
+                    armWrapper.guideServo.setPosition(0.05);
                 })
                 .resetConstraints()
                 .build();
@@ -316,7 +317,7 @@ public class LeftMiddle2 implements IAutonomousRunner {
                 .lineToLinearHeading(new Pose2d(-17.5,-15,Math.toRadians(168)))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                     armWrapper.slidePos = 0;armWrapper.UpdatePos();
-                    armWrapper.guideServo.setPosition(0);
+                    armWrapper.guideServo.setPosition(0.05);
                 })
                 .resetConstraints()
                 .build();

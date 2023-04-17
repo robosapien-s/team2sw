@@ -86,7 +86,7 @@ public class RightTall implements IAutonomousRunner {
                 .lineToLinearHeading(new Pose2d(37, -1, Math.toRadians(80))) //first drive
                 .lineToLinearHeading(new Pose2d(38,-4,Math.toRadians(80)))
 
-                .lineToLinearHeading(new Pose2d(27,-8,Math.toRadians(125))) //position of first drop
+                .lineToLinearHeading(new Pose2d(27,-6,Math.toRadians(115))) //position of first drop
                 .waitSeconds(.35)
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.rightServo.setPosition(.8); armWrapper.leftServo.setPosition(.2); })
                 //drop 1 open
@@ -99,8 +99,7 @@ public class RightTall implements IAutonomousRunner {
 
 
 
-                //.waitSeconds(.35) //do we need this? testing
-                .lineToLinearHeading(new Pose2d(67,-16,Math.toRadians(2))) //first pickup location
+                .lineToLinearHeading(new Pose2d(67,-15.5,Math.toRadians(2))) //first pickup location
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.rightServo.setPosition(.9); armWrapper.leftServo.setPosition(.1); }) //closing of servo at first pickup
 
                 .waitSeconds(.35)
@@ -109,17 +108,17 @@ public class RightTall implements IAutonomousRunner {
                 .UNSTABLE_addTemporalMarkerOffset(.35, () -> { armWrapper.guideServo.setPosition(.7); })//guide down for second drop
 
 
-                .lineToLinearHeading(new Pose2d(26,-5,Math.toRadians(135))) //location for second drop
+                .lineToLinearHeading(new Pose2d(26,-4.5,Math.toRadians(135))) //location for second drop
                 .waitSeconds(.4)
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.rightServo.setPosition(.8); armWrapper.leftServo.setPosition(.2); }) //servo open for second drop
 
                 .waitSeconds(.35)
                 .UNSTABLE_addTemporalMarkerOffset(0.3, () -> { armWrapper.slidePos = 450;armWrapper.UpdatePos(); }) //arm going down for second pickup
-                .UNSTABLE_addTemporalMarkerOffset(.6, () -> { armWrapper.guideServo.setPosition(0); }) //guide going up for second pickup
+                .UNSTABLE_addTemporalMarkerOffset(.6, () -> { armWrapper.guideServo.setPosition(0.05); }) //guide going up for second pickup
                 .lineToLinearHeading(new Pose2d(40,-12,Math.toRadians(10))) //aligning for second pickup
 
 
-                .lineToLinearHeading(new Pose2d(65,-15,Math.toRadians(3))) //position of second pickup
+                .lineToLinearHeading(new Pose2d(66,-17,Math.toRadians(-5))) //position of second pickup
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.rightServo.setPosition(.9); armWrapper.leftServo.setPosition(.1); })//closing for second pickup
 
                 .waitSeconds(.35)
@@ -129,7 +128,7 @@ public class RightTall implements IAutonomousRunner {
 
                 .waitSeconds(.35)
 
-                .lineToLinearHeading(new Pose2d(26,-5,Math.toRadians(135))) //location of third drop
+                .lineToLinearHeading(new Pose2d(26,-5,Math.toRadians(122))) //location of third drop
 
                 .waitSeconds(.35)
 
@@ -138,9 +137,9 @@ public class RightTall implements IAutonomousRunner {
                 .waitSeconds(.35)
 
                 .UNSTABLE_addTemporalMarkerOffset(0.3, () -> { armWrapper.slidePos = 305;armWrapper.UpdatePos();}) //arm down for third pickup
-                .UNSTABLE_addTemporalMarkerOffset(0.6, () -> {armWrapper.guideServo.setPosition(0);}) //guide up for third pickup
+                .UNSTABLE_addTemporalMarkerOffset(0.6, () -> {armWrapper.guideServo.setPosition(0.05);}) //guide up for third pickup
                 .lineToLinearHeading(new Pose2d(40,-12,Math.toRadians(12))) //alligning for third pickup
-                .lineToLinearHeading(new Pose2d(65,-16,Math.toRadians(0))) //third pickup location
+                .lineToLinearHeading(new Pose2d(66,-19,Math.toRadians(-7))) //third pickup location
                 .waitSeconds(.35)
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.rightServo.setPosition(.9); armWrapper.leftServo.setPosition(.1); }) //close servo for third pickup
 
@@ -151,25 +150,14 @@ public class RightTall implements IAutonomousRunner {
 
                 .waitSeconds(.35)
 
-                .lineToLinearHeading(new Pose2d(26,-5,Math.toRadians(135)))//position of fourth drop
+                .lineToLinearHeading(new Pose2d(26,-5,Math.toRadians(105)))//position of fourth drop
                 .waitSeconds(.35)
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.rightServo.setPosition(.8); armWrapper.leftServo.setPosition(.2); })
                 .waitSeconds(.35)
 
-                .UNSTABLE_addTemporalMarkerOffset(0.3, () -> { armWrapper.slidePos = 305;armWrapper.UpdatePos();}) //arm down for fourth pickup
-                .UNSTABLE_addTemporalMarkerOffset(0.6, () -> {armWrapper.guideServo.setPosition(0);}) //guide up for fourth pickup
-                .lineToLinearHeading(new Pose2d(40,-13,Math.toRadians(12)))//alignment for fourth pickup
-                .lineToLinearHeading(new Pose2d(65,-18,Math.toRadians(0))) //fourth pickup location
+                .UNSTABLE_addTemporalMarkerOffset(0.3, () -> { armWrapper.slidePos = 305;armWrapper.UpdatePos();}) //arm down for parking
+                .UNSTABLE_addTemporalMarkerOffset(0.6, () -> {armWrapper.guideServo.setPosition(0.05);}) //guide up for parking
                 .waitSeconds(.35)
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.rightServo.setPosition(.9); armWrapper.leftServo.setPosition(.1); }) //close servo for fourth pickup
-
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.slidePos = 4000;armWrapper.UpdatePos(); }) //raise arm for fifth drop
-                .UNSTABLE_addTemporalMarkerOffset(.4, () -> { armWrapper.guideServo.setPosition(.7); })//drop guide for fifth drop
-                .waitSeconds(.35)
-
-                .lineToLinearHeading(new Pose2d(26,-7,Math.toRadians(135)))//position of fifth drop
-                .waitSeconds(.35)
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.rightServo.setPosition(.8); armWrapper.leftServo.setPosition(.2); })
 
                 //drop 1
 
@@ -221,9 +209,10 @@ public class RightTall implements IAutonomousRunner {
                         return 45;
                     }
                 })
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.slidePos = 0;armWrapper.UpdatePos(); armWrapper.guideServo.setPosition(0); })
-                .lineToLinearHeading(new Pose2d(61.5,-9.5,Math.toRadians(168)))
-                .resetConstraints()
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.slidePos = 0;armWrapper.UpdatePos();})
+                .UNSTABLE_addTemporalMarkerOffset(.4, () -> {armWrapper.guideServo.setPosition(0.05);})
+                .lineToLinearHeading(new Pose2d(61,-19,Math.toRadians(-5)))
+                .resetConstraints() //three
 
                 .waitSeconds(2)
 
@@ -238,12 +227,13 @@ public class RightTall implements IAutonomousRunner {
                 }, new TrajectoryAccelerationConstraint() {
                     @Override
                     public double get(double v, @NonNull Pose2d pose2d, @NonNull Pose2d pose2d1, @NonNull Pose2d pose2d2) {
-                        return 50;
+                        return 45;
                     }
                 })
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.slidePos = 0;armWrapper.UpdatePos(); armWrapper.guideServo.setPosition(0); })
-                .lineToLinearHeading(new Pose2d(39.5,-11,Math.toRadians(168)))
-                .resetConstraints()
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.slidePos = 0;armWrapper.UpdatePos();})
+                .UNSTABLE_addTemporalMarkerOffset(.4, () -> {armWrapper.guideServo.setPosition(0.05);})
+                .lineToLinearHeading(new Pose2d(33,-15,Math.toRadians(168)))
+                .resetConstraints()//two
 
                 .waitSeconds(2)
 
@@ -258,12 +248,13 @@ public class RightTall implements IAutonomousRunner {
                 }, new TrajectoryAccelerationConstraint() {
                     @Override
                     public double get(double v, @NonNull Pose2d pose2d, @NonNull Pose2d pose2d1, @NonNull Pose2d pose2d2) {
-                        return 50;
+                        return 45;
                     }
                 })
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.slidePos = 0;armWrapper.UpdatePos(); armWrapper.guideServo.setPosition(0); })
-                .lineToLinearHeading(new Pose2d(17.5,-15,Math.toRadians(168)))
-                .resetConstraints()
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.slidePos = 0;armWrapper.UpdatePos();})
+                .UNSTABLE_addTemporalMarkerOffset(.4, () -> {armWrapper.guideServo.setPosition(0.05);})
+                .lineToLinearHeading(new Pose2d(7,-11,Math.toRadians(168)))
+                .resetConstraints()//one
 
                 .waitSeconds(2)
 
@@ -278,11 +269,11 @@ public class RightTall implements IAutonomousRunner {
         drive.followTrajectorySequence(trajectoryBase);
 
         if(signalInt==0){
-            drive.followTrajectorySequence(trajectory3);
+            drive.followTrajectorySequence(trajectory1);
         }else if(signalInt==1){
             drive.followTrajectorySequence(trajectory2);
         }else{
-            drive.followTrajectorySequence(trajectory1);
+            drive.followTrajectorySequence(trajectory3);
         }
 
         linearOpMode.sleep(10000);
