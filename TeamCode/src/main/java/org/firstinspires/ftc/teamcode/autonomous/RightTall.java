@@ -155,9 +155,6 @@ public class RightTall implements IAutonomousRunner {
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.rightServo.setPosition(.8); armWrapper.leftServo.setPosition(.2); })
                 .waitSeconds(.35)
 
-                .UNSTABLE_addTemporalMarkerOffset(0.3, () -> { armWrapper.slidePos = 305;armWrapper.UpdatePos();}) //arm down for parking
-                .UNSTABLE_addTemporalMarkerOffset(0.6, () -> {armWrapper.guideServo.setPosition(0.05);}) //guide up for parking
-                .waitSeconds(.35)
 
                 //drop 1
 
@@ -209,8 +206,8 @@ public class RightTall implements IAutonomousRunner {
                         return 45;
                     }
                 })
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.slidePos = 0;armWrapper.UpdatePos();})
-                .UNSTABLE_addTemporalMarkerOffset(.4, () -> {armWrapper.guideServo.setPosition(0.05);})
+                .UNSTABLE_addTemporalMarkerOffset(0.3, () -> { armWrapper.slidePos = 0;armWrapper.UpdatePos();})
+                .UNSTABLE_addTemporalMarkerOffset(.6, () -> {armWrapper.guideServo.setPosition(0.05);})
                 .lineToLinearHeading(new Pose2d(61,-19,Math.toRadians(-5)))
                 .resetConstraints() //three
 
@@ -230,8 +227,8 @@ public class RightTall implements IAutonomousRunner {
                         return 45;
                     }
                 })
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.slidePos = 0;armWrapper.UpdatePos();})
-                .UNSTABLE_addTemporalMarkerOffset(.4, () -> {armWrapper.guideServo.setPosition(0.05);})
+                .UNSTABLE_addTemporalMarkerOffset(0.3, () -> { armWrapper.slidePos = 0;armWrapper.UpdatePos();})
+                .UNSTABLE_addTemporalMarkerOffset(.6, () -> {armWrapper.guideServo.setPosition(0.05);})
                 .lineToLinearHeading(new Pose2d(33,-15,Math.toRadians(168)))
                 .resetConstraints()//two
 
@@ -251,8 +248,9 @@ public class RightTall implements IAutonomousRunner {
                         return 45;
                     }
                 })
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.slidePos = 0;armWrapper.UpdatePos();})
-                .UNSTABLE_addTemporalMarkerOffset(.4, () -> {armWrapper.guideServo.setPosition(0.05);})
+                .UNSTABLE_addTemporalMarkerOffset(0.3, () -> { armWrapper.slidePos = 0;armWrapper.UpdatePos();})
+                .UNSTABLE_addTemporalMarkerOffset(.6
+                        , () -> {armWrapper.guideServo.setPosition(0.05);})
                 .lineToLinearHeading(new Pose2d(7,-11,Math.toRadians(168)))
                 .resetConstraints()//one
 

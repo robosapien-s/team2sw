@@ -103,7 +103,7 @@ public class LeftMiddle implements IAutonomousRunner {
 
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.slidePos = 2850;armWrapper.UpdatePos(); }) //moving arm up for second drop
                 .UNSTABLE_addTemporalMarkerOffset(.4, () -> { armWrapper.guideServo.setPosition(.7); })// moving guide out for second drop
-                .lineToLinearHeading(new Pose2d(-25,-22,Math.toRadians(-60))) //location of second drop
+                .lineToLinearHeading(new Pose2d(-25,-21,Math.toRadians(-85))) //location of second drop
                 .waitSeconds(.35)
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.rightServo.setPosition(.8); armWrapper.leftServo.setPosition(.2); }) //opening claw for second drop
 
@@ -111,7 +111,7 @@ public class LeftMiddle implements IAutonomousRunner {
                 .UNSTABLE_addTemporalMarkerOffset(0.2, () -> { armWrapper.slidePos = 450;armWrapper.UpdatePos();}) //moving arm back down on a delay
                 .UNSTABLE_addTemporalMarkerOffset(0.4, () -> {armWrapper.guideServo.setPosition(0.05);})
                 .lineToLinearHeading(new Pose2d(-30,-17,Math.toRadians(190))) //aligning for second pickup
-                .lineToLinearHeading(new Pose2d(-68,-11.5,Math.toRadians(183)))// location for second pickup
+                .lineToLinearHeading(new Pose2d(-68,-10.5,Math.toRadians(183)))// location for second pickup
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.rightServo.setPosition(.9); armWrapper.leftServo.setPosition(.1); }) //closing servo for second pickup
                 .waitSeconds(.35)
 
@@ -182,7 +182,7 @@ public class LeftMiddle implements IAutonomousRunner {
                 //may need above line for this trajectory, but it is not tested
                 .UNSTABLE_addTemporalMarkerOffset(0.2, () -> { armWrapper.slidePos = 0;armWrapper.UpdatePos();})
                 .UNSTABLE_addTemporalMarkerOffset(0.4, () -> {armWrapper.guideServo.setPosition(0.05);})
-                .lineToLinearHeading(new Pose2d(-61.5,-9.5,Math.toRadians(-12)))
+                .lineToLinearHeading(new Pose2d(-59.5,-19,Math.toRadians(168)))
                 .resetConstraints()
 
                 .waitSeconds(2)
@@ -205,7 +205,7 @@ public class LeftMiddle implements IAutonomousRunner {
                 //may need above line for this trajectory, but it is not tested
                 .UNSTABLE_addTemporalMarkerOffset(0.2, () -> { armWrapper.slidePos = 0;armWrapper.UpdatePos();})
                 .UNSTABLE_addTemporalMarkerOffset(0.4, () -> {armWrapper.guideServo.setPosition(0.05);})
-                .lineToLinearHeading(new Pose2d(-39.5,-11,Math.toRadians(-12)))
+                .lineToLinearHeading(new Pose2d(-39.5,-19,Math.toRadians(168)))
                 .resetConstraints()
 
                 .waitSeconds(2)
