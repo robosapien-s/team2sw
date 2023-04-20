@@ -87,6 +87,8 @@ public class RightTall2 implements IAutonomousRunner {
                 .lineToLinearHeading(new Pose2d(38,-4,Math.toRadians(80)))
 
                 .lineToLinearHeading(new Pose2d(27,-6,Math.toRadians(115))) //position of first drop
+                //3850
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.slidePos = 3850  ;armWrapper.UpdatePos(); })
                 .waitSeconds(.35)
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.rightServo.setPosition(.8); armWrapper.leftServo.setPosition(.2); })
                 //drop 1 open
@@ -109,7 +111,9 @@ public class RightTall2 implements IAutonomousRunner {
 
 
                 .lineToLinearHeading(new Pose2d(26,-4.5,Math.toRadians(135))) //location for second drop
-                .waitSeconds(.4)
+                .waitSeconds(.2)
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.slidePos = 3850  ;armWrapper.UpdatePos(); })
+                .waitSeconds(.2)
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.rightServo.setPosition(.8); armWrapper.leftServo.setPosition(.2); }) //servo open for second drop
 
                 .waitSeconds(.35)
@@ -129,6 +133,8 @@ public class RightTall2 implements IAutonomousRunner {
                 .waitSeconds(.35)
 
                 .lineToLinearHeading(new Pose2d(26,-5,Math.toRadians(122))) //location of third drop
+
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.slidePos = 3800  ;armWrapper.UpdatePos(); })
 
                 .waitSeconds(.35)
 
@@ -151,6 +157,7 @@ public class RightTall2 implements IAutonomousRunner {
                 .waitSeconds(.35)
 
                 .lineToLinearHeading(new Pose2d(26,-5,Math.toRadians(105)))//position of fourth drop
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.slidePos = 3850  ;armWrapper.UpdatePos(); })
                 .waitSeconds(.35)
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.rightServo.setPosition(.8); armWrapper.leftServo.setPosition(.2); })
                 .waitSeconds(.35)
