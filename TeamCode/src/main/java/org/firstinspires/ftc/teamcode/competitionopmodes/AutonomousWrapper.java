@@ -19,6 +19,7 @@ import org.firstinspires.ftc.teamcode.autonomous.RedHomeRunnerV1;
 import org.firstinspires.ftc.teamcode.autonomous.RedMiddle;
 import org.firstinspires.ftc.teamcode.autonomous.RightMiddle;
 import org.firstinspires.ftc.teamcode.autonomous.RightTall;
+import org.firstinspires.ftc.teamcode.autonomous.RightTall2;
 import org.firstinspires.ftc.teamcode.wrappers.ArmWrapper;
 import org.firstinspires.ftc.teamcode.wrappers.DrivingWrapper;
 import org.firstinspires.ftc.teamcode.wrappers.ExtensionArmWrapper;
@@ -102,7 +103,7 @@ public class AutonomousWrapper {
         }else if(location == VuforiaWebcamLocalization.ELocation.REDHOME) {
             runner = new RedHomeRunnerV1(drive, arm, opMode, this);
         }else if(location == VuforiaWebcamLocalization.ELocation.REDCORNER) {
-            runner = new RedCorner(drive, arm, opMode, this);
+            runner = new RightTall2(drive, armA, opMode, this, telemetry,hardwareMap);
         }else if(location == VuforiaWebcamLocalization.ELocation.REDMIDDLE) {
             runner = new RightMiddle(drive, armA, opMode, this, telemetry,hardwareMap);
         }

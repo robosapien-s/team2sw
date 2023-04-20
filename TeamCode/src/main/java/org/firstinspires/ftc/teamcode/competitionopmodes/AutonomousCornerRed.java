@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.teamcode.testopmodes.VuforiaWebcamLocalization;
 import org.firstinspires.ftc.teamcode.wrappers.DrivingWrapper;
 @Disabled
-@Autonomous(name="Defense Red", group="Autonomous")
+@Autonomous(name="Right Tall 2", group="Autonomous")
 public class AutonomousCornerRed extends LinearOpMode {
 
     @Override
