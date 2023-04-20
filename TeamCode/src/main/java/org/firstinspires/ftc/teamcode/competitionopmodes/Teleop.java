@@ -16,7 +16,6 @@ import org.firstinspires.ftc.teamcode.wrappers.ArmWrapper;
 import org.firstinspires.ftc.teamcode.wrappers.DrivingWrapper;
 import org.firstinspires.ftc.teamcode.wrappers.JoystickWrapper;
 
-@Disabled
 @TeleOp(name="Teleop")
 public class Teleop extends OpMode {
 

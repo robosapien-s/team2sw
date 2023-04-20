@@ -105,7 +105,7 @@ public class RightTall implements IAutonomousRunner {
                 .waitSeconds(.35)
 
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.slidePos = 4000;armWrapper.UpdatePos(); }) //arm up for second drop
-                .UNSTABLE_addTemporalMarkerOffset(.35, () -> { armWrapper.guideServo.setPosition(.7); })//guide down for second drop
+                .UNSTABLE_addTemporalMarkerOffset(.35, () -> { armWrapper.guideServo.setPosition(0); })//guide down for second drop
 
 
                 .lineToLinearHeading(new Pose2d(26,-4.5,Math.toRadians(135))) //location for second drop
@@ -124,7 +124,7 @@ public class RightTall implements IAutonomousRunner {
                 .waitSeconds(.35)
 
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.slidePos = 4000;armWrapper.UpdatePos(); })//raising arm for third drop
-                .UNSTABLE_addTemporalMarkerOffset(.4, () -> { armWrapper.guideServo.setPosition(.7); })//lowering guide for third drop
+                .UNSTABLE_addTemporalMarkerOffset(.4, () -> { armWrapper.guideServo.setPosition(0); })//lowering guide for third drop
 
                 .waitSeconds(.35)
 
@@ -146,7 +146,7 @@ public class RightTall implements IAutonomousRunner {
                 .waitSeconds(.35)
 
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> { armWrapper.slidePos = 4000;armWrapper.UpdatePos(); }) //raise arm for fourth drop
-                .UNSTABLE_addTemporalMarkerOffset(.4, () -> { armWrapper.guideServo.setPosition(.7); })//drop guide for fourth drop
+                .UNSTABLE_addTemporalMarkerOffset(.4, () -> { armWrapper.guideServo.setPosition(0); })//drop guide for fourth drop
 
                 .waitSeconds(.35)
 
